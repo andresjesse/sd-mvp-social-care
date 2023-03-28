@@ -21,6 +21,7 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Lint
         run: yarn lint
-      - name: Build
+      - name: Copy credentials
         run: cp src/config/firebaseConfig.example.ts src/config/firebaseConfig.ts
+      - name: Build
         run: yarn build
