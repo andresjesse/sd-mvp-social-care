@@ -1,11 +1,6 @@
 import React from "react";
-import { Button } from "@mantine/core";
+import i18n from "../../lang";
 
 export default function Home() {
-  return (
-    <div>
-      index.page
-      <Button>Settings</Button>
-    </div>
-  );
+  return <div>teste i18n {i18n.t("hello")}</div>;
 }
