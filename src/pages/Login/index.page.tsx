@@ -1,6 +1,9 @@
 import React from "react";
 import { Button } from "@mantine/core";
+import useAuth from "@/hooks/useAuth";
 
 export default function Login() {
-  return <Button>Logar</Button>;
+  const { login } = useAuth();
+
+  return <Button onClick={() => login("", "")}>Logar</Button>;
 }
