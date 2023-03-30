@@ -1,0 +1,32 @@
+name: Deploy to Firebase Hosting
+"on": pull_request
+# "on":
+#   push:
+#     branches:
+#       - main
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Write firebaseConfig
+        env:
+          MY_VAL: ${{ secrets.FIREBASE_CONFIG }}
+        run: |
+          import os
+          data = open("src/config/firebaseConfig.ts", "w")
+          for q in (os.getenv("MY_VAL")):
+            data.write(q)
+        shell: python
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Lint
+        run: yarn lint
+      - name: Build
+        run: yarn build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SD_MVP_SOCIAL_CARE }}"
+          channelId: live
+          projectId: sd-mvp-social-care

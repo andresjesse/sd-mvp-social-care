@@ -48,3 +48,27 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## Setup Firebase
 
 https://firebase.google.com/docs/web/setup?hl=pt-br
+
+## Setup Deploy
+
+**Install Firebase CLI**
+
+Firebase CLI can be installed globally or used as a standalone binary (your choice). Follow official guide: https://firebase.google.com/docs/cli
+
+Execute: `firebase login`
+
+**Setup Firebase Hosting**
+
+Execute: `firebase init hosting`
+
+- ❯ Use an existing project
+- ❯ sd-mvp-social-care (sd-mvp-social-care)
+- ? What do you want to use as your public directory? build
+- ? Configure as a single-page app (rewrite all urls to /index.html)? (y/N) y
+- ? Set up automatic builds and deploys with GitHub? (y/N) y
+- ? For which GitHub repository would you like to set up a GitHub workflow? (format:
+  user/repository) (andresjesse/sd-mvp-social-care)
+- ? Set up the workflow to run a build script before every deploy? Yes
+- ? What script should be run before every deploy? yarn install --frozen-lockfile && yarn build
+- ? Set up automatic deployment to your site's live channel when a PR is merged? (Y/n) Y
+- ? What is the name of the GitHub branch associated with your site's live channel? main
