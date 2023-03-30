@@ -72,3 +72,45 @@ Execute: `firebase init hosting`
 - ? What script should be run before every deploy? yarn install --frozen-lockfile && yarn build
 - ? Set up automatic deployment to your site's live channel when a PR is merged? (Y/n) Y
 - ? What is the name of the GitHub branch associated with your site's live channel? main
+
+Previous process will generate configs for firebase deploy and two github workflows: `firebase-hosting-merge.yml` and `firebase-hosting-pull-request.yml`. For this project we decided to merge them into the following workflow (`cd-firebase.yml`):
+
+```
+name: Deploy to Firebase Hosting
+# "on": pull_request
+"on":
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    name: "Build and Deploy to Firebase Hosting"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Write firebaseConfig
+        env:
+          MY_VAL: ${{ secrets.FIREBASE_CONFIG }}
+        run: |
+          import os
+          data = open("src/config/firebaseConfig.ts", "w")
+          for q in (os.getenv("MY_VAL")):
+            data.write(q)
+        shell: python
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Lint
+        run: yarn lint
+      - name: Build
+        run: yarn build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SD_MVP_SOCIAL_CARE }}"
+          channelId: live
+          projectId: sd-mvp-social-care
+```
+
+**Setup github permissions for workflow**:
+
+From your repository: Settings >> Actions >> General, scroll down to Workflow permissions >> enable Read and Write permissions.
