@@ -114,3 +114,9 @@ jobs:
 **Setup github permissions for workflow**:
 
 From your repository: Settings >> Actions >> General, scroll down to Workflow permissions >> enable Read and Write permissions.
+
+**Setup FIREBASE_CONFIG secret**:
+
+Open your repository Settings >> Secrets and Variables >> Actions >> Tab Secrets.
+
+Add the content of `src/config/firebaseConfig` as a secret named `FIREBASE_CONFIG`.
