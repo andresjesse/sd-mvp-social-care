@@ -9,7 +9,7 @@ export default function ProtectedOutlet() {
   if (loading) return <Loader variant="dots" />;
 
   if (!user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;
