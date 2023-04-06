@@ -77,7 +77,6 @@ export default function Login() {
               withAsterisk
               label="Password"
               placeholder="******"
-              defaultValue="secret"
               {...form.getInputProps("password")}
             />
 
