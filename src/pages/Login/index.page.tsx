@@ -13,6 +13,7 @@ import {
 
 import { notifications } from "@mantine/notifications";
 import { hasLength, isEmail, useForm } from "@mantine/form";
+import i18n from "@/lang";
 
 export default function Login() {
   const { login } = useAuth();
@@ -25,8 +26,8 @@ export default function Login() {
         navigate("/admin");
       } catch (e) {
         notifications.show({
-          title: "Login",
-          message: "Erro de autenticação! 🤥",
+          title: i18n.t("notifications.login.title"),
+          message: i18n.t("notifications.login.auth_error"),
           color: "red",
         });
       }
@@ -48,14 +49,14 @@ export default function Login() {
   const handleError = (errors: typeof form.errors) => {
     if (errors.email) {
       notifications.show({
-        title: "Login",
-        message: "Please provide a valid email",
+        title: i18n.t("notifications.login.title"),
+        message: i18n.t("notifications.login.invalid_email_error"),
         color: "red",
       });
     } else if (errors.password) {
       notifications.show({
-        title: "Login",
-        message: "Min 6 characters to password",
+        title: i18n.t("notifications.login.title"),
+        message: i18n.t("notifications.login.password_min_len_error"),
         color: "red",
       });
     }
