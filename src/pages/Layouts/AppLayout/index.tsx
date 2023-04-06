@@ -13,6 +13,7 @@ import {
   rem,
   MediaQuery,
   Burger,
+  Loader,
 } from "@mantine/core";
 
 import logo from "@/assets/images/logo-desenho.png";
@@ -24,6 +25,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import i18n from "@/lang";
+import useAuth from "@/hooks/useAuth";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -31,8 +33,10 @@ interface AppLayoutProps {
 
 export default function AppLayout({ children }: AppLayoutProps) {
   const theme = useMantineTheme();
-  const user = { name: "Camila Souza", email: "camila@gmail.com" };
   const [opened, setOpened] = useState(false);
+  const { user, loading } = useAuth();
+
+  if (loading) return <Loader variant="dots" />;
 
   return (
     <AppShell
@@ -102,11 +106,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
                   style={{ fontSize: "30px", color: "white" }}
                 />
                 <Box sx={{ flex: 1 }}>
-                  <Text size="sm" weight={500} color="white">
-                    {user.name}
-                  </Text>
                   <Text color="white" size="xs">
-                    {user.email}
+                    {user?.email}
                   </Text>
 
                   <Anchor
