@@ -34,7 +34,7 @@ interface AppLayoutProps {
 export default function AppLayout({ children }: AppLayoutProps) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  const { user, loading } = useAuth();
+  const { user, loading, logout } = useAuth();
 
   if (loading) return <Loader variant="dots" />;
 
@@ -93,11 +93,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                 paddingRight: "35px",
                 paddingLeft: "10px",
                 paddingTop: theme.spacing.sm,
-                borderTop: `${rem(1)} solid ${
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[4]
-                    : theme.colors.gray[2]
-                }`,
+                borderTop: `${rem(1)} solid ${theme.colors.gray[2]}`,
               }}
             >
               <Group>
@@ -106,16 +102,17 @@ export default function AppLayout({ children }: AppLayoutProps) {
                   style={{ fontSize: "30px", color: "white" }}
                 />
                 <Box sx={{ flex: 1 }}>
-                  <Text color="white" size="xs">
+                  <Text color="white" size="md">
                     {user?.email}
                   </Text>
 
                   <Anchor
                     href="#"
                     color="white"
-                    fz="sm"
+                    fz="lg"
                     underline={false}
                     sx={{ "&:hover": { color: "#b9b9b9" } }}
+                    onClick={() => logout()}
                   >
                     <FontAwesomeIcon
                       style={{
