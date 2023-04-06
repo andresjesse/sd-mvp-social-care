@@ -24,7 +24,6 @@ export default function Login() {
         await login(form.values.email, form.values.password);
         navigate("/admin");
       } catch (e) {
-        console.log("Deal error!", e);
         notifications.show({
           title: "Login",
           message: "Erro de autenticação! 🤥",
