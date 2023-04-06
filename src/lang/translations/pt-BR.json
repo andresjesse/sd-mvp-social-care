@@ -8,6 +8,8 @@
         "invalid_email_error": "O email fornecido é inválido!",
         "password_min_len_error": "A senha deve conter pelo menos 6 caracteres!"
       }
-    }
+    },
+    "home": "Início",
+    "subjects": "Sujeitos"
   }
 }
