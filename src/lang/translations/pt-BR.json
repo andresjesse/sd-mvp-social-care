@@ -9,7 +9,11 @@
         "password_min_len_error": "A senha deve conter pelo menos 6 caracteres!"
       }
     },
-    "home": "Início",
-    "subjects": "Sujeitos"
+    "layout": {
+      "navbar": {
+        "home": "Início",
+        "subjects": "Sujeitos"
+      }
+    }
   }
 }

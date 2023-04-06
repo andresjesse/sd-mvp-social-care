@@ -62,7 +62,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                   icon={faHome}
                   style={{ marginRight: "15px" }}
                 />
-                {i18n.t("home")}
+                {i18n.t("layout.navbar.home")}
               </Text>
             </Anchor>
 
@@ -78,7 +78,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                   icon={faIdCard}
                   style={{ marginRight: "15px" }}
                 />
-                {i18n.t("subjects")}
+                {i18n.t("layout.navbar.subjects")}
               </Text>
             </Anchor>
           </Navbar.Section>
