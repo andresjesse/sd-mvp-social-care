@@ -1,6 +1,7 @@
 {
   "pt-BR": {
     "hello": "Olá!",
+    "login": "Entrar",
     "notifications": {
       "login": {
         "title": "Ops! 🤥",
@@ -15,6 +16,11 @@
         "subjects": "Sujeitos",
         "logout": "Sair"
       }
+    },
+    "landing_page": {
+      "title": "Olá, seja bem vindo ao MVP Social Care!",
+      "subtitle": "Um sistema feito para agilizar o seu trabalho.",
+      "content": "O atendimento social consiste em muitas informações a serem consideradas, como também muitas etapas para executar. Pensado no dia a dia de trabalho, o sistema surgiu para ajudar as agências sociais a organizar seus atendimentos aos clientes."
     }
   }
 }
