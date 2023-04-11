@@ -27,10 +27,12 @@ const useStyles = createStyles((theme) => ({
 
     "&:hover": {
       backgroundColor: theme.fn.lighten(
+        /* eslint-disable */
         theme.fn.variant({
           variant: "filled",
           color: theme.primaryColor,
         }).background!,
+        /* eslint-enable */
         0.1
       ),
     },
@@ -43,8 +45,10 @@ const useStyles = createStyles((theme) => ({
   navbarLinkActive: {
     "&, &:hover": {
       backgroundColor: theme.fn.lighten(
+        /* eslint-disable */
         theme.fn.variant({ variant: "filled", color: theme.primaryColor })
           .background!,
+        /* eslint-enable */
         0.15
       ),
     },
