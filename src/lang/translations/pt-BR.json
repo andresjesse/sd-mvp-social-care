@@ -12,7 +12,8 @@
     "layout": {
       "navbar": {
         "home": "Início",
-        "subjects": "Sujeitos"
+        "subjects": "Sujeitos",
+        "logout": "Sair"
       }
     }
   }

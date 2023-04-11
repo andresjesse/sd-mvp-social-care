@@ -1,38 +1,44 @@
-import React, { ReactNode } from "react";
-import { useState } from "react";
+import React from "react";
+
 import {
-  Navbar,
-  AppShell,
-  Header,
   Anchor,
-  Text,
-  Image,
-  Group,
+  AppShell,
   Box,
-  useMantineTheme,
-  rem,
-  MediaQuery,
   Burger,
+  Divider,
+  Flex,
+  Header,
+  Image,
   Loader,
+  MediaQuery,
+  Navbar,
+  Title,
+  UnstyledButton,
 } from "@mantine/core";
+import { ReactNode, useState } from "react";
 
 import logo from "@/assets/images/logo-desenho.png";
+import useAuth from "@/hooks/useAuth";
+import i18n from "@/lang";
 import {
-  faIdCard,
-  faUserCircle,
-  faSignOut,
+  faCircleUser,
   faHome,
+  faIdCard,
+  faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import i18n from "@/lang";
-import useAuth from "@/hooks/useAuth";
+import useStyles from "./styles";
 
 interface AppLayoutProps {
   children: ReactNode;
+  navbarLinkActive?: string;
 }
 
-export default function AppLayout({ children }: AppLayoutProps) {
-  const theme = useMantineTheme();
+export default function AppLayout({
+  children,
+  navbarLinkActive,
+}: AppLayoutProps) {
+  const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
   const { user, loading, logout } = useAuth();
 
@@ -42,113 +48,15 @@ export default function AppLayout({ children }: AppLayoutProps) {
     <AppShell
       padding="md"
       navbarOffsetBreakpoint="md"
-      navbar={
-        <Navbar
-          hiddenBreakpoint="md"
-          hidden={!opened}
-          width={{ base: 300 }}
-          height="auto"
-          p="xs"
-          style={{
-            backgroundColor: "#797993",
-          }}
-        >
-          <Navbar.Section grow>
-            <Anchor
-              href="#"
-              color="white"
-              fz="lg"
-              underline={false}
-              sx={{ "&:hover": { color: "#b9b9b9" } }}
-            >
-              <Text ml="sm" mb="sm">
-                <FontAwesomeIcon
-                  icon={faHome}
-                  style={{ marginRight: "15px" }}
-                />
-                {i18n.t("layout.navbar.home")}
-              </Text>
-            </Anchor>
-
-            <Anchor
-              href="#"
-              color="white"
-              fz="lg"
-              underline={false}
-              sx={{ "&:hover": { color: "#b9b9b9" } }}
-            >
-              <Text ml="sm" mb="sm">
-                <FontAwesomeIcon
-                  icon={faIdCard}
-                  style={{ marginRight: "15px" }}
-                />
-                {i18n.t("layout.navbar.subjects")}
-              </Text>
-            </Anchor>
-          </Navbar.Section>
-
-          <Navbar.Section>
-            <Box
-              sx={{
-                paddingRight: "35px",
-                paddingLeft: "10px",
-                paddingTop: theme.spacing.sm,
-                borderTop: `${rem(1)} solid ${theme.colors.gray[2]}`,
-              }}
-            >
-              <Group>
-                <FontAwesomeIcon
-                  icon={faUserCircle}
-                  style={{ fontSize: "30px", color: "white" }}
-                />
-                <Box sx={{ flex: 1 }}>
-                  <Text color="white" size="md">
-                    {user?.email}
-                  </Text>
-
-                  <Anchor
-                    href="#"
-                    color="white"
-                    fz="lg"
-                    underline={false}
-                    sx={{ "&:hover": { color: "#b9b9b9" } }}
-                    onClick={() => logout()}
-                  >
-                    <FontAwesomeIcon
-                      style={{
-                        fontSize: "12px",
-                        marginRight: "5px",
-                        marginTop: "10px",
-                      }}
-                      icon={faSignOut}
-                    />
-                    Sair
-                  </Anchor>
-                </Box>
-              </Group>
-            </Box>
-          </Navbar.Section>
-        </Navbar>
-      }
       header={
-        <Header
-          height={65}
-          px="md"
-          style={{
-            backgroundColor: "#797993",
-            paddingTop: "0px !important",
-            paddingBottom: "0px !important",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            <Image maw={63} src={logo} alt="logo" w="63" />
+        <Header height={65} px="md" pt={0} pb={0} className={classes.header}>
+          <Flex justify="space-between" align="center" h="100%">
+            <Flex align="center">
+              <Image maw={63} src={logo} alt="logo" w="63" mr="lg" />
+              <Title c="white" fz="lg">
+                Social Care
+              </Title>
+            </Flex>
 
             <MediaQuery largerThan="md" styles={{ display: "none" }}>
               <Burger
@@ -158,8 +66,60 @@ export default function AppLayout({ children }: AppLayoutProps) {
                 color="white"
               />
             </MediaQuery>
-          </div>
+          </Flex>
         </Header>
+      }
+      navbar={
+        <Navbar
+          hiddenBreakpoint="md"
+          hidden={!opened}
+          width={{ base: 300 }}
+          height="auto"
+          p="xs"
+          className={classes.navbar}
+        >
+          <Navbar.Section grow>
+            <Anchor
+              href="#"
+              underline={false}
+              className={cx(classes.navbarLink, {
+                [classes.navbarLinkActive]: navbarLinkActive === "home",
+              })}
+            >
+              <FontAwesomeIcon icon={faHome} />
+              {i18n.t("layout.navbar.home")}
+            </Anchor>
+
+            <Anchor
+              href="#"
+              underline={false}
+              className={cx(classes.navbarLink, {
+                [classes.navbarLinkActive]: navbarLinkActive === "subjects",
+              })}
+            >
+              <FontAwesomeIcon icon={faIdCard} />
+              {i18n.t("layout.navbar.subjects")}
+            </Anchor>
+          </Navbar.Section>
+
+          <Divider />
+
+          <Navbar.Section>
+            <Box className={classes.navbarLink}>
+              <FontAwesomeIcon icon={faCircleUser} />
+              {user?.email}
+            </Box>
+
+            <UnstyledButton
+              className={classes.navbarLink}
+              w="100%"
+              onClick={() => logout()}
+            >
+              <FontAwesomeIcon icon={faSignOut} />
+              {i18n.t("layout.navbar.logout")}
+            </UnstyledButton>
+          </Navbar.Section>
+        </Navbar>
       }
     >
       {children}
