@@ -47,9 +47,6 @@ const useStyles = createStyles((theme) => ({
           .background!,
         0.15
       ),
-      // [`& .${getStylesRef("icon")}`]: {
-      //   opacity: 0.9,
-      // },
     },
   },
 }));

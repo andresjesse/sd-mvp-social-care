@@ -3,6 +3,7 @@ import React from "react";
 import {
   Anchor,
   AppShell,
+  Box,
   Burger,
   Divider,
   Flex,
@@ -12,6 +13,7 @@ import {
   MediaQuery,
   Navbar,
   Title,
+  UnstyledButton,
 } from "@mantine/core";
 import { ReactNode, useState } from "react";
 
@@ -103,20 +105,19 @@ export default function AppLayout({
           <Divider />
 
           <Navbar.Section>
-            <Anchor href="#" underline={false} className={classes.navbarLink}>
+            <Box className={classes.navbarLink}>
               <FontAwesomeIcon icon={faCircleUser} />
               {user?.email}
-            </Anchor>
+            </Box>
 
-            <Anchor
-              href="#"
-              underline={false}
+            <UnstyledButton
               className={classes.navbarLink}
+              w="100%"
               onClick={() => logout()}
             >
               <FontAwesomeIcon icon={faSignOut} />
               {i18n.t("layout.navbar.logout")}
-            </Anchor>
+            </UnstyledButton>
           </Navbar.Section>
         </Navbar>
       }
