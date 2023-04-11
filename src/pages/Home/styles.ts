@@ -55,6 +55,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "end",
     padding: "15px",
     paddingRight: "30px",
+    paddingBottom: 0,
 
     [theme.fn.smallerThan("md")]: {
       paddingRight: "15px",
