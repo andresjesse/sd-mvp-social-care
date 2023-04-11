@@ -14,6 +14,7 @@ import {
   MediaQuery,
   Burger,
   Loader,
+  Flex,
 } from "@mantine/core";
 
 import logo from "@/assets/images/logo-desenho.png";
@@ -38,10 +39,61 @@ export default function AppLayout({ children }: AppLayoutProps) {
 
   if (loading) return <Loader variant="dots" />;
 
+  const linkSx = {
+    "&:hover": {
+      backgroundColor: theme.fn.lighten(
+        theme.fn.variant({
+          variant: "filled",
+          color: theme.primaryColor,
+        }).background!,
+        0.1
+      ),
+    },
+  };
+
   return (
     <AppShell
       padding="md"
       navbarOffsetBreakpoint="md"
+      header={
+        <Header
+          height={65}
+          px="md"
+          pt={0}
+          pb={0}
+          style={{
+            // backgroundColor: "#797993",
+            backgroundColor: theme.fn.variant({
+              variant: "filled",
+              color: theme.primaryColor,
+            }).background,
+            // paddingTop: "0px !important",
+            // paddingBottom: "0px !important",
+          }}
+        >
+          {/* <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "100%",
+            }}
+          > */}
+          <Flex justify="space-between" align="center" h="100%">
+            <Image maw={63} src={logo} alt="logo" w="63" />
+
+            <MediaQuery largerThan="md" styles={{ display: "none" }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color="white"
+              />
+            </MediaQuery>
+            {/* </div> */}
+          </Flex>
+        </Header>
+      }
       navbar={
         <Navbar
           hiddenBreakpoint="md"
@@ -50,7 +102,10 @@ export default function AppLayout({ children }: AppLayoutProps) {
           height="auto"
           p="xs"
           style={{
-            backgroundColor: "#797993",
+            backgroundColor: theme.fn.variant({
+              variant: "filled",
+              color: theme.primaryColor,
+            }).background,
           }}
         >
           <Navbar.Section grow>
@@ -59,7 +114,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
               color="white"
               fz="lg"
               underline={false}
-              sx={{ "&:hover": { color: "#b9b9b9" } }}
+              sx={linkSx}
             >
               <Text ml="sm" mb="sm">
                 <FontAwesomeIcon
@@ -75,7 +130,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
               color="white"
               fz="lg"
               underline={false}
-              sx={{ "&:hover": { color: "#b9b9b9" } }}
+              sx={linkSx}
             >
               <Text ml="sm" mb="sm">
                 <FontAwesomeIcon
@@ -111,7 +166,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                     color="white"
                     fz="lg"
                     underline={false}
-                    sx={{ "&:hover": { color: "#b9b9b9" } }}
+                    sx={linkSx}
                     onClick={() => logout()}
                   >
                     <FontAwesomeIcon
@@ -122,44 +177,13 @@ export default function AppLayout({ children }: AppLayoutProps) {
                       }}
                       icon={faSignOut}
                     />
-                    Sair
+                    {i18n.t("layout.navbar.logout")}
                   </Anchor>
                 </Box>
               </Group>
             </Box>
           </Navbar.Section>
         </Navbar>
-      }
-      header={
-        <Header
-          height={65}
-          px="md"
-          style={{
-            backgroundColor: "#797993",
-            paddingTop: "0px !important",
-            paddingBottom: "0px !important",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            <Image maw={63} src={logo} alt="logo" w="63" />
-
-            <MediaQuery largerThan="md" styles={{ display: "none" }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color="white"
-              />
-            </MediaQuery>
-          </div>
-        </Header>
       }
     >
       {children}
