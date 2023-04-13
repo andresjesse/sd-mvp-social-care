@@ -17,7 +17,6 @@ import {
 } from "@mantine/core";
 import { ReactNode, useState } from "react";
 
-import logo from "@/assets/images/logo-desenho.png";
 import useAuth from "@/hooks/useAuth";
 import i18n from "@/lang";
 import {
@@ -49,11 +48,17 @@ export default function AppLayout({
       padding="md"
       navbarOffsetBreakpoint="md"
       header={
-        <Header height={65} px="md" pt={0} pb={0} className={classes.header}>
+        <Header height={65} px="md" pt={0} pb={0}>
           <Flex justify="space-between" align="center" h="100%">
             <Flex align="center">
-              <Image maw={63} src={logo} alt="logo" w="63" mr="lg" />
-              <Title c="white" fz="lg">
+              <Image
+                maw={63}
+                src="/images/logo-black.png"
+                alt="logo"
+                w="63"
+                mr="lg"
+              />
+              <Title fz={28} className={classes.headerTitle}>
                 Social Care
               </Title>
             </Flex>
@@ -63,7 +68,6 @@ export default function AppLayout({
                 opened={opened}
                 onClick={() => setOpened((o) => !o)}
                 size="sm"
-                color="white"
               />
             </MediaQuery>
           </Flex>
@@ -76,7 +80,6 @@ export default function AppLayout({
           width={{ base: 300 }}
           height="auto"
           p="xs"
-          className={classes.navbar}
         >
           <Navbar.Section grow>
             <Anchor
@@ -121,6 +124,11 @@ export default function AppLayout({
           </Navbar.Section>
         </Navbar>
       }
+      styles={(theme) => ({
+        main: {
+          backgroundColor: theme.colors.gray[0],
+        },
+      })}
     >
       {children}
     </AppShell>
