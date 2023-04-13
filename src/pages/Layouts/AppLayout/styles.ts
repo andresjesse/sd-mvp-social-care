@@ -1,11 +1,8 @@
 import { createStyles } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
-  header: {
-    backgroundColor: theme.fn.variant({
-      variant: "filled",
-      color: theme.primaryColor,
-    }).background,
+  headerTitle: {
+    fontFamily: "Dancing Script, cursive",
   },
 
   navbar: {
