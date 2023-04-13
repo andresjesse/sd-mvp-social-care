@@ -5,7 +5,6 @@ const theme: MantineThemeOverride = {
   primaryColor: "teal",
   defaultRadius: 8,
   fontFamily: "Roboto",
-  // primaryShade: 7,
 };
 
 export default theme;
