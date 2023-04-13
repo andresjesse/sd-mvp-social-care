@@ -124,6 +124,11 @@ export default function AppLayout({
           </Navbar.Section>
         </Navbar>
       }
+      styles={(theme) => ({
+        main: {
+          backgroundColor: theme.colors.gray[0],
+        },
+      })}
     >
       {children}
     </AppShell>
