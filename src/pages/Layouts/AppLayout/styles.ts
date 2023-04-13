@@ -5,13 +5,6 @@ const useStyles = createStyles((theme) => ({
     fontFamily: "Dancing Script, cursive",
   },
 
-  navbar: {
-    backgroundColor: theme.fn.variant({
-      variant: "filled",
-      color: theme.primaryColor,
-    }).background,
-  },
-
   navbarLink: {
     display: "flex",
     alignItems: "center",
@@ -19,7 +12,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: theme.fontSizes.md,
     padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     fontWeight: 400,
-    color: theme.white,
+    color: theme.colors.gray[7],
     borderRadius: theme.defaultRadius,
 
     "&:hover": {
@@ -30,8 +23,9 @@ const useStyles = createStyles((theme) => ({
           color: theme.primaryColor,
         }).background!,
         /* eslint-enable */
-        0.1
+        0.9
       ),
+      color: theme.black,
     },
 
     "svg:first-of-type": {
@@ -46,8 +40,9 @@ const useStyles = createStyles((theme) => ({
         theme.fn.variant({ variant: "filled", color: theme.primaryColor })
           .background!,
         /* eslint-enable */
-        0.15
+        0.8
       ),
+      color: theme.black,
     },
   },
 }));

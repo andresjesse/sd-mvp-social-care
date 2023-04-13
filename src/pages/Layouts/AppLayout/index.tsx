@@ -80,7 +80,6 @@ export default function AppLayout({
           width={{ base: 300 }}
           height="auto"
           p="xs"
-          className={classes.navbar}
         >
           <Navbar.Section grow>
             <Anchor
