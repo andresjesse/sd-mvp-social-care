@@ -1,10 +1,13 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import ProtectedOutlet from "./_ProtectedOutlet";
 
 import Home from "@/pages/Home/index.page";
 import Login from "@/pages/Login/index.page";
 import Admin from "@/pages/Admin/index.page";
+import AdminSocialServicesPage from "@/pages/Admin/Subjects/[id]/SocialServices/index.page";
+import AdminSocialServicesCreatePage from "@/pages/Admin/Subjects/[id]/SocialServices/Create/index.page";
+import AdminSocialServicesShowPage from "@/pages/Admin/Subjects/[id]/SocialServices/[id]/index.page";
 
 const router = createBrowserRouter([
   {
@@ -16,11 +19,60 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
+    path: "/admin",
     element: <ProtectedOutlet />,
     children: [
       {
-        path: "/admin",
+        index: true,
         element: <Admin />,
+      },
+      {
+        path: "subjects",
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <div>Subjects Index</div>,
+          },
+          {
+            path: "create",
+            element: <div>Subjects CREATE</div>,
+          },
+          {
+            path: ":subjectId",
+            element: <Outlet />,
+            children: [
+              {
+                index: true,
+                element: <div>Subject ID + LIST Social Services</div>,
+              },
+              {
+                path: "social-services",
+                element: <Outlet />,
+                children: [
+                  {
+                    index: true,
+                    element: <AdminSocialServicesPage />,
+                  },
+                  {
+                    path: "create",
+                    element: <AdminSocialServicesCreatePage />,
+                  },
+                  {
+                    path: ":socialserviceId",
+                    element: <Outlet />,
+                    children: [
+                      {
+                        index: true,
+                        element: <AdminSocialServicesShowPage />,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
     ],
   },
