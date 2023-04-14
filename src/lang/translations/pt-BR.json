@@ -128,7 +128,25 @@
         }
       }
     },
-
-    "create": "Criar"
+    "create": "Criar",
+    "forms": {
+      "create": "Cadastrar",
+      "date_and_time": "Data e hora",
+      "file_upload": "Upload de arquivo",
+      "asterisk_info": "Campos com asteriscos * são obrigatórios"
+    },
+    "social_service_create_page": {
+      "title": "Cadastrar antendimento",
+      "form": {
+        "origin": "Origem",
+        "origin_internal": "Interna",
+        "origin_external": "Externa",
+        "demands": "Demandas",
+        "other": "Outra",
+        "other_placeholder": "outra...",
+        "forward": "Encaminhamento",
+        "forward_placeholder": "encaminhamento..."
+      }
+    }
   }
 }
