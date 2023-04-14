@@ -21,6 +21,25 @@
       "title": "Olá, seja bem vindo ao MVP Social Care!",
       "subtitle": "Um sistema feito para agilizar o seu trabalho.",
       "content": "O atendimento social consiste em muitas informações a serem consideradas, como também muitas etapas para executar. Pensado no dia a dia de trabalho, o sistema surgiu para ajudar as agências sociais a organizar seus atendimentos aos clientes."
+    },
+    "forms": {
+      "create": "Cadastrar",
+      "date_and_time": "Data e hora",
+      "file_upload": "Upload de arquivo",
+      "asterisk_info": "Campos com asteriscos * são obrigatórios"
+    },
+    "social_service_create_page": {
+      "title": "Cadastrar antendimento",
+      "form": {
+        "origin": "Origem",
+        "origin_internal": "Interna",
+        "origin_external": "Externa",
+        "demands": "Demandas",
+        "other": "Outra",
+        "other_placeholder": "outra...",
+        "forward": "Encaminhamento",
+        "forward_placeholder": "encaminhamento..."
+      }
     }
   }
 }
