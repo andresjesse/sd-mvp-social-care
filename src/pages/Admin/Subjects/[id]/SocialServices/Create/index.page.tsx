@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppLayout from "@/pages/Layouts/AppLayout";
 
 import {
@@ -21,6 +21,13 @@ import { useForm, hasLength } from "@mantine/form";
 import { DateTimePicker } from "@mantine/dates";
 
 export default function AdminSocialServicesCreatePage() {
+  const demands = [
+    { id: 1, value: "demand1" },
+    { id: 2, value: "demand2" },
+  ];
+
+  const [otherDemandChecked, setOtherDemandChecked] = useState(false);
+
   const form = useForm({
     initialValues: {
       name: "",
@@ -41,14 +48,14 @@ export default function AdminSocialServicesCreatePage() {
       <Flex justify="center">
         <Box w="100vmin" mx="auto">
           <Title>Create</Title>
-          <Space h="xl" />
+          <Space h="sm" />
           <Card shadow="sm" padding="lg" radius="md" withBorder>
             <form onSubmit={form.onSubmit(() => handleError)}>
               <Group position="apart">
                 <Text>Subject: subject</Text>
                 <Text>Social-worker: user</Text>
               </Group>
-              <Space h="xl" />
+              <Space h="sm" />
               <Divider
                 my="xs"
                 label="Date and time"
@@ -63,7 +70,7 @@ export default function AdminSocialServicesCreatePage() {
                 mx="auto"
                 withAsterisk
               />
-              <Space h="xl" />
+              <Space h="sm" />
               <Divider
                 my="xs"
                 label="Origin"
@@ -76,26 +83,31 @@ export default function AdminSocialServicesCreatePage() {
                   <Radio value="ex" label="external" />
                 </Group>
               </Radio.Group>
-              <Space h="xl" />
               <Divider
                 my="xs"
                 label="Demands"
                 labelPosition="center"
                 variant="dashed"
               />
-              <Checkbox value="demand" label="demand" />
-              <Space h="xl" />
-              <Checkbox value="demand" label="demand" />
-              <Space h="xl" />
-              <Checkbox value="otherDemandCheck" label="otherDemandCheck" />
-              <Space h="xl" />
+              {demands.map((demand) => (
+                <div key={demand.id}>
+                  <Checkbox value={demand.value} label={demand.value} />
+                  <Space h="sm" />
+                </div>
+              ))}
+              <Checkbox
+                value="Other"
+                label="Other"
+                onChange={() => setOtherDemandChecked(!otherDemandChecked)}
+              />
+              <Space h="sm" />
               <TextInput
                 withAsterisk
                 placeholder="other..."
-                disabled
+                disabled={!otherDemandChecked}
                 {...form.getInputProps("otherDemand")}
               />
-              <Space h="xl" />
+              <Space h="sm" />
               <Divider
                 my="xs"
                 label="Referrals"
@@ -108,7 +120,7 @@ export default function AdminSocialServicesCreatePage() {
                 minRows={2}
                 maxRows={10}
               />
-              <Space h="xl" />
+              <Space h="sm" />
               <Group mt="md">
                 <Button type="submit">Create</Button>
               </Group>
