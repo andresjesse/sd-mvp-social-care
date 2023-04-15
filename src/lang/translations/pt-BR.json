@@ -15,6 +15,13 @@
         "relative_name_empty_error": "O campo 'Nome da mãe (ou parente/conhecido próximo)' é obrigatório!",
         "relative_relation_empty_error": "O campo 'Grau de parentesco' é obrigatório!",
         "other_chemical_dependency_empty_error": "O campo de texto em depêndencias é obrigatório se a opção 'outro' está selecionada!"
+      },
+      "social_service_create_page": {
+        "title": "Ops!",
+        "date_empty_error": "Selecionar uma data é obrigatório!",
+        "origin_empty_error": "O campo origem é obrigatório!",
+        "demands_empty_error": "Selecione pelo menos uma demanda!",
+        "other_demand_min_len_error": "Digite pelo menos 6 caracteres em outra demanda!"
       }
     },
     "layout": {
@@ -142,8 +149,8 @@
         "origin_internal": "Interna",
         "origin_external": "Externa",
         "demands": "Demandas",
-        "other": "Outra",
-        "other_placeholder": "outra...",
+        "other_demand": "Outra",
+        "other_demand_placeholder": "outra...",
         "forward": "Encaminhamento",
         "forward_placeholder": "encaminhamento..."
       }

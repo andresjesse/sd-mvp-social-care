@@ -20,21 +20,22 @@ import {
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
-import { useForm, isNotEmpty } from "@mantine/form";
+import { useForm, isNotEmpty, hasLength } from "@mantine/form";
 import { DateTimePicker } from "@mantine/dates";
 import i18n from "@/lang";
 
 export default function AdminSocialServicesCreatePage() {
+  //fetch demands
   const demands = [
-    { id: 1, value: "Demanda 1" },
-    { id: 2, value: "Demanda 2" },
+    { id: "1", value: "Demanda 1" },
+    { id: "2", value: "Demanda 2" },
   ];
 
   const [otherDemandChecked, setOtherDemandChecked] = useState(false);
+  const [otherDemand, setOtherDemand] = useState("");
 
   const [file, setFile] = useState<File | null>(null);
   const resetRef = useRef<() => void>(null);
-
   const clearFile = () => {
     setFile(null);
     resetRef.current?.();
@@ -42,18 +43,69 @@ export default function AdminSocialServicesCreatePage() {
 
   const form = useForm({
     initialValues: {
+      date: new Date(),
       origin: "",
+      demands: [{ id: "", value: "" }],
+      otherDemand: "",
+      forward: "",
     },
     validate: {
+      date: isNotEmpty(),
       origin: isNotEmpty(),
+      demands: hasLength({ min: otherDemand.length > 0 ? 0 : 2 }),
+      otherDemand: hasLength({ min: otherDemand.length > 0 ? 6 : 0 }),
     },
   });
 
+  const checkDemand = (id: string, value: string) => {
+    const index = form.values.demands.map((demand) => demand.id).indexOf(id);
+    if (index > 0)
+      form.values.demands = form.values.demands.filter(
+        (demand) => !demand.id.includes(id)
+      );
+    else {
+      const demand = {
+        id: id,
+        value: value,
+      };
+      form.values.demands.push(demand);
+    }
+  };
+
   const handleError = (errors: typeof form.errors) => {
+    if (errors.date) {
+      notifications.show({
+        title: i18n.t("notifications.social_service_create_page.title"),
+        message: i18n.t(
+          "notifications.social_service_create_page.date_empty_error"
+        ),
+        color: "red",
+      });
+    }
     if (errors.origin) {
       notifications.show({
-        title: i18n.t("validation error"),
-        message: i18n.t("..."),
+        title: i18n.t("notifications.social_service_create_page.title"),
+        message: i18n.t(
+          "notifications.social_service_create_page.origin_empty_error"
+        ),
+        color: "red",
+      });
+    }
+    if (errors.demands) {
+      notifications.show({
+        title: i18n.t("notifications.social_service_create_page.title"),
+        message: i18n.t(
+          "notifications.social_service_create_page.demands_empty_error"
+        ),
+        color: "red",
+      });
+    }
+    if (errors.otherDemand) {
+      notifications.show({
+        title: "demands",
+        message: i18n.t(
+          "notifications.social_service_create_page.other_demand_min_len_error"
+        ),
         color: "red",
       });
     }
@@ -66,7 +118,12 @@ export default function AdminSocialServicesCreatePage() {
           <Title>{i18n.t("social_service_create_page.title")}</Title>
           <Space h="sm" />
           <Card shadow="sm" padding="lg" radius="md" withBorder>
-            <form onSubmit={form.onSubmit(() => handleError)}>
+            <form
+              onSubmit={form.onSubmit(
+                () => console.log("submited"),
+                handleError
+              )}
+            >
               <Group position="apart">
                 <Chip checked>{"{Subject: subject}"}</Chip>
                 <Chip disabled>{"{Social_worker: user}"}</Chip>
@@ -83,11 +140,10 @@ export default function AdminSocialServicesCreatePage() {
               </Text>
               <DateTimePicker
                 clearable
-                defaultValue={new Date()}
                 dropdownType="modal"
                 maw={400}
                 mx="auto"
-                withAsterisk
+                {...form.getInputProps("date")}
               />
               <Space h="sm" />
               <Divider
@@ -128,25 +184,36 @@ export default function AdminSocialServicesCreatePage() {
               </Text>
               {demands.map((demand) => (
                 <div key={demand.id}>
-                  <Checkbox value={demand.value} label={demand.value} />
+                  <Checkbox
+                    value={demand.id}
+                    label={demand.value}
+                    onChange={() => {
+                      checkDemand(demand.id, demand.value);
+                    }}
+                  />
                   <Space h="xs" />
                 </div>
               ))}
               <Group>
                 <Checkbox
                   value="other"
-                  label={i18n.t("social_service_create_page.form.other")}
-                  onChange={() => setOtherDemandChecked(!otherDemandChecked)}
+                  label={i18n.t("social_service_create_page.form.other_demand")}
+                  onChange={() => {
+                    setOtherDemandChecked(!otherDemandChecked);
+                    setOtherDemand("");
+                    form.values.otherDemand = "";
+                  }}
                 />
 
                 <TextInput
                   withAsterisk={otherDemandChecked}
                   label=" "
                   placeholder={i18n.t(
-                    "social_service_create_page.form.other_placeholder"
+                    "social_service_create_page.form.other_demand_placeholder"
                   )}
                   disabled={!otherDemandChecked}
                   {...form.getInputProps("otherDemand")}
+                  onInput={() => setOtherDemand(form.values.otherDemand)}
                 />
               </Group>
               <Space h="sm" />
@@ -163,6 +230,7 @@ export default function AdminSocialServicesCreatePage() {
                 autosize
                 minRows={2}
                 maxRows={10}
+                {...form.getInputProps("forward")}
               />
               <Space h="sm" />
               <Divider my="xs" labelPosition="center" variant="dashed" />
