@@ -9,7 +9,6 @@ import {
   Flex,
   Header,
   Image,
-  Loader,
   MediaQuery,
   Navbar,
   Title,
@@ -27,6 +26,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useStyles from "./styles";
+import AppLoader from "../AppLoader";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -41,7 +41,7 @@ export default function AppLayout({
   const [opened, setOpened] = useState(false);
   const { user, loading, logout } = useAuth();
 
-  if (loading) return <Loader variant="dots" />;
+  if (loading) return <AppLoader />;
 
   return (
     <AppShell
