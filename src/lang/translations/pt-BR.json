@@ -8,6 +8,13 @@
         "auth_error": "Ocorreu um erro de autenticação!",
         "invalid_email_error": "O email fornecido é inválido!",
         "password_min_len_error": "A senha deve conter pelo menos 6 caracteres!"
+      },
+      "social_service_create_page": {
+        "title": "Ops!",
+        "date_empty_error": "Selecionar uma data é obrigatório!",
+        "origin_empty_error": "O campo origem é obrigatório!",
+        "demands_empty_error": "Selecione pelo menos uma demanda!",
+        "other_demand_min_len_error": "Digite pelo menos 6 caracteres em outra demanda!"
       }
     },
     "layout": {
@@ -35,8 +42,8 @@
         "origin_internal": "Interna",
         "origin_external": "Externa",
         "demands": "Demandas",
-        "other": "Outra",
-        "other_placeholder": "outra...",
+        "other_demand": "Outra",
+        "other_demand_placeholder": "outra...",
         "forward": "Encaminhamento",
         "forward_placeholder": "encaminhamento..."
       }
