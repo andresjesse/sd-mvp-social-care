@@ -102,7 +102,7 @@ export default function AdminSocialServicesCreatePage() {
     }
     if (errors.otherDemand) {
       notifications.show({
-        title: "demands",
+        title: i18n.t("notifications.social_service_create_page.title"),
         message: i18n.t(
           "notifications.social_service_create_page.other_demand_min_len_error"
         ),

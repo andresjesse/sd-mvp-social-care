@@ -20,17 +20,15 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    if (form.isValid()) {
-      try {
-        await login(form.values.email, form.values.password);
-        navigate("/admin");
-      } catch (e) {
-        notifications.show({
-          title: i18n.t("notifications.login.title"),
-          message: i18n.t("notifications.login.auth_error"),
-          color: "red",
-        });
-      }
+    try {
+      await login(form.values.email, form.values.password);
+      navigate("/admin");
+    } catch (e) {
+      notifications.show({
+        title: i18n.t("notifications.login.title"),
+        message: i18n.t("notifications.login.auth_error"),
+        color: "red",
+      });
     }
   };
 
