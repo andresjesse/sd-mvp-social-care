@@ -21,6 +21,55 @@
       "title": "Olá, seja bem vindo ao MVP Social Care!",
       "subtitle": "Um sistema feito para agilizar o seu trabalho.",
       "content": "O atendimento social consiste em muitas informações a serem consideradas, como também muitas etapas para executar. Pensado no dia a dia de trabalho, o sistema surgiu para ajudar as agências sociais a organizar seus atendimentos aos clientes."
-    }
+    },
+    "subjects": {
+      "form": {
+        "pick": "Escolha um",
+        "example": "Exemplo",
+        "create": "Criar novo sujeito",
+        "aditional_info": "Informações adicionais",
+
+        "fields": {
+          "name": "Nome",
+          "relative_name": "Nome da mãe (ou parente/conhecido próximo)",
+          "relative_relation": "Grau de parentesco",
+          "familiar_contact": "Contato familiar",
+          "birth_date": "Data de nascimento",
+          "cpf": "CPF",
+          "rg": "RG",
+          "born_place": "Localidade onde nasceu",
+          "origin_unit": "Unidade de origem (caso venha transferido)",
+          "destination_unit": "Unidade de destino (caso seja transferido)",
+          "phone": "Telefone",
+          "address": "Endereço",
+          "last_social_service_date": "Data do último atendimento",
+          "religion": "Religião",
+          "color": "Cor",
+          "address_state": "Estado",
+          "address_city": "Cidade",
+          "address_district": "Bairro",
+          "address_street": "Rua",
+          "address_number": "Número",
+          "income": "Faixa de renda",
+          "family_bond": "Vínculo familiar",
+          "active": "Ativo",
+          "fragile": "Fragilizado",
+          "chemical_dependency": "Dependência química",
+
+          "chemical_dependency_options": {
+            "alcohol": "Álcool",
+            "crack": "Crack",
+            "cocaine": "Cocaína",
+            "marihuana": "Maconha",
+            "other": "Outro"
+          },
+
+          "article_sentence": "Artigo da pena",
+          "condemnation_status": "Status de condenação"
+        }
+      }
+    },
+
+    "create": "Criar"
   }
 }
