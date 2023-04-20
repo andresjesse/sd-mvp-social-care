@@ -16,75 +16,66 @@ import {
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { hasLength, useForm } from "@mantine/form";
+import i18nEntriesToSelect from "@/helpers/i18nEntriesToSelect";
+import type { Subject } from "@/types/Subject";
 
 export default function AdminSubjectsCreatePage() {
-  const relativeRelationOptions = [
-    { value: "parents", label: "Mãe/Pai" },
-    { value: "uncles", label: "Tio(a)" },
-    { value: "second_degree_relative", label: "Parente próximo" },
-    { value: "friend", label: "Amigo(a)" },
-  ];
+  const relativeRelationOptions = i18nEntriesToSelect(
+    "subjects.form.fields.relative_relation_options"
+  );
 
-  const colorOptions = [
-    { value: "white", label: "Branco(a)" },
-    { value: "black", label: "Preto(a)" },
-    { value: "brown", label: "Pardo(a)" },
-    { value: "native", label: "Indígeno(a)" },
-    { value: "yellow", label: "Amarelo(a)" },
-  ];
+  const colorOptions = i18nEntriesToSelect(
+    "subjects.form.fields.skin_color_options"
+  );
 
   // Classe A: 2,8% (renda mensal domiciliar superior a R$ 22 mil)
   // Classe B: 13,2% (renda mensal domiciliar entre R$ 7,1 mil e R$ 22 mil)
   // Classe C: 33,3% (renda mensal domiciliar entre R$ 2,9 mil e R$ 7,1 mil)
   // Classes D/E: 50,7% (renda mensal domiciliar até R$ 2,9 mil)
   const incomeOptions = [
-    { value: "no_income", label: "Sem rendimento" },
-    { value: "until_2900", label: "Renda mensal domiciliar até R$ 2,9 mil" },
-    {
-      value: "between_2900_7100",
-      label: "Renda mensal domiciliar entre R$ 2,9 mil e R$ 7,1 mil",
-    },
-    {
-      value: "between_7100_22000",
-      label: "Renda mensal domiciliar entre R$ 7,1 mil e R$ 22 mil",
-    },
-    {
-      value: "more_than_22000",
-      label: "Renda mensal domiciliar superior a R$ 22 mil",
-    },
-  ];
+    i18n.t("subjects.form.fields.income_options.none"),
+    i18n.t("subjects.form.fields.income_options.up_to", { value: 2900 }),
+    i18n.t("subjects.form.fields.income_options.between", {
+      value1: 2900,
+      value2: 7100,
+    }),
+    i18n.t("subjects.form.fields.income_options.between", {
+      value1: 7100,
+      value2: 22000,
+    }),
+    i18n.t("subjects.form.fields.income_options.superior_to", { value: 22000 }),
+  ].map((label, index) => ({ value: index.toString(), label }));
 
-  const form = useForm({
+  const form = useForm<Subject>({
     initialValues: {
       name: "",
-      relative_name: "",
-      relative_relation: "parents",
-      birth_date: null,
+      relativeName: "",
+      relativeRelation: "parents",
+      birthDate: undefined,
       cpf: "",
       rg: "",
-      born_place: "",
-      origin_unit: "",
-      destination_unit: "",
-      contact_phone: "",
-      contact_address: "",
-      last_social_service_date: null,
+      bornPlace: "",
+      originUnit: "",
+      destinationUnit: "",
+      contactPhone: "",
+      contactAddress: "",
       religion: "",
-      color: "",
-      address_state: "",
-      address_city: "",
-      address_district: "",
-      address_street: "",
-      address_number: "",
+      skinColor: "",
+      addressState: "",
+      addressCity: "",
+      addressDistrict: "",
+      addressStreet: "",
+      addressNumber: "",
       income: "",
-      family_bond: null,
-      chemical_dependency: [],
-      article_sentence: "",
-      condemnation_status: "",
+      familyBond: "",
+      chemicalDependency: [],
+      articleSentence: "",
+      condemnationStatus: "",
     },
 
     validate: {
       name: hasLength({ min: 1 }),
-      relative_name: hasLength({ min: 1 }),
+      relativeName: hasLength({ min: 1 }),
     },
   });
 
@@ -104,11 +95,12 @@ export default function AdminSubjectsCreatePage() {
     //   form.values.chemical_dependency.splice(index, 1);
     // }
 
-    console.log("is", form.values.chemical_dependency, checked, fieldName);
+    console.log("is", form.values.chemicalDependency, checked, fieldName);
   };
 
-  const handleCreate = async () => {
-    //
+  const handleCreate = async (subject: Subject) => {
+    console.log("form");
+    console.log(subject);
   };
 
   return (
@@ -116,7 +108,7 @@ export default function AdminSubjectsCreatePage() {
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("subjects.form.create")}</Title>
 
-        <form onSubmit={form.onSubmit(() => handleCreate())}>
+        <form onSubmit={form.onSubmit((values) => handleCreate(values))}>
           <TextInput
             w="50%"
             mt="10px"
@@ -139,14 +131,14 @@ export default function AdminSubjectsCreatePage() {
               withAsterisk
               label={i18n.t("subjects.form.fields.relative_name")}
               placeholder={i18n.t("subjects.form.example")}
-              {...form.getInputProps("relative_name")}
+              {...form.getInputProps("relativeName")}
             />
 
             <Select
               label={i18n.t("subjects.form.fields.relative_relation")}
               placeholder={i18n.t("subjects.form.pick")}
               data={relativeRelationOptions}
-              {...form.getInputProps("relative_relation")}
+              {...form.getInputProps("relativeRelation")}
             />
           </Flex>
 
@@ -327,11 +319,15 @@ export default function AdminSubjectsCreatePage() {
             <Group mt="xs">
               <Radio
                 value="active"
-                label={i18n.t("subjects.form.fields.active")}
+                label={i18n.t(
+                  "subjects.form.fields.family_bond_options.active"
+                )}
               />
               <Radio
                 value="fragile"
-                label={i18n.t("subjects.form.fields.fragile")}
+                label={i18n.t(
+                  "subjects.form.fields.family_bond_options.fragile"
+                )}
               />
             </Group>
           </Radio.Group>
@@ -454,9 +450,9 @@ export default function AdminSubjectsCreatePage() {
             {...form.getInputProps("condemnation_status")}
           />
 
-          <Group mt="xl" position="right">
+          <Flex mt="xl" justify="flex-end">
             <Button type="submit">{i18n.t("create")}</Button>
-          </Group>
+          </Flex>
         </form>
       </Card>
     </AppLayout>
