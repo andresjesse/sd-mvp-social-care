@@ -27,8 +27,8 @@ import i18n from "@/lang";
 export default function AdminSocialServicesCreatePage() {
   //fetch demands
   const demands = [
-    { id: "1", value: "Demanda 1" },
-    { id: "2", value: "Demanda 2" },
+    { label: "Demanda 1", value: "Demanda 1" },
+    { label: "Demanda 2", value: "Demanda 2" },
   ];
 
   const [otherDemandChecked, setOtherDemandChecked] = useState(false);
@@ -45,32 +45,17 @@ export default function AdminSocialServicesCreatePage() {
     initialValues: {
       date: new Date(),
       origin: "",
-      demands: [{ id: "", value: "" }],
+      demands: [],
       otherDemand: "",
       forward: "",
     },
     validate: {
       date: isNotEmpty(),
       origin: isNotEmpty(),
-      demands: hasLength({ min: otherDemand.length > 0 ? 0 : 2 }),
+      demands: hasLength({ min: otherDemand.length > 0 ? 1 : 0 }),
       otherDemand: hasLength({ min: otherDemand.length > 0 ? 6 : 0 }),
     },
   });
-
-  const checkDemand = (id: string, value: string) => {
-    const index = form.values.demands.map((demand) => demand.id).indexOf(id);
-    if (index > 0)
-      form.values.demands = form.values.demands.filter(
-        (demand) => !demand.id.includes(id)
-      );
-    else {
-      const demand = {
-        id: id,
-        value: value,
-      };
-      form.values.demands.push(demand);
-    }
-  };
 
   const handleError = (errors: typeof form.errors) => {
     if (errors.date) {
@@ -120,7 +105,7 @@ export default function AdminSocialServicesCreatePage() {
           <Card shadow="sm" padding="lg" radius="md" withBorder>
             <form
               onSubmit={form.onSubmit(
-                () => console.log("submited"),
+                (values) => console.log(values),
                 handleError
               )}
             >
@@ -182,18 +167,14 @@ export default function AdminSocialServicesCreatePage() {
               <Text color="#fa5252" size="sm">
                 *
               </Text>
-              {demands.map((demand) => (
-                <div key={demand.id}>
-                  <Checkbox
-                    value={demand.id}
-                    label={demand.value}
-                    onChange={() => {
-                      checkDemand(demand.id, demand.value);
-                    }}
-                  />
-                  <Space h="xs" />
-                </div>
-              ))}
+              <Checkbox.Group {...form.getInputProps("demands")}>
+                {demands.map((demand, index) => (
+                  <div key={index}>
+                    <Checkbox value={demand.value} label={demand.label} />
+                    <Space h="xs" />
+                  </div>
+                ))}
+              </Checkbox.Group>
               <Group>
                 <Checkbox
                   value="other"
