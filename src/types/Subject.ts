@@ -20,6 +20,7 @@ export type Subject = {
   income?: string;
   familyBond?: string;
   chemicalDependency: string[];
+  otherChemicalDependency?: string;
   articleSentence?: string;
   condemnationStatus?: string;
   lastSocialServiceDate?: Date;
