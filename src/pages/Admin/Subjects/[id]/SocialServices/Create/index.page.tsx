@@ -52,7 +52,7 @@ export default function AdminSocialServicesCreatePage() {
     validate: {
       date: isNotEmpty(),
       origin: isNotEmpty(),
-      demands: hasLength({ min: otherDemand.length > 0 ? 1 : 0 }),
+      demands: hasLength({ min: otherDemand.length > 0 ? 0 : 1 }),
       otherDemand: hasLength({ min: otherDemand.length > 0 ? 6 : 0 }),
     },
   });
@@ -103,17 +103,18 @@ export default function AdminSocialServicesCreatePage() {
           <Title>{i18n.t("social_service_create_page.title")}</Title>
           <Space h="sm" />
           <Card shadow="sm" padding="lg" radius="md" withBorder>
+            <Group position="apart">
+              <Chip checked>{"{Subject: subject}"}</Chip>
+              <Chip disabled>{"{Social_worker: user}"}</Chip>
+            </Group>
+            <Space h="xl" />
+            <Text>{i18n.t("forms.asterisk_info")}</Text>
             <form
               onSubmit={form.onSubmit(
                 (values) => console.log(values),
                 handleError
               )}
             >
-              <Group position="apart">
-                <Chip checked>{"{Subject: subject}"}</Chip>
-                <Chip disabled>{"{Social_worker: user}"}</Chip>
-              </Group>
-              <Space h="sm" />
               <Divider
                 my="xs"
                 label={i18n.t("forms.date_and_time")}
@@ -237,10 +238,10 @@ export default function AdminSocialServicesCreatePage() {
               <Space h="xl" />
               <Group mt="md">
                 <Button type="submit">{i18n.t("forms.create")}</Button>
+                {/* <Button type="submit">{i18n.t("forms.return")}</Button> */}
               </Group>
             </form>
           </Card>
-          <Text>{i18n.t("forms.asterisk_info")}</Text>
         </Box>
       </Flex>
     </AppLayout>
