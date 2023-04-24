@@ -8,6 +8,13 @@
         "auth_error": "Ocorreu um erro de autenticação!",
         "invalid_email_error": "O email fornecido é inválido!",
         "password_min_len_error": "A senha deve conter pelo menos 6 caracteres!"
+      },
+      "subjects_create_page": {
+        "title": "Ops! 🤥",
+        "name_empty_error": "O campo 'Nome' é obrigatório!",
+        "relative_name_empty_error": "O campo 'Nome da mãe (ou parente/conhecido próximo)' é obrigatório!",
+        "relative_relation_empty_error": "O campo 'Grau de parentesco' é obrigatório!",
+        "other_chemical_dependency_empty_error": "O campo de texto em depêndencias é obrigatório se a opção 'outro' está selecionada!"
       }
     },
     "layout": {

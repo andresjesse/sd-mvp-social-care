@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import i18n from "@/lang";
 import AppLayout from "@/pages/Layouts/AppLayout";
 import {
@@ -15,9 +15,10 @@ import {
   Button,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
-import { hasLength, useForm } from "@mantine/form";
+import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import i18nEntriesToSelect from "@/helpers/i18nEntriesToSelect";
 import type { Subject } from "@/types/Subject";
+import { notifications } from "@mantine/notifications";
 
 export default function AdminSubjectsCreatePage() {
   const relativeRelationOptions = i18nEntriesToSelect(
@@ -53,11 +54,14 @@ export default function AdminSubjectsCreatePage() {
   //   "subjects.form.fields.chemical_dependency_options"
   // );
 
+  const [hasOtherChemicalDependency, sethasOtherChemicalDependency] =
+    useState(false);
+
   const form = useForm<Subject>({
     initialValues: {
       name: "",
       relativeName: "",
-      relativeRelation: "parents",
+      relativeRelation: "mother",
       birthDate: undefined,
       cpf: "",
       rg: "",
@@ -82,12 +86,67 @@ export default function AdminSubjectsCreatePage() {
     },
 
     validate: {
-      name: hasLength({ min: 1 }),
-      relativeName: hasLength({ min: 1 }),
+      name: isNotEmpty(
+        i18n.t("notifications.subjects_create_page.name_empty_error")
+      ),
+      relativeName: isNotEmpty(
+        i18n.t("notifications.subjects_create_page.relative_name_empty_error")
+      ),
+      relativeRelation: isNotEmpty(
+        i18n.t(
+          "notifications.subjects_create_page.relative_relation_empty_error"
+        )
+      ),
+      chemicalDependency: (value) => (
+        sethasOtherChemicalDependency(value.includes("other")), null
+      ),
+      otherChemicalDependency: hasLength(
+        {
+          min: hasOtherChemicalDependency ? 1 : 0,
+        },
+        i18n.t(
+          "notifications.subjects_create_page.other_chemical_dependency_empty_error"
+        )
+      ),
     },
   });
 
+  const handleError = (errors: typeof form.errors) => {
+    if (errors.name) {
+      notifications.show({
+        title: i18n.t("notifications.subjects_create_page.title"),
+        message: i18n.t("notifications.subjects_create_page.name_empty_error"),
+        color: "red",
+      });
+    } else if (errors.relativeName) {
+      notifications.show({
+        title: i18n.t("notifications.subjects_create_page.title"),
+        message: i18n.t(
+          "notifications.subjects_create_page.relative_name_empty_error"
+        ),
+        color: "red",
+      });
+    } else if (errors.relativeRelation) {
+      notifications.show({
+        title: i18n.t("notifications.subjects_create_page.title"),
+        message: i18n.t(
+          "notifications.subjects_create_page.relative_relation_empty_error"
+        ),
+        color: "red",
+      });
+    } else if (errors.otherChemicalDependency) {
+      notifications.show({
+        title: i18n.t("notifications.subjects_create_page.title"),
+        message: i18n.t(
+          "notifications.subjects_create_page.other_chemical_dependency_empty_error"
+        ),
+        color: "red",
+      });
+    }
+  };
+
   const handleCreate = async (subject: Subject) => {
+    console.log(hasOtherChemicalDependency);
     console.log("form");
     console.log(subject);
   };
@@ -97,7 +156,12 @@ export default function AdminSubjectsCreatePage() {
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("subjects.form.create")}</Title>
 
-        <form onSubmit={form.onSubmit((values) => handleCreate(values))}>
+        <form
+          onSubmit={form.onSubmit(
+            (values) => handleCreate(values),
+            handleError
+          )}
+        >
           <TextInput
             w="50%"
             mt="10px"
@@ -124,6 +188,7 @@ export default function AdminSubjectsCreatePage() {
             />
 
             <Select
+              withAsterisk
               label={i18n.t("subjects.form.fields.relative_relation")}
               placeholder={i18n.t("subjects.form.pick")}
               data={relativeRelationOptions}
