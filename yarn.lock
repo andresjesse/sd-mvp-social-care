@@ -2862,6 +2862,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-input-mask@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/react-input-mask/-/react-input-mask-3.0.2.tgz#60df645cdb2415c97a8f97316011eb3ede78dc1e"
+  integrity sha512-WTli3kUyvUqqaOLYG/so2pLqUvRb+n4qnx2He5klfqZDiQmRyD07jVIt/bco/1BrcErkPMtpOm+bHii4Oed6cQ==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^18.0.0":
   version "18.0.35"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.35.tgz#192061cb1044fe01f2d3a94272cd35dd50502741"
@@ -5932,6 +5939,11 @@ ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.4.tgz#a291c0c6178ff1b960befe47fcdec301674a6324"
   integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
+imask@^6.6.1-alpha.0:
+  version "6.6.1-alpha.0"
+  resolved "https://registry.yarnpkg.com/imask/-/imask-6.6.1-alpha.0.tgz#8f0da7666f1ea67bb14bc27285403d35c5f88faf"
+  integrity sha512-rObkITJGQtv5V7EDVcz0PN+YlLF/nqxNP98LI3vtiMSxhJv8jgj5UZMxyd+BueK9isZFdIDFmwm8GZBsgHLs5Q==
+
 immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
@@ -8591,6 +8603,14 @@ react-error-overlay@^6.0.11:
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
   integrity sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==
+
+react-imask@^6.6.1-alpha.0:
+  version "6.6.1-alpha.0"
+  resolved "https://registry.yarnpkg.com/react-imask/-/react-imask-6.6.1-alpha.0.tgz#d94835e50efacef3410aee8dc4edb7d2b10f274a"
+  integrity sha512-vZZ37bVg6WB7I3aqssOiyiO3ei86aUzBa4oIoXF8shqzS/8dv8ThmKXJ5lsq9CJhGBMG5M0Ehd8dPasOu3zItQ==
+  dependencies:
+    imask "^6.6.1-alpha.0"
+    prop-types "^15.8.1"
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"

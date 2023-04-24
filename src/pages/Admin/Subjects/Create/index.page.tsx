@@ -13,12 +13,14 @@ import {
   Checkbox,
   Text,
   Button,
+  Input,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import i18nEntriesToSelect from "@/helpers/i18nEntriesToSelect";
 import type { Subject } from "@/types/Subject";
 import { notifications } from "@mantine/notifications";
+import { IMaskInput } from "react-imask";
 
 export default function AdminSubjectsCreatePage() {
   const relativeRelationOptions = i18nEntriesToSelect(
@@ -49,10 +51,6 @@ export default function AdminSubjectsCreatePage() {
     value: entry[0],
     label: entry[1],
   }));
-
-  // const chemicalDependencyOptions = i18nEntriesToSelect(
-  //   "subjects.form.fields.chemical_dependency_options"
-  // );
 
   const [hasOtherChemicalDependency, sethasOtherChemicalDependency] =
     useState(false);
@@ -146,7 +144,6 @@ export default function AdminSubjectsCreatePage() {
   };
 
   const handleCreate = async (subject: Subject) => {
-    console.log(hasOtherChemicalDependency);
     console.log("form");
     console.log(subject);
   };
@@ -210,21 +207,31 @@ export default function AdminSubjectsCreatePage() {
             {...form.getInputProps("birthDate")}
           />
 
-          <TextInput
-            w="50%"
-            mt="5px"
+          <Input.Wrapper
             label={i18n.t("subjects.form.fields.cpf")}
-            placeholder="000.000.000-00"
-            {...form.getInputProps("cpf")}
-          />
-
-          <TextInput
             w="50%"
             mt="5px"
+          >
+            <Input
+              {...form.getInputProps("cpf")}
+              component={IMaskInput}
+              mask="000.000.000-00"
+              placeholder="000.000.000-00"
+            />
+          </Input.Wrapper>
+
+          <Input.Wrapper
             label={i18n.t("subjects.form.fields.rg")}
-            placeholder="000.000.000-00"
-            {...form.getInputProps("rg")}
-          />
+            w="50%"
+            mt="5px"
+          >
+            <Input
+              {...form.getInputProps("rg")}
+              component={IMaskInput}
+              mask="000.000.000-00"
+              placeholder="000.000.000-00"
+            />
+          </Input.Wrapper>
 
           <TextInput
             w="50%"
