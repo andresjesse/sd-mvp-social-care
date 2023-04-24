@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import i18n from "@/lang";
 import AppLayout from "@/pages/Layouts/AppLayout";
 import {
@@ -13,14 +13,28 @@ import {
   Checkbox,
   Text,
   Button,
+  Input,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
 import i18nEntriesToSelect from "@/helpers/i18nEntriesToSelect";
 import type { Subject } from "@/types/Subject";
 import { notifications } from "@mantine/notifications";
+import InputMask from "react-input-mask";
+import { useId } from "@mantine/hooks";
 
 export default function AdminSubjectsCreatePage() {
+  const id = useId();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (input) {
+      input.select();
+    }
+  }, []);
+
   const relativeRelationOptions = i18nEntriesToSelect(
     "subjects.form.fields.relative_relation_options"
   );
@@ -56,6 +70,8 @@ export default function AdminSubjectsCreatePage() {
 
   const [hasOtherChemicalDependency, sethasOtherChemicalDependency] =
     useState(false);
+
+  // const [cpf, setCpf] = useState("");
 
   const form = useForm<Subject>({
     initialValues: {
@@ -210,13 +226,32 @@ export default function AdminSubjectsCreatePage() {
             {...form.getInputProps("birthDate")}
           />
 
-          <TextInput
+          {/* <TextInput
             w="50%"
             mt="5px"
             label={i18n.t("subjects.form.fields.cpf")}
             placeholder="000.000.000-00"
             {...form.getInputProps("cpf")}
-          />
+          /> */}
+
+          <Input.Wrapper
+            ref={inputRef}
+            id={id}
+            label={i18n.t("subjects.form.fields.cpf")}
+            w="50%"
+            mt="5px"
+          >
+            {/* eslint-disable */}
+            <Input<any>
+              id={id}
+              ref={inputRef}
+              {...form.getInputProps("cpf")}
+              component={InputMask}
+              mask="000.000.000-00"
+              placeholder="000.000.000-00"
+            />
+            {/* eslint-enable */}
+          </Input.Wrapper>
 
           <TextInput
             w="50%"
