@@ -8,6 +8,13 @@
         "auth_error": "Ocorreu um erro de autenticação!",
         "invalid_email_error": "O email fornecido é inválido!",
         "password_min_len_error": "A senha deve conter pelo menos 6 caracteres!"
+      },
+      "subjects_create_page": {
+        "title": "Ops! 🤥",
+        "name_empty_error": "O campo 'Nome' é obrigatório!",
+        "relative_name_empty_error": "O campo 'Nome da mãe (ou parente/conhecido próximo)' é obrigatório!",
+        "relative_relation_empty_error": "O campo 'Grau de parentesco' é obrigatório!",
+        "other_chemical_dependency_empty_error": "O campo de texto em depêndencias é obrigatório se a opção 'outro' está selecionada!"
       }
     },
     "layout": {
@@ -21,6 +28,107 @@
       "title": "Olá, seja bem vindo ao MVP Social Care!",
       "subtitle": "Um sistema feito para agilizar o seu trabalho.",
       "content": "O atendimento social consiste em muitas informações a serem consideradas, como também muitas etapas para executar. Pensado no dia a dia de trabalho, o sistema surgiu para ajudar as agências sociais a organizar seus atendimentos aos clientes."
-    }
+    },
+    "subjects": {
+      "form": {
+        "pick": "Escolha um",
+        "example": "Exemplo",
+        "create": "Criar novo sujeito",
+        "aditional_info": "Informações adicionais",
+
+        "fields": {
+          "name": "Nome",
+          "relative_name": "Nome da mãe (ou parente/conhecido próximo)",
+          "relative_relation": "Grau de parentesco",
+          "relative_relation_options": {
+            "mother": "Mãe",
+            "father": "Pai",
+            "near_relative": "Parente próximo(a)",
+            "friend": "Amigo(a)"
+          },
+          "familiar_contact": "Contato familiar",
+          "birth_date": "Data de nascimento",
+          "cpf": "CPF",
+          "rg": "RG",
+          "born_place": "Localidade onde nasceu",
+          "origin_unit": "Unidade de origem (caso venha transferido)",
+          "destination_unit": "Unidade de destino (caso seja transferido)",
+          "phone": "Telefone",
+          "address": "Endereço",
+          "last_social_service_date": "Data do último atendimento",
+          "religion": "Religião",
+          "skin_color": "Cor",
+          "skin_color_options": {
+            "white": "Branco(a)",
+            "black": "Preto(a)",
+            "brown": "Pardo(a)",
+            "native": "Indígeno(a)",
+            "yellow": "Amarelo(a)"
+          },
+          "address_state": "Estado",
+          "address_state_options": {
+            "ac": "Acre",
+            "al": "Alagoas",
+            "ap": "Amapá",
+            "am": "Amazonas",
+            "ba": "Bahia",
+            "ce": "Ceará",
+            "df": "Distrito Federal",
+            "es": "Espírito Santo",
+            "go": "Goiás",
+            "ma": "Maranhão",
+            "mt": "Mato Grosso",
+            "ms": "Mato Grosso do Sul",
+            "mg": "Minas Gerais",
+            "pa": "Pará",
+            "pb": "Paraíba",
+            "pr": "Paraná",
+            "pe": "Pernambuco",
+            "pi": "Piauí",
+            "rj": "Rio de Janeiro",
+            "rn": "Rio Grande do Norte",
+            "rs": "Rio Grande do Sul",
+            "ro": "Rondônia",
+            "rr": "Roraima",
+            "sc": "Santa Catarina",
+            "sp": "São Paulo",
+            "se": "Sergipe",
+            "to": "Tocantins"
+          },
+          "address_city": "Cidade",
+          "address_district": "Bairro",
+          "address_street": "Rua",
+          "address_number": "Número",
+          "income": "Faixa de renda",
+          "income_options": {
+            "none": "Sem rendimento",
+            "up_to": "Até R$ %{value}",
+            "between": "De R$ %{value1} até R$ %{value2}",
+            "superior_to": "Superior a R$ %{value}"
+          },
+          "family_bond": "Vínculo familiar",
+          "family_bond_options": {
+            "active": "Ativo",
+            "fragile": "Fragilizado"
+          },
+          "chemical_dependency": "Dependência química",
+          "chemical_dependency_options": {
+            "alcohol": "Álcool",
+            "crack": "Crack",
+            "cocaine": "Cocaína",
+            "marihuana": "Maconha",
+            "other": "Outro"
+          },
+          "chemical_dependency_other_placeholder": "Descreva a(s) outra(s) dependência(s) aqui",
+          "article_sentence": "Artigo da pena",
+          "condemnation_status": "Status de condenação",
+          "demographic_information": "Informações demográficas",
+          "required_information": "Informações obrigatórias",
+          "other": "Outros"
+        }
+      }
+    },
+
+    "create": "Criar"
   }
 }
