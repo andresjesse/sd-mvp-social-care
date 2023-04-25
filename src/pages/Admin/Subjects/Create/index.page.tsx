@@ -154,9 +154,11 @@ export default function AdminSubjectsCreatePage() {
   };
 
   return (
-    <AppLayout navbarLinkActive="home">
+    <AppLayout navbarLinkActive="subjects">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("subjects.form.create")}</Title>
+
+        <Input.Label mt="md">{i18n.t("forms.asterisk_info")}</Input.Label>
 
         <form
           onSubmit={form.onSubmit(
@@ -167,6 +169,7 @@ export default function AdminSubjectsCreatePage() {
           <Title mt="md" order={2}>
             {i18n.t("subjects.form.fields.required_information")}
           </Title>
+
           <TextInput
             mt="md"
             withAsterisk
