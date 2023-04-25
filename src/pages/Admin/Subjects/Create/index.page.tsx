@@ -13,6 +13,7 @@ import {
   Button,
   Input,
   SimpleGrid,
+  MediaQuery,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
@@ -20,7 +21,7 @@ import i18nEntriesToSelect from "@/helpers/i18nEntriesToSelect";
 import type { Subject } from "@/types/Subject";
 import { notifications } from "@mantine/notifications";
 import { IMaskInput } from "react-imask";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export default function AdminSubjectsCreatePage() {
   const relativeRelationOptions = i18nEntriesToSelect(
@@ -198,7 +199,7 @@ export default function AdminSubjectsCreatePage() {
             maxDate={new Date()}
             withAsterisk
             dateParser={(input: string) => {
-              return moment(input, "DD/MM/YYYY").toDate();
+              return dayjs(input, "DD/MM/YYYY").toDate();
             }}
             valueFormat="DD/MM/YYYY"
             label={i18n.t("subjects.form.fields.birth_date")}
@@ -404,9 +405,11 @@ export default function AdminSubjectsCreatePage() {
           />
 
           <Flex mt="xl" justify="flex-end">
-            <Button w={{ sm: "100%", md: "30%" }} type="submit">
-              {i18n.t("create")}
-            </Button>
+            <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
+              <Button w="100%" type="submit">
+                {i18n.t("create")}
+              </Button>
+            </MediaQuery>
           </Flex>
         </form>
       </Card>
