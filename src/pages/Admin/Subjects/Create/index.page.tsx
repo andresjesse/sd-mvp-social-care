@@ -7,13 +7,12 @@ import {
   Select,
   TextInput,
   Title,
-  Divider,
   Radio,
   Group,
   Checkbox,
-  Text,
   Button,
   Input,
+  SimpleGrid,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
@@ -30,6 +29,10 @@ export default function AdminSubjectsCreatePage() {
 
   const colorOptions = i18nEntriesToSelect(
     "subjects.form.fields.skin_color_options"
+  );
+
+  const stateOptions = i18nEntriesToSelect(
+    "subjects.form.fields.address_state_options"
   );
 
   const incomeOptions = [
@@ -160,25 +163,22 @@ export default function AdminSubjectsCreatePage() {
             handleError
           )}
         >
+          <Title mt="md" order={2}>
+            {i18n.t("subjects.form.fields.required_information")}
+          </Title>
           <TextInput
-            w="50%"
-            mt="10px"
+            mt="md"
             withAsterisk
             label={i18n.t("subjects.form.fields.name")}
             placeholder={i18n.t("subjects.form.example")}
             {...form.getInputProps("name")}
           />
-
-          <Flex
-            mt="5px"
-            gap="md"
-            justify="flex-start"
-            align="flex-start"
-            direction="row"
-            wrap="wrap"
+          <SimpleGrid
+            mt="md"
+            cols={1}
+            breakpoints={[{ minWidth: "sm", cols: 2 }]}
           >
             <TextInput
-              w="50%"
               withAsterisk
               label={i18n.t("subjects.form.fields.relative_name")}
               placeholder={i18n.t("subjects.form.example")}
@@ -192,12 +192,10 @@ export default function AdminSubjectsCreatePage() {
               data={relativeRelationOptions}
               {...form.getInputProps("relativeRelation")}
             />
-          </Flex>
-
+          </SimpleGrid>
           <DateInput
+            mt="md"
             maxDate={new Date()}
-            w="50%"
-            mt="5px"
             withAsterisk
             dateParser={(input: string) => {
               return moment(input, "DD/MM/YYYY").toDate();
@@ -212,12 +210,10 @@ export default function AdminSubjectsCreatePage() {
             }}
             {...form.getInputProps("birthDate")}
           />
-
-          <Input.Wrapper
-            label={i18n.t("subjects.form.fields.cpf")}
-            w="50%"
-            mt="5px"
-          >
+          <Title mt="md" order={2}>
+            {i18n.t("subjects.form.aditional_info")}
+          </Title>
+          <Input.Wrapper mt="md" label={i18n.t("subjects.form.fields.cpf")}>
             <Input
               {...form.getInputProps("cpf")}
               component={IMaskInput}
@@ -225,12 +221,7 @@ export default function AdminSubjectsCreatePage() {
               placeholder="000.000.000-00"
             />
           </Input.Wrapper>
-
-          <Input.Wrapper
-            label={i18n.t("subjects.form.fields.rg")}
-            w="50%"
-            mt="5px"
-          >
+          <Input.Wrapper mt="md" label={i18n.t("subjects.form.fields.rg")}>
             <Input
               {...form.getInputProps("rg")}
               component={IMaskInput}
@@ -238,133 +229,50 @@ export default function AdminSubjectsCreatePage() {
               placeholder="000.000.000-00"
             />
           </Input.Wrapper>
-
           <TextInput
-            w="50%"
-            mt="5px"
+            mt="md"
             label={i18n.t("subjects.form.fields.born_place")}
             placeholder={i18n.t("subjects.form.example")}
             {...form.getInputProps("bornPlace")}
           />
-
           <TextInput
-            w="50%"
-            mt="5px"
+            mt="md"
             label={i18n.t("subjects.form.fields.origin_unit")}
             placeholder={i18n.t("subjects.form.example")}
             {...form.getInputProps("originUnit")}
           />
-
           <TextInput
-            w="50%"
-            mt="5px"
+            mt="md"
             label={i18n.t("subjects.form.fields.destination_unit")}
             placeholder={i18n.t("subjects.form.example")}
             {...form.getInputProps("destinationUnit")}
           />
-
-          <Title mt="5px" order={4}>
+          <Title mt="md" order={3}>
             {i18n.t("subjects.form.fields.familiar_contact")}
           </Title>
-          <Flex
-            w="100%"
-            gap="md"
-            justify="flex-start"
-            align="flex-start"
-            direction="row"
-            wrap="wrap"
+          <SimpleGrid
+            mt="md"
+            cols={1}
+            breakpoints={[{ minWidth: "sm", cols: 2 }]}
           >
-            <TextInput
-              w="50%"
-              label={i18n.t("subjects.form.fields.phone")}
-              placeholder="(00) 00000-0000"
-              {...form.getInputProps("contactPhone")}
-            />
+            <Input.Wrapper label={i18n.t("subjects.form.fields.phone")}>
+              <Input
+                {...form.getInputProps("contactPhone")}
+                component={IMaskInput}
+                mask="{00} 00000-0000"
+                placeholder="(00) 00000-0000"
+              />
+            </Input.Wrapper>
 
             <TextInput
-              w="40%"
               label={i18n.t("subjects.form.fields.address")}
               placeholder={i18n.t("subjects.form.example")}
               {...form.getInputProps("contactAddress")}
             />
-          </Flex>
-
-          <Title mt="15px">{i18n.t("subjects.form.aditional_info")}</Title>
-          <Divider my="sm" />
-
-          <TextInput
-            w="50%"
-            label={i18n.t("subjects.form.fields.religion")}
-            placeholder={i18n.t("subjects.form.example")}
-            {...form.getInputProps("religion")}
-          />
-
-          <Select
-            w="50%"
-            label={i18n.t("subjects.form.fields.color")}
-            placeholder={i18n.t("subjects.form.pick")}
-            data={colorOptions}
-            {...form.getInputProps("skinColor")}
-          />
-
-          <Title mt="5px" order={4}>
-            {i18n.t("subjects.form.fields.address")}
-          </Title>
-          <Flex
-            w="100%"
-            gap="md"
-            justify="flex-start"
-            align="flex-start"
-            direction="row"
-            wrap="wrap"
-          >
-            <TextInput
-              w="30%"
-              label={i18n.t("subjects.form.fields.address_state")}
-              placeholder={i18n.t("subjects.form.example")}
-              {...form.getInputProps("addressState")}
-            />
-
-            <TextInput
-              w="30%"
-              label={i18n.t("subjects.form.fields.address_city")}
-              placeholder={i18n.t("subjects.form.example")}
-              {...form.getInputProps("addressCity")}
-            />
-
-            <TextInput
-              w="30%"
-              label={i18n.t("subjects.form.fields.address_district")}
-              placeholder={i18n.t("subjects.form.example")}
-              {...form.getInputProps("addressDistrict")}
-            />
-
-            <TextInput
-              w="30%"
-              label={i18n.t("subjects.form.fields.address_street")}
-              placeholder={i18n.t("subjects.form.example")}
-              {...form.getInputProps("addressStreet")}
-            />
-
-            <TextInput
-              w="30%"
-              label={i18n.t("subjects.form.fields.address_number")}
-              placeholder={i18n.t("subjects.form.example")}
-              {...form.getInputProps("addressNumber")}
-            />
-          </Flex>
-
-          <Select
-            mt="5px"
-            w="50%"
-            label={i18n.t("subjects.form.fields.income")}
-            placeholder={i18n.t("subjects.form.pick")}
-            data={incomeOptions}
-            {...form.getInputProps("income")}
-          />
+          </SimpleGrid>
 
           <Radio.Group
-            mt="5px"
+            mt="md"
             {...form.getInputProps("familyBond")}
             name="family_bond"
             label={i18n.t("subjects.form.fields.family_bond")}
@@ -385,9 +293,81 @@ export default function AdminSubjectsCreatePage() {
             </Group>
           </Radio.Group>
 
-          <Text fz="0.875rem" mt="5px" mb="5px" c="#212529">
+          <Title mt="md" order={3}>
+            {i18n.t("subjects.form.fields.address")}
+          </Title>
+
+          <SimpleGrid
+            mt="md"
+            cols={1}
+            breakpoints={[{ minWidth: "sm", cols: 2 }]}
+          >
+            <Select
+              label={i18n.t("subjects.form.fields.address_state")}
+              placeholder={i18n.t("subjects.form.example")}
+              data={stateOptions}
+              {...form.getInputProps("addressState")}
+            />
+
+            <TextInput
+              label={i18n.t("subjects.form.fields.address_city")}
+              placeholder={i18n.t("subjects.form.example")}
+              {...form.getInputProps("addressCity")}
+            />
+
+            <TextInput
+              label={i18n.t("subjects.form.fields.address_district")}
+              placeholder={i18n.t("subjects.form.example")}
+              {...form.getInputProps("addressDistrict")}
+            />
+
+            <TextInput
+              label={i18n.t("subjects.form.fields.address_street")}
+              placeholder={i18n.t("subjects.form.example")}
+              {...form.getInputProps("addressStreet")}
+            />
+
+            <TextInput
+              label={i18n.t("subjects.form.fields.address_number")}
+              placeholder={i18n.t("subjects.form.example")}
+              {...form.getInputProps("addressNumber")}
+            />
+          </SimpleGrid>
+
+          <Title mt="md" order={3}>
+            {i18n.t("subjects.form.fields.demographic_information")}
+          </Title>
+
+          <TextInput
+            mt="md"
+            label={i18n.t("subjects.form.fields.religion")}
+            placeholder={i18n.t("subjects.form.example")}
+            {...form.getInputProps("religion")}
+          />
+
+          <Select
+            mt="md"
+            label={i18n.t("subjects.form.fields.skin_color")}
+            placeholder={i18n.t("subjects.form.pick")}
+            data={colorOptions}
+            {...form.getInputProps("skinColor")}
+          />
+
+          <Select
+            mt="md"
+            label={i18n.t("subjects.form.fields.income")}
+            placeholder={i18n.t("subjects.form.pick")}
+            data={incomeOptions}
+            {...form.getInputProps("income")}
+          />
+
+          <Title mt="md" order={3}>
+            {i18n.t("subjects.form.fields.other")}
+          </Title>
+
+          <Input.Label my="md">
             {i18n.t("subjects.form.fields.chemical_dependency")}
-          </Text>
+          </Input.Label>
 
           <Checkbox.Group {...form.getInputProps("chemicalDependency")}>
             {chemicalDependencyOptions.map((chemicalDependency, index) => (
@@ -400,34 +380,33 @@ export default function AdminSubjectsCreatePage() {
             ))}
           </Checkbox.Group>
 
-          {form.values.chemicalDependency.includes("other") ? (
+          {form.values.chemicalDependency.includes("other") && (
             <TextInput
-              w="50%"
-              placeholder={i18n.t("subjects.form.example")}
+              placeholder={i18n.t(
+                "subjects.form.fields.chemical_dependency_other_placeholder"
+              )}
               {...form.getInputProps("otherChemicalDependency")}
             />
-          ) : (
-            ""
           )}
 
           <TextInput
-            mt="5px"
-            w="50%"
+            mt="md"
             label={i18n.t("subjects.form.fields.article_sentence")}
             placeholder={i18n.t("subjects.form.example")}
             {...form.getInputProps("articleSentence")}
           />
 
           <TextInput
-            mt="5px"
-            w="50%"
+            mt="md"
             label={i18n.t("subjects.form.fields.condemnation_status")}
             placeholder={i18n.t("subjects.form.example")}
             {...form.getInputProps("condemnationStatus")}
           />
 
           <Flex mt="xl" justify="flex-end">
-            <Button type="submit">{i18n.t("create")}</Button>
+            <Button w={{ sm: "100%", md: "30%" }} type="submit">
+              {i18n.t("create")}
+            </Button>
           </Flex>
         </form>
       </Card>
