@@ -21,6 +21,7 @@ import i18nEntriesToSelect from "@/helpers/i18nEntriesToSelect";
 import type { Subject } from "@/types/Subject";
 import { notifications } from "@mantine/notifications";
 import { IMaskInput } from "react-imask";
+import moment from "moment";
 
 export default function AdminSubjectsCreatePage() {
   const relativeRelationOptions = i18nEntriesToSelect(
@@ -199,11 +200,16 @@ export default function AdminSubjectsCreatePage() {
             mt="5px"
             withAsterisk
             dateParser={(input: string) => {
-              return new Date(input);
+              return moment(input, "DD/MM/YYYY").toDate();
             }}
             valueFormat="DD/MM/YYYY"
             label={i18n.t("subjects.form.fields.birth_date")}
             placeholder="00/00/0000"
+            onKeyPress={(event) => {
+              if (event.code === "Enter") {
+                event.preventDefault();
+              }
+            }}
             {...form.getInputProps("birthDate")}
           />
 
