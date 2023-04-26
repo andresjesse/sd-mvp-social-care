@@ -9,7 +9,6 @@ import {
   FileButton,
   Group,
   Radio,
-  Text,
   TextInput,
   Textarea,
   Title,
@@ -17,12 +16,17 @@ import {
   SimpleGrid,
   Flex,
   MediaQuery,
+  List,
+  ThemeIcon,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
 import { useForm, isNotEmpty, hasLength } from "@mantine/form";
 import { DateTimePicker } from "@mantine/dates";
 import i18n from "@/lang";
+
+import { faFilePdf, faFileImage } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AdminSocialServicesCreatePage() {
   //fetch demands
@@ -33,10 +37,10 @@ export default function AdminSocialServicesCreatePage() {
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
 
-  const [file, setFile] = useState<File | null>(null);
+  const [files, setFiles] = useState<File[] | null>([]);
   const resetRef = useRef<() => void>(null);
   const clearFile = () => {
-    setFile(null);
+    setFiles(null);
     resetRef.current?.();
   };
 
@@ -206,25 +210,45 @@ export default function AdminSocialServicesCreatePage() {
 
           <Group position="center" mt="md">
             <FileButton
+              multiple
               resetRef={resetRef}
-              onChange={setFile}
-              // multiple={true}
+              onChange={setFiles}
               accept="application/pdf,image/png,image/jpeg"
             >
               {(props) => (
                 <Button {...props}>{i18n.t("forms.file_upload")}</Button>
               )}
             </FileButton>
-            <Button disabled={!file} color="red" onClick={clearFile}>
+            <Button disabled={!files} color="red" onClick={clearFile}>
               {i18n.t("forms.file_reset")}
             </Button>
           </Group>
-
-          {file && (
-            <Text size="sm" align="center" mt="sm">
-              {file.name}
-            </Text>
-          )}
+          <Flex justify="center" mt="md">
+            <List spacing="xs" size="xs">
+              {files?.map((file: File, index) => (
+                <List.Item
+                  key={index}
+                  icon={
+                    <ThemeIcon
+                      color={file.type == "application/pdf" ? "red" : "cyan"}
+                      size={24}
+                      radius="xl"
+                    >
+                      <FontAwesomeIcon
+                        icon={
+                          file.type == "application/pdf"
+                            ? faFilePdf
+                            : faFileImage
+                        }
+                      />
+                    </ThemeIcon>
+                  }
+                >
+                  {file.name}
+                </List.Item>
+              ))}
+            </List>
+          </Flex>
 
           <Flex mt="xl" justify="flex-end">
             <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
