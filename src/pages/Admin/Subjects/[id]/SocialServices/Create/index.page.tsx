@@ -54,19 +54,19 @@ export default function AdminSocialServicesCreatePage() {
     },
     validate: {
       date: isNotEmpty(
-        i18n.t("notifications.social_service_create_page.date_empty_error")
+        i18n.t("notifications.social_services_create_page.date_empty_error")
       ),
       origin: isNotEmpty(
-        i18n.t("notifications.social_service_create_page.origin_empty_error")
+        i18n.t("notifications.social_services_create_page.origin_empty_error")
       ),
       demands: hasLength(
         { min: hasOtherDemand ? 0 : 1 },
-        i18n.t("notifications.social_service_create_page.demands_empty_error")
+        i18n.t("notifications.social_services_create_page.demands_empty_error")
       ),
       otherDemand: hasLength(
         { min: hasOtherDemand ? 1 : 0 },
         i18n.t(
-          "notifications.social_service_create_page.other_demand_empty_error"
+          "notifications.social_services_create_page.other_demand_empty_error"
         )
       ),
     },
@@ -75,36 +75,36 @@ export default function AdminSocialServicesCreatePage() {
   const handleError = (errors: typeof form.errors) => {
     if (errors.date) {
       notifications.show({
-        title: i18n.t("notifications.social_service_create_page.title"),
+        title: i18n.t("notifications.social_services_create_page.title"),
         message: i18n.t(
-          "notifications.social_service_create_page.date_empty_error"
+          "notifications.social_services_create_page.date_empty_error"
         ),
         color: "red",
       });
     }
     if (errors.origin) {
       notifications.show({
-        title: i18n.t("notifications.social_service_create_page.title"),
+        title: i18n.t("notifications.social_services_create_page.title"),
         message: i18n.t(
-          "notifications.social_service_create_page.origin_empty_error"
+          "notifications.social_services_create_page.origin_empty_error"
         ),
         color: "red",
       });
     }
     if (errors.demands) {
       notifications.show({
-        title: i18n.t("notifications.social_service_create_page.title"),
+        title: i18n.t("notifications.social_services_create_page.title"),
         message: i18n.t(
-          "notifications.social_service_create_page.demands_empty_error"
+          "notifications.social_services_create_page.demands_empty_error"
         ),
         color: "red",
       });
     }
     if (errors.otherDemand) {
       notifications.show({
-        title: i18n.t("notifications.social_service_create_page.title"),
+        title: i18n.t("notifications.social_services_create_page.title"),
         message: i18n.t(
-          "notifications.social_service_create_page.other_demand_empty_error"
+          "notifications.social_services_create_page.other_demand_empty_error"
         ),
         color: "red",
       });
@@ -114,15 +114,15 @@ export default function AdminSocialServicesCreatePage() {
   return (
     <AppLayout navbarLinkActive="subjects">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Title>{i18n.t("social_service_create_page.title")}</Title>
+        <Title>{i18n.t("social_services_create_page.form.title")}</Title>
 
         <Group mt="md" position="apart">
-          <Chip checked>{"{Subject: subject}"}</Chip>
+          <Chip checked>{"//subject"}</Chip>
 
-          <Chip disabled>{"{Social_worker: user}"}</Chip>
+          <Chip disabled>{"//socialWorker"}</Chip>
         </Group>
 
-        <Input.Label mt="md">{i18n.t("forms.asterisk_info")}</Input.Label>
+        <Input.Label mt="md">{i18n.t("infos.asterisk_info")}</Input.Label>
 
         <form
           onSubmit={form.onSubmit((values) => console.log(values), handleError)}
@@ -131,7 +131,9 @@ export default function AdminSocialServicesCreatePage() {
             mt="md"
             clearable
             withAsterisk
-            label={i18n.t("forms.date_and_time")}
+            label={i18n.t(
+              "social_services_create_page.form.fields.date_and_time"
+            )}
             dropdownType="modal"
             {...form.getInputProps("date")}
           />
@@ -139,7 +141,7 @@ export default function AdminSocialServicesCreatePage() {
           <Radio.Group
             mt="md"
             name="origin"
-            label={i18n.t("social_service_create_page.form.origin")}
+            label={i18n.t("social_services_create_page.form.fields.origin")}
             withAsterisk
             {...form.getInputProps("origin")}
           >
@@ -147,21 +149,21 @@ export default function AdminSocialServicesCreatePage() {
               <Radio
                 value="internal"
                 label={i18n.t(
-                  "social_service_create_page.form.origin_internal"
+                  "social_services_create_page.form.fields.origin_internal"
                 )}
               />
 
               <Radio
                 value="external"
                 label={i18n.t(
-                  "social_service_create_page.form.origin_external"
+                  "social_services_create_page.form.fields.origin_external"
                 )}
               />
             </Group>
           </Radio.Group>
 
           <Checkbox.Group
-            label={i18n.t("social_service_create_page.form.demands")}
+            label={i18n.t("social_services_create_page.form.fields.demands")}
             mt="md"
             withAsterisk
             {...form.getInputProps("demands")}
@@ -183,7 +185,9 @@ export default function AdminSocialServicesCreatePage() {
           >
             <Checkbox
               value="other"
-              label={i18n.t("social_service_create_page.form.other_demand")}
+              label={i18n.t(
+                "social_services_create_page.form.fields.other_demand"
+              )}
               onChange={() => {
                 setHasOtherDemand(!hasOtherDemand);
               }}
@@ -191,7 +195,7 @@ export default function AdminSocialServicesCreatePage() {
 
             <TextInput
               placeholder={i18n.t(
-                "social_service_create_page.form.other_demand_placeholder"
+                "social_services_create_page.form.fields.other_demand_placeholder"
               )}
               disabled={!hasOtherDemand}
               {...form.getInputProps("otherDemand")}
@@ -200,9 +204,9 @@ export default function AdminSocialServicesCreatePage() {
 
           <Textarea
             mt="md"
-            label={i18n.t("social_service_create_page.form.forward")}
+            label={i18n.t("social_services_create_page.form.fields.forward")}
             placeholder={i18n.t(
-              "social_service_create_page.form.forward_placeholder"
+              "social_services_create_page.form.fields.forward_placeholder"
             )}
             autosize
             minRows={2}
@@ -218,12 +222,16 @@ export default function AdminSocialServicesCreatePage() {
               accept="application/pdf,image/png,image/jpeg"
             >
               {(props) => (
-                <Button {...props}>{i18n.t("forms.file_upload")}</Button>
+                <Button {...props}>
+                  {i18n.t(
+                    "social_services_create_page.form.fields.file_upload"
+                  )}
+                </Button>
               )}
             </FileButton>
 
             <Button disabled={!files} color="red" onClick={clearFiles}>
-              {i18n.t("forms.file_reset")}
+              {i18n.t("social_services_create_page.form.fields.file_reset")}
             </Button>
           </Group>
 
