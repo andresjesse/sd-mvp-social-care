@@ -39,7 +39,7 @@ export default function AdminSocialServicesCreatePage() {
 
   const [files, setFiles] = useState<File[] | null>([]);
   const resetRef = useRef<() => void>(null);
-  const clearFile = () => {
+  const clearFiles = () => {
     setFiles(null);
     resetRef.current?.();
   };
@@ -118,6 +118,7 @@ export default function AdminSocialServicesCreatePage() {
 
         <Group mt="md" position="apart">
           <Chip checked>{"{Subject: subject}"}</Chip>
+
           <Chip disabled>{"{Social_worker: user}"}</Chip>
         </Group>
 
@@ -149,6 +150,7 @@ export default function AdminSocialServicesCreatePage() {
                   "social_service_create_page.form.origin_internal"
                 )}
               />
+
               <Radio
                 value="external"
                 label={i18n.t(
@@ -219,36 +221,40 @@ export default function AdminSocialServicesCreatePage() {
                 <Button {...props}>{i18n.t("forms.file_upload")}</Button>
               )}
             </FileButton>
-            <Button disabled={!files} color="red" onClick={clearFile}>
+
+            <Button disabled={!files} color="red" onClick={clearFiles}>
               {i18n.t("forms.file_reset")}
             </Button>
           </Group>
-          <Flex justify="center" mt="md">
-            <List spacing="xs" size="xs">
-              {files?.map((file: File, index) => (
-                <List.Item
-                  key={index}
-                  icon={
-                    <ThemeIcon
-                      color={file.type == "application/pdf" ? "red" : "cyan"}
-                      size={24}
-                      radius="xl"
-                    >
-                      <FontAwesomeIcon
-                        icon={
-                          file.type == "application/pdf"
-                            ? faFilePdf
-                            : faFileImage
-                        }
-                      />
-                    </ThemeIcon>
-                  }
-                >
-                  {file.name}
-                </List.Item>
-              ))}
-            </List>
-          </Flex>
+
+          {files && (
+            <Flex justify="center" mt="md">
+              <List spacing="xs" size="xs">
+                {files.map((file: File, index) => (
+                  <List.Item
+                    key={index}
+                    icon={
+                      <ThemeIcon
+                        color={file.type == "application/pdf" ? "red" : "cyan"}
+                        size={24}
+                        radius="xl"
+                      >
+                        <FontAwesomeIcon
+                          icon={
+                            file.type == "application/pdf"
+                              ? faFilePdf
+                              : faFileImage
+                          }
+                        />
+                      </ThemeIcon>
+                    }
+                  >
+                    {file.name}
+                  </List.Item>
+                ))}
+              </List>
+            </Flex>
+          )}
 
           <Flex mt="xl" justify="flex-end">
             <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
