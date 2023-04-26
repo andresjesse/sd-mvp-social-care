@@ -9,6 +9,8 @@ import AdminSocialServicesPage from "@/pages/Admin/Subjects/[id]/SocialServices/
 import AdminSocialServicesCreatePage from "@/pages/Admin/Subjects/[id]/SocialServices/Create/index.page";
 import AdminSocialServicesShowPage from "@/pages/Admin/Subjects/[id]/SocialServices/[id]/index.page";
 
+import SubjectsCreate from "@/pages/Admin/Subjects/Create/index.page";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,7 +38,7 @@ const router = createBrowserRouter([
           },
           {
             path: "create",
-            element: <div>Subjects CREATE</div>,
+            element: <SubjectsCreate />,
           },
           {
             path: ":subjectId",

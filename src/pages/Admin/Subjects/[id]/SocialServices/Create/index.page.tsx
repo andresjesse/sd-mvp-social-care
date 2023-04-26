@@ -2,21 +2,21 @@ import React, { useRef, useState } from "react";
 import AppLayout from "@/pages/Layouts/AppLayout";
 
 import {
-  Box,
   Button,
   Card,
   Checkbox,
   Chip,
-  Divider,
   FileButton,
-  Flex,
   Group,
   Radio,
-  Space,
   Text,
   TextInput,
   Textarea,
   Title,
+  Input,
+  SimpleGrid,
+  Flex,
+  MediaQuery,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
@@ -31,8 +31,7 @@ export default function AdminSocialServicesCreatePage() {
     { label: "Demanda 2", value: "Demanda 2" },
   ];
 
-  const [otherDemandChecked, setOtherDemandChecked] = useState(false);
-  const [otherDemand, setOtherDemand] = useState("");
+  const [hasOtherDemand, setHasOtherDemand] = useState(false);
 
   const [file, setFile] = useState<File | null>(null);
   const resetRef = useRef<() => void>(null);
@@ -50,10 +49,22 @@ export default function AdminSocialServicesCreatePage() {
       forward: "",
     },
     validate: {
-      date: isNotEmpty(),
-      origin: isNotEmpty(),
-      demands: hasLength({ min: otherDemand.length > 0 ? 0 : 1 }),
-      otherDemand: hasLength({ min: otherDemand.length > 0 ? 6 : 0 }),
+      date: isNotEmpty(
+        i18n.t("notifications.social_service_create_page.date_empty_error")
+      ),
+      origin: isNotEmpty(
+        i18n.t("notifications.social_service_create_page.origin_empty_error")
+      ),
+      demands: hasLength(
+        { min: hasOtherDemand ? 0 : 1 },
+        i18n.t("notifications.social_service_create_page.demands_empty_error")
+      ),
+      otherDemand: hasLength(
+        { min: hasOtherDemand ? 1 : 0 },
+        i18n.t(
+          "notifications.social_service_create_page.other_demand_empty_error"
+        )
+      ),
     },
   });
 
@@ -89,7 +100,7 @@ export default function AdminSocialServicesCreatePage() {
       notifications.show({
         title: i18n.t("notifications.social_service_create_page.title"),
         message: i18n.t(
-          "notifications.social_service_create_page.other_demand_min_len_error"
+          "notifications.social_service_create_page.other_demand_empty_error"
         ),
         color: "red",
       });
@@ -97,153 +108,133 @@ export default function AdminSocialServicesCreatePage() {
   };
 
   return (
-    <AppLayout>
-      <Flex justify="center">
-        <Box w="100vmin" mx="auto">
-          <Title>{i18n.t("social_service_create_page.title")}</Title>
-          <Space h="sm" />
-          <Card shadow="sm" padding="lg" radius="md" withBorder>
-            <Group position="apart">
-              <Chip checked>{"{Subject: subject}"}</Chip>
-              <Chip disabled>{"{Social_worker: user}"}</Chip>
-            </Group>
-            <Space h="xl" />
-            <Text>{i18n.t("forms.asterisk_info")}</Text>
-            <form
-              onSubmit={form.onSubmit(
-                (values) => console.log(values),
-                handleError
-              )}
-            >
-              <Divider
-                my="xs"
-                label={i18n.t("forms.date_and_time")}
-                labelPosition="center"
-                variant="dashed"
-              />
-              <Text color="#fa5252" size="sm">
-                *
-              </Text>
-              <DateTimePicker
-                clearable
-                dropdownType="modal"
-                maw={400}
-                mx="auto"
-                {...form.getInputProps("date")}
-              />
-              <Space h="sm" />
-              <Divider
-                my="xs"
-                label={i18n.t("social_service_create_page.form.origin")}
-                labelPosition="center"
-                variant="dashed"
-              />
-              <Radio.Group
-                name="origin"
-                label=" "
-                withAsterisk
-                {...form.getInputProps("origin")}
-              >
-                <Group mt="xs">
-                  <Radio
-                    value="internal"
-                    label={i18n.t(
-                      "social_service_create_page.form.origin_internal"
-                    )}
-                  />
-                  <Radio
-                    value="external"
-                    label={i18n.t(
-                      "social_service_create_page.form.origin_external"
-                    )}
-                  />
-                </Group>
-              </Radio.Group>
-              <Divider
-                my="xs"
-                label={i18n.t("social_service_create_page.form.demands")}
-                labelPosition="center"
-                variant="dashed"
-              />
-              <Text color="#fa5252" size="sm">
-                *
-              </Text>
-              <Checkbox.Group {...form.getInputProps("demands")}>
-                {demands.map((demand, index) => (
-                  <div key={index}>
-                    <Checkbox value={demand.value} label={demand.label} />
-                    <Space h="xs" />
-                  </div>
-                ))}
-              </Checkbox.Group>
-              <Group>
-                <Checkbox
-                  value="other"
-                  label={i18n.t("social_service_create_page.form.other_demand")}
-                  onChange={() => {
-                    setOtherDemandChecked(!otherDemandChecked);
-                    setOtherDemand("");
-                    form.values.otherDemand = "";
-                  }}
-                />
+    <AppLayout navbarLinkActive="subjects">
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
+        <Title>{i18n.t("social_service_create_page.title")}</Title>
 
-                <TextInput
-                  withAsterisk={otherDemandChecked}
-                  label=" "
-                  placeholder={i18n.t(
-                    "social_service_create_page.form.other_demand_placeholder"
-                  )}
-                  disabled={!otherDemandChecked}
-                  {...form.getInputProps("otherDemand")}
-                  onInput={() => setOtherDemand(form.values.otherDemand)}
-                />
-              </Group>
-              <Space h="sm" />
-              <Divider
-                my="xs"
-                label={i18n.t("social_service_create_page.form.forward")}
-                labelPosition="center"
-                variant="dashed"
-              />
-              <Textarea
-                placeholder={i18n.t(
-                  "social_service_create_page.form.forward_placeholder"
+        <Group mt="md" position="apart">
+          <Chip checked>{"{Subject: subject}"}</Chip>
+          <Chip disabled>{"{Social_worker: user}"}</Chip>
+        </Group>
+
+        <Input.Label mt="md">{i18n.t("forms.asterisk_info")}</Input.Label>
+
+        <form
+          onSubmit={form.onSubmit((values) => console.log(values), handleError)}
+        >
+          <DateTimePicker
+            mt="md"
+            clearable
+            withAsterisk
+            label={i18n.t("forms.date_and_time")}
+            dropdownType="modal"
+            {...form.getInputProps("date")}
+          />
+
+          <Radio.Group
+            mt="md"
+            name="origin"
+            label={i18n.t("social_service_create_page.form.origin")}
+            withAsterisk
+            {...form.getInputProps("origin")}
+          >
+            <Group>
+              <Radio
+                value="internal"
+                label={i18n.t(
+                  "social_service_create_page.form.origin_internal"
                 )}
-                autosize
-                minRows={2}
-                maxRows={10}
-                {...form.getInputProps("forward")}
               />
-              <Space h="sm" />
-              <Divider my="xs" labelPosition="center" variant="dashed" />
-              <Group position="center">
-                <FileButton
-                  resetRef={resetRef}
-                  onChange={setFile}
-                  accept="application/pdf,image/png,image/jpeg"
-                >
-                  {(props) => (
-                    <Button {...props}>{i18n.t("forms.file_upload")}</Button>
-                  )}
-                </FileButton>
-                <Button disabled={!file} color="red" onClick={clearFile}>
-                  Reset
-                </Button>
-              </Group>
-              {file && (
-                <Text size="sm" align="center" mt="sm">
-                  {file.name}
-                </Text>
+              <Radio
+                value="external"
+                label={i18n.t(
+                  "social_service_create_page.form.origin_external"
+                )}
+              />
+            </Group>
+          </Radio.Group>
+
+          <Checkbox.Group
+            label={i18n.t("social_service_create_page.form.demands")}
+            mt="md"
+            withAsterisk
+            {...form.getInputProps("demands")}
+          >
+            {demands.map((demand, index) => (
+              <Checkbox
+                key={index}
+                mt="md"
+                value={demand.value}
+                label={demand.label}
+              />
+            ))}
+          </Checkbox.Group>
+
+          <SimpleGrid
+            mt="md"
+            cols={1}
+            breakpoints={[{ minWidth: "sm", cols: 2 }]}
+          >
+            <Checkbox
+              value="other"
+              label={i18n.t("social_service_create_page.form.other_demand")}
+              onChange={() => {
+                setHasOtherDemand(!hasOtherDemand);
+              }}
+            />
+
+            <TextInput
+              placeholder={i18n.t(
+                "social_service_create_page.form.other_demand_placeholder"
               )}
-              <Space h="xl" />
-              <Group mt="md">
-                <Button type="submit">{i18n.t("forms.create")}</Button>
-                {/* <Button type="submit">{i18n.t("forms.return")}</Button> */}
-              </Group>
-            </form>
-          </Card>
-        </Box>
-      </Flex>
+              disabled={!hasOtherDemand}
+              {...form.getInputProps("otherDemand")}
+            />
+          </SimpleGrid>
+
+          <Textarea
+            mt="md"
+            label={i18n.t("social_service_create_page.form.forward")}
+            placeholder={i18n.t(
+              "social_service_create_page.form.forward_placeholder"
+            )}
+            autosize
+            minRows={2}
+            maxRows={10}
+            {...form.getInputProps("forward")}
+          />
+
+          <Group position="center" mt="md">
+            <FileButton
+              resetRef={resetRef}
+              onChange={setFile}
+              // multiple={true}
+              accept="application/pdf,image/png,image/jpeg"
+            >
+              {(props) => (
+                <Button {...props}>{i18n.t("forms.file_upload")}</Button>
+              )}
+            </FileButton>
+            <Button disabled={!file} color="red" onClick={clearFile}>
+              {i18n.t("forms.file_reset")}
+            </Button>
+          </Group>
+
+          {file && (
+            <Text size="sm" align="center" mt="sm">
+              {file.name}
+            </Text>
+          )}
+
+          <Flex mt="xl" justify="flex-end">
+            <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
+              <Button w="100%" type="submit">
+                {i18n.t("forms.create")}
+              </Button>
+            </MediaQuery>
+          </Flex>
+        </form>
+      </Card>
     </AppLayout>
   );
 }
