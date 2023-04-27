@@ -22,7 +22,7 @@ import i18nEntriesToSelect from "@/helpers/i18nEntriesToSelect";
 import type { Subject } from "@/types/Subject";
 import { notifications } from "@mantine/notifications";
 import { IMaskInput } from "react-imask";
-import dayjs from "dayjs";
+import moment from "moment";
 
 export default function AdminSubjectsCreatePage() {
   const relativeRelationOptions = i18nEntriesToSelect(
@@ -216,7 +216,7 @@ export default function AdminSubjectsCreatePage() {
             maxDate={new Date()}
             withAsterisk
             dateParser={(input: string) => {
-              return dayjs(input, "DD/MM/YYYY").toDate();
+              return moment(input, "DD/MM/YYYY").toDate();
             }}
             valueFormat="DD/MM/YYYY"
             label={i18n.t("subjects_create_page.form.fields.birth_date")}
