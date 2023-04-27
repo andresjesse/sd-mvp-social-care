@@ -1,22 +1,5 @@
 {
   "pt-BR": {
-    "hello": "Olá!",
-    "login": "Entrar",
-    "notifications": {
-      "login": {
-        "title": "Ops! 🤥",
-        "auth_error": "Ocorreu um erro de autenticação!",
-        "invalid_email_error": "O email fornecido é inválido!",
-        "password_min_len_error": "A senha deve conter pelo menos 6 caracteres!"
-      },
-      "subjects_create_page": {
-        "title": "Ops! 🤥",
-        "name_empty_error": "O campo 'Nome' é obrigatório!",
-        "relative_name_empty_error": "O campo 'Nome da mãe (ou parente/conhecido próximo)' é obrigatório!",
-        "relative_relation_empty_error": "O campo 'Grau de parentesco' é obrigatório!",
-        "other_chemical_dependency_empty_error": "O campo de texto em depêndencias é obrigatório se a opção 'outro' está selecionada!"
-      }
-    },
     "layout": {
       "navbar": {
         "home": "Início",
@@ -24,16 +7,22 @@
         "logout": "Sair"
       }
     },
+
     "landing_page": {
+      "login": "Entrar",
       "title": "Olá, seja bem vindo ao MVP Social Care!",
       "subtitle": "Um sistema feito para agilizar o seu trabalho.",
       "content": "O atendimento social consiste em muitas informações a serem consideradas, como também muitas etapas para executar. Pensado no dia a dia de trabalho, o sistema surgiu para ajudar as agências sociais a organizar seus atendimentos aos clientes."
     },
-    "subjects": {
+
+    "subjects_create_page": {
+      "asterisk_info": "Campos com asteriscos * são obrigatórios",
       "form": {
+        "title": "Cadastrar novo sujeito",
+
         "pick": "Escolha um",
         "example": "Exemplo",
-        "create": "Criar novo sujeito",
+
         "aditional_info": "Informações adicionais",
 
         "fields": {
@@ -116,19 +105,64 @@
             "alcohol": "Álcool",
             "crack": "Crack",
             "cocaine": "Cocaína",
-            "marihuana": "Maconha",
-            "other": "Outro"
+            "marihuana": "Maconha"
           },
+          "chemical_dependency_other": "Outra",
           "chemical_dependency_other_placeholder": "Descreva a(s) outra(s) dependência(s) aqui",
           "article_sentence": "Artigo da pena",
           "condemnation_status": "Status de condenação",
           "demographic_information": "Informações demográficas",
           "required_information": "Informações obrigatórias",
           "other": "Outros"
-        }
+        },
+        "create": "Cadastrar"
       }
     },
 
-    "create": "Criar"
+    "social_services_create_page": {
+      "asterisk_info": "Campos com asteriscos * são obrigatórios",
+      "form": {
+        "title": "Cadastrar atendimento",
+        "fields": {
+          "date_and_time": "Data e hora",
+          "origin": "Origem",
+          "origin_internal": "Interna",
+          "origin_external": "Externa",
+          "demands": "Demandas",
+          "other_demand": "Outra",
+          "other_demand_placeholder": "outra demanda...",
+          "forward": "Encaminhamento",
+          "forward_placeholder": "encaminhamento...",
+          "file_upload": "Upload de arquivo",
+          "file_reset": "Resetar"
+        },
+        "create": "Cadastrar"
+      }
+    },
+
+    "notifications": {
+      "login": {
+        "title": "Ops! 🙁",
+        "auth_error": "Ocorreu um erro de autenticação!",
+        "invalid_email_error": "O email fornecido é inválido!",
+        "password_min_len_error": "A senha deve conter pelo menos 6 caracteres!"
+      },
+
+      "subjects_create_page": {
+        "title": "Ops! 🙁",
+        "name_empty_error": "O campo 'Nome' é obrigatório!",
+        "relative_name_empty_error": "O campo 'Nome da mãe (ou parente/conhecido próximo)' é obrigatório!",
+        "relative_relation_empty_error": "O campo 'Grau de parentesco' é obrigatório!",
+        "other_chemical_dependency_empty_error": "O campo de texto em depêndencias é obrigatório se a opção 'outro' está selecionada!"
+      },
+
+      "social_services_create_page": {
+        "title": "Ops! 🙁",
+        "date_empty_error": "Selecionar uma data é obrigatório!",
+        "origin_empty_error": "O campo 'origem' é obrigatório!",
+        "demands_empty_error": "Selecione pelo menos uma demanda!",
+        "other_demand_empty_error": "O campo 'outra demanda' é obrigatório se estiver selecionada!"
+      }
+    }
   }
 }

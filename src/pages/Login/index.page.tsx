@@ -9,28 +9,31 @@ import {
   Group,
   Box,
   Flex,
+  Image,
+  Space,
 } from "@mantine/core";
 
 import { notifications } from "@mantine/notifications";
 import { hasLength, isEmail, useForm } from "@mantine/form";
 import i18n from "@/lang";
 
+import useStyles from "./styles";
+
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { classes } = useStyles();
 
   const handleLogin = async () => {
-    if (form.isValid()) {
-      try {
-        await login(form.values.email, form.values.password);
-        navigate("/admin");
-      } catch (e) {
-        notifications.show({
-          title: i18n.t("notifications.login.title"),
-          message: i18n.t("notifications.login.auth_error"),
-          color: "red",
-        });
-      }
+    try {
+      await login(form.values.email, form.values.password);
+      navigate("/admin");
+    } catch (e) {
+      notifications.show({
+        title: i18n.t("notifications.login.title"),
+        message: i18n.t("notifications.login.auth_error"),
+        color: "red",
+      });
     }
   };
 
@@ -63,29 +66,41 @@ export default function Login() {
   };
 
   return (
-    <Flex w="100%" h="100vmin" align="center" justify="center">
-      <Box maw={300} mx="auto">
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
-          <form onSubmit={form.onSubmit(() => handleLogin(), handleError)}>
-            <TextInput
-              withAsterisk
-              label="Email"
-              placeholder="your@email.com"
-              {...form.getInputProps("email")}
+    <div className={classes.main}>
+      <Flex w="100%" h="100vmin" align="center" justify="center">
+        <Box maw={300} mx="auto">
+          <Group position="center">
+            <Image
+              maw={63}
+              src="/images/logo-black.png"
+              alt="logo"
+              w="63"
+              mr="lg"
             />
-            <PasswordInput
-              withAsterisk
-              label="Password"
-              placeholder="******"
-              {...form.getInputProps("password")}
-            />
+          </Group>
+          <Space h="md" />
+          <Card shadow="sm" padding="lg" radius="md" withBorder>
+            <form onSubmit={form.onSubmit(() => handleLogin(), handleError)}>
+              <TextInput
+                withAsterisk
+                label="Email"
+                placeholder="your@email.com"
+                {...form.getInputProps("email")}
+              />
+              <PasswordInput
+                withAsterisk
+                label="Password"
+                placeholder="******"
+                {...form.getInputProps("password")}
+              />
 
-            <Group position="center" mt="md">
-              <Button type="submit">Login</Button>
-            </Group>
-          </form>
-        </Card>
-      </Box>
-    </Flex>
+              <Group position="center" mt="md">
+                <Button type="submit">Login</Button>
+              </Group>
+            </form>
+          </Card>
+        </Box>
+      </Flex>
+    </div>
   );
 }

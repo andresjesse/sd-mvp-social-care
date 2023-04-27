@@ -5,6 +5,9 @@ import ProtectedOutlet from "./_ProtectedOutlet";
 import Home from "@/pages/Home/index.page";
 import Login from "@/pages/Login/index.page";
 import Admin from "@/pages/Admin/index.page";
+import AdminSocialServicesPage from "@/pages/Admin/Subjects/[id]/SocialServices/index.page";
+import AdminSocialServicesCreatePage from "@/pages/Admin/Subjects/[id]/SocialServices/Create/index.page";
+import AdminSocialServicesShowPage from "@/pages/Admin/Subjects/[id]/SocialServices/[id]/index.page";
 
 import SubjectsCreate from "@/pages/Admin/Subjects/Create/index.page";
 
@@ -51,11 +54,21 @@ const router = createBrowserRouter([
                 children: [
                   {
                     index: true,
-                    element: <div>Social Services Index</div>,
+                    element: <AdminSocialServicesPage />,
                   },
                   {
                     path: "create",
-                    element: <div>Social Services CREATE</div>,
+                    element: <AdminSocialServicesCreatePage />,
+                  },
+                  {
+                    path: ":socialserviceId",
+                    element: <Outlet />,
+                    children: [
+                      {
+                        index: true,
+                        element: <AdminSocialServicesShowPage />,
+                      },
+                    ],
                   },
                 ],
               },
