@@ -4,15 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { Text, Title, Image, Center, Button } from "@mantine/core";
 
 import useStyles from "./styles";
+import useAuth from "@/hooks/useAuth";
 
 export default function Home() {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <div className={classes.main}>
       <div className={classes.header}>
-        <Button onClick={() => navigate("/login")}>
+        <Button onClick={() => navigate(user ? "/admin" : "/login")}>
           {i18n.t("landing_page.login")}
         </Button>
       </div>
