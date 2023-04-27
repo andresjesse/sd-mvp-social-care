@@ -83,7 +83,7 @@ export default function AppLayout({
         >
           <Navbar.Section grow>
             <Anchor
-              href="#"
+              href="/admin"
               underline={false}
               className={cx(classes.navbarLink, {
                 [classes.navbarLinkActive]: navbarLinkActive === "home",
@@ -94,7 +94,7 @@ export default function AppLayout({
             </Anchor>
 
             <Anchor
-              href="#"
+              href="/admin/subjects"
               underline={false}
               className={cx(classes.navbarLink, {
                 [classes.navbarLinkActive]: navbarLinkActive === "subjects",

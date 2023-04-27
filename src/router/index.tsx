@@ -10,6 +10,7 @@ import AdminSocialServicesCreatePage from "@/pages/Admin/Subjects/[id]/SocialSer
 import AdminSocialServicesShowPage from "@/pages/Admin/Subjects/[id]/SocialServices/[id]/index.page";
 
 import SubjectsCreate from "@/pages/Admin/Subjects/Create/index.page";
+import AdminSubjectsList from "@/pages/Admin/Subjects/index.page";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div>Subjects Index</div>,
+            element: <AdminSubjectsList />,
           },
           {
             path: "create",

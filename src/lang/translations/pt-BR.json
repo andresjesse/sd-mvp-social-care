@@ -15,6 +15,15 @@
       "content": "O atendimento social consiste em muitas informações a serem consideradas, como também muitas etapas para executar. Pensado no dia a dia de trabalho, o sistema surgiu para ajudar as agências sociais a organizar seus atendimentos aos clientes."
     },
 
+    "admin_page": {
+      "subjects": "Sujeitos"
+    },
+
+    "subjects_page": {
+      "title": "Sujeitos",
+      "create": "Cadastrar"
+    },
+
     "subjects_create_page": {
       "asterisk_info": "Campos com asteriscos * são obrigatórios",
       "form": {
