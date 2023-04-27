@@ -27,6 +27,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useStyles from "./styles";
 import AppLoader from "../AppLoader";
+import { Link } from "react-router-dom";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -51,13 +52,15 @@ export default function AppLayout({
         <Header height={65} px="md" pt={0} pb={0}>
           <Flex justify="space-between" align="center" h="100%">
             <Flex align="center">
-              <Image
-                maw={63}
-                src="/images/logo-black.png"
-                alt="logo"
-                w="63"
-                mr="lg"
-              />
+              <Link to="/admin">
+                <Image
+                  maw={63}
+                  src="/images/logo-black.png"
+                  alt="logo"
+                  w="63"
+                  mr="lg"
+                />
+              </Link>
               <Title fz={28} className={classes.headerTitle}>
                 Social Care
               </Title>
@@ -83,7 +86,7 @@ export default function AppLayout({
         >
           <Navbar.Section grow>
             <Anchor
-              href="#"
+              href="/admin"
               underline={false}
               className={cx(classes.navbarLink, {
                 [classes.navbarLinkActive]: navbarLinkActive === "home",
@@ -94,7 +97,7 @@ export default function AppLayout({
             </Anchor>
 
             <Anchor
-              href="#"
+              href="/admin/subjects"
               underline={false}
               className={cx(classes.navbarLink, {
                 [classes.navbarLinkActive]: navbarLinkActive === "subjects",
