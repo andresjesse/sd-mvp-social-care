@@ -162,7 +162,9 @@ export default function AdminSubjectsCreatePage() {
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("subjects_create_page.form.title")}</Title>
 
-        <Input.Label mt="md">{i18n.t("infos.asterisk_info")}</Input.Label>
+        <Input.Label mt="md">
+          {i18n.t("subjects_create_page.asterisk_info")}
+        </Input.Label>
 
         <form
           onSubmit={form.onSubmit(
@@ -428,7 +430,7 @@ export default function AdminSubjectsCreatePage() {
           <Flex mt="xl" justify="flex-end">
             <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
               <Button w="100%" type="submit">
-                {i18n.t("create")}
+                {i18n.t("subjects_create_page.form.create")}
               </Button>
             </MediaQuery>
           </Flex>

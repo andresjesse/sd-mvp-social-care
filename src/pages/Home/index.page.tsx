@@ -12,7 +12,9 @@ export default function Home() {
   return (
     <div className={classes.main}>
       <div className={classes.header}>
-        <Button onClick={() => navigate("/login")}>{i18n.t("login")}</Button>
+        <Button onClick={() => navigate("/login")}>
+          {i18n.t("landing_page.login")}
+        </Button>
       </div>
 
       <div className={classes.wrapper}>

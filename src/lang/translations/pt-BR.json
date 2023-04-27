@@ -1,13 +1,5 @@
 {
   "pt-BR": {
-    "hello": "Olá!",
-    "login": "Entrar",
-    "create": "Cadastrar",
-
-    "infos": {
-      "asterisk_info": "Campos com asteriscos * são obrigatórios"
-    },
-
     "layout": {
       "navbar": {
         "home": "Início",
@@ -17,12 +9,14 @@
     },
 
     "landing_page": {
+      "login": "Entrar",
       "title": "Olá, seja bem vindo ao MVP Social Care!",
       "subtitle": "Um sistema feito para agilizar o seu trabalho.",
       "content": "O atendimento social consiste em muitas informações a serem consideradas, como também muitas etapas para executar. Pensado no dia a dia de trabalho, o sistema surgiu para ajudar as agências sociais a organizar seus atendimentos aos clientes."
     },
 
     "subjects_create_page": {
+      "asterisk_info": "Campos com asteriscos * são obrigatórios",
       "form": {
         "title": "Cadastrar novo sujeito",
 
@@ -120,11 +114,13 @@
           "demographic_information": "Informações demográficas",
           "required_information": "Informações obrigatórias",
           "other": "Outros"
-        }
+        },
+        "create": "Cadastrar"
       }
     },
 
     "social_services_create_page": {
+      "asterisk_info": "Campos com asteriscos * são obrigatórios",
       "form": {
         "title": "Cadastrar atendimento",
         "fields": {
@@ -139,7 +135,8 @@
           "forward_placeholder": "encaminhamento...",
           "file_upload": "Upload de arquivo",
           "file_reset": "Resetar"
-        }
+        },
+        "create": "Cadastrar"
       }
     },
 

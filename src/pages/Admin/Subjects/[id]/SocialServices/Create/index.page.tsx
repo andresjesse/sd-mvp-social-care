@@ -122,7 +122,9 @@ export default function AdminSocialServicesCreatePage() {
           <Chip disabled>{"//socialWorker"}</Chip>
         </Group>
 
-        <Input.Label mt="md">{i18n.t("infos.asterisk_info")}</Input.Label>
+        <Input.Label mt="md">
+          {i18n.t("subjects_create_page.asterisk_info")}
+        </Input.Label>
 
         <form
           onSubmit={form.onSubmit((values) => console.log(values), handleError)}
@@ -267,7 +269,7 @@ export default function AdminSocialServicesCreatePage() {
           <Flex mt="xl" justify="flex-end">
             <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
               <Button w="100%" type="submit">
-                {i18n.t("forms.create")}
+                {i18n.t("social_services_create_page.form.create")}
               </Button>
             </MediaQuery>
           </Flex>
