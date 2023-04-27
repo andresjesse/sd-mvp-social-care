@@ -14,6 +14,7 @@ import {
   Input,
   SimpleGrid,
   MediaQuery,
+  Textarea,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
@@ -400,16 +401,26 @@ export default function AdminSubjectsCreatePage() {
                 label={chemicalDependency.label}
               ></Checkbox>
             ))}
-          </Checkbox.Group>
 
-          {form.values.chemicalDependency.includes("other") && (
-            <TextInput
-              placeholder={i18n.t(
-                "subjects_create_page.form.fields.chemical_dependency_other_placeholder"
-              )}
-              {...form.getInputProps("otherChemicalDependency")}
-            />
-          )}
+            <Flex mt="md" wrap="wrap" gap="md" align="center">
+              <Checkbox
+                value="other"
+                label={i18n.t(
+                  "subjects_create_page.form.fields.chemical_dependency_other"
+                )}
+              />
+              <Textarea
+                placeholder={i18n.t(
+                  "subjects_create_page.form.fields.chemical_dependency_other_placeholder"
+                )}
+                {...form.getInputProps("otherChemicalDependency")}
+                disabled={!form.values.chemicalDependency.includes("other")}
+                minRows={1}
+                autosize
+                sx={{ flexGrow: 1 }}
+              />
+            </Flex>
+          </Checkbox.Group>
 
           <TextInput
             mt="md"

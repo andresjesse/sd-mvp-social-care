@@ -9,11 +9,9 @@ import {
   FileButton,
   Group,
   Radio,
-  TextInput,
   Textarea,
   Title,
   Input,
-  SimpleGrid,
   Flex,
   MediaQuery,
   List,
@@ -180,11 +178,7 @@ export default function AdminSocialServicesCreatePage() {
             ))}
           </Checkbox.Group>
 
-          <SimpleGrid
-            mt="md"
-            cols={1}
-            breakpoints={[{ minWidth: "sm", cols: 2 }]}
-          >
+          <Flex mt="md" wrap="wrap" gap="md" align="center">
             <Checkbox
               value="other"
               label={i18n.t(
@@ -195,14 +189,17 @@ export default function AdminSocialServicesCreatePage() {
               }}
             />
 
-            <TextInput
+            <Textarea
               placeholder={i18n.t(
                 "social_services_create_page.form.fields.other_demand_placeholder"
               )}
               disabled={!hasOtherDemand}
               {...form.getInputProps("otherDemand")}
+              sx={{ flexGrow: 1 }}
+              minRows={1}
+              autosize
             />
-          </SimpleGrid>
+          </Flex>
 
           <Textarea
             mt="md"

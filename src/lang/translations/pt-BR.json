@@ -105,9 +105,9 @@
             "alcohol": "Álcool",
             "crack": "Crack",
             "cocaine": "Cocaína",
-            "marihuana": "Maconha",
-            "other": "Outro"
+            "marihuana": "Maconha"
           },
+          "chemical_dependency_other": "Outra",
           "chemical_dependency_other_placeholder": "Descreva a(s) outra(s) dependência(s) aqui",
           "article_sentence": "Artigo da pena",
           "condemnation_status": "Status de condenação",
