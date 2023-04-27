@@ -70,8 +70,8 @@ export default function AdminSocialServicesCreatePage() {
     },
   });
 
-  const handleError = (errors: typeof form.errors) => {
-    if (errors.date) {
+  const handleError = () => {
+    if (!form.isValid("date")) {
       notifications.show({
         title: i18n.t("notifications.social_services_create_page.title"),
         message: i18n.t(
@@ -80,7 +80,7 @@ export default function AdminSocialServicesCreatePage() {
         color: "red",
       });
     }
-    if (errors.origin) {
+    if (!form.isValid("origin")) {
       notifications.show({
         title: i18n.t("notifications.social_services_create_page.title"),
         message: i18n.t(
@@ -89,7 +89,7 @@ export default function AdminSocialServicesCreatePage() {
         color: "red",
       });
     }
-    if (errors.demands) {
+    if (!form.isValid("demands")) {
       notifications.show({
         title: i18n.t("notifications.social_services_create_page.title"),
         message: i18n.t(
@@ -98,7 +98,7 @@ export default function AdminSocialServicesCreatePage() {
         color: "red",
       });
     }
-    if (errors.otherDemand) {
+    if (!form.isValid("otherDemand")) {
       notifications.show({
         title: i18n.t("notifications.social_services_create_page.title"),
         message: i18n.t(
@@ -106,6 +106,15 @@ export default function AdminSocialServicesCreatePage() {
         ),
         color: "red",
       });
+    }
+  };
+
+  const handleSubmit = () => {
+    form.validate();
+    handleError();
+
+    if (form.isValid()) {
+      console.log("form", form.values);
     }
   };
 
@@ -124,9 +133,7 @@ export default function AdminSocialServicesCreatePage() {
           {i18n.t("subjects_create_page.asterisk_info")}
         </Input.Label>
 
-        <form
-          onSubmit={form.onSubmit((values) => console.log(values), handleError)}
-        >
+        <form>
           <DateTimePicker
             mt="md"
             clearable
@@ -134,7 +141,6 @@ export default function AdminSocialServicesCreatePage() {
             label={i18n.t(
               "social_services_create_page.form.fields.date_and_time"
             )}
-            dropdownType="modal"
             {...form.getInputProps("date")}
           />
 
@@ -265,7 +271,7 @@ export default function AdminSocialServicesCreatePage() {
 
           <Flex mt="xl" justify="flex-end">
             <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
-              <Button w="100%" type="submit">
+              <Button w="100%" type="button" onClick={handleSubmit}>
                 {i18n.t("social_services_create_page.form.create")}
               </Button>
             </MediaQuery>
