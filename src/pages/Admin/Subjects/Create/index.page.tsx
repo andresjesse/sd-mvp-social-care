@@ -22,7 +22,7 @@ import i18nEntriesToSelect from "@/helpers/i18nEntriesToSelect";
 import type { Subject } from "@/types/Subject";
 import { notifications } from "@mantine/notifications";
 import { IMaskInput } from "react-imask";
-import dayjs from "dayjs";
+import moment from "moment";
 
 export default function AdminSubjectsCreatePage() {
   const relativeRelationOptions = i18nEntriesToSelect(
@@ -119,14 +119,16 @@ export default function AdminSubjectsCreatePage() {
     },
   });
 
-  const handleError = (errors: typeof form.errors) => {
-    if (errors.name) {
+  const handleError = () => {
+    if (!form.isValid("name")) {
       notifications.show({
         title: i18n.t("notifications.subjects_create_page.title"),
         message: i18n.t("notifications.subjects_create_page.name_empty_error"),
         color: "red",
       });
-    } else if (errors.relativeName) {
+    }
+
+    if (!form.isValid("relativeName")) {
       notifications.show({
         title: i18n.t("notifications.subjects_create_page.title"),
         message: i18n.t(
@@ -134,7 +136,9 @@ export default function AdminSubjectsCreatePage() {
         ),
         color: "red",
       });
-    } else if (errors.relativeRelation) {
+    }
+
+    if (!form.isValid("relativeRelation")) {
       notifications.show({
         title: i18n.t("notifications.subjects_create_page.title"),
         message: i18n.t(
@@ -142,7 +146,9 @@ export default function AdminSubjectsCreatePage() {
         ),
         color: "red",
       });
-    } else if (errors.otherChemicalDependency) {
+    }
+
+    if (!form.isValid("otherChemicalDependency")) {
       notifications.show({
         title: i18n.t("notifications.subjects_create_page.title"),
         message: i18n.t(
@@ -153,9 +159,13 @@ export default function AdminSubjectsCreatePage() {
     }
   };
 
-  const handleCreate = async (subject: Subject) => {
-    console.log("form");
-    console.log(subject);
+  const handleSubmit = () => {
+    form.validate();
+    handleError();
+
+    if (form.isValid()) {
+      console.log("form", form.values);
+    }
   };
 
   return (
@@ -167,12 +177,7 @@ export default function AdminSubjectsCreatePage() {
           {i18n.t("subjects_create_page.asterisk_info")}
         </Input.Label>
 
-        <form
-          onSubmit={form.onSubmit(
-            (values) => handleCreate(values),
-            handleError
-          )}
-        >
+        <form>
           <Title mt="md" order={2}>
             {i18n.t("subjects_create_page.form.fields.required_information")}
           </Title>
@@ -211,16 +216,11 @@ export default function AdminSubjectsCreatePage() {
             maxDate={new Date()}
             withAsterisk
             dateParser={(input: string) => {
-              return dayjs(input, "DD/MM/YYYY").toDate();
+              return moment(input, "DD/MM/YYYY").toDate();
             }}
             valueFormat="DD/MM/YYYY"
             label={i18n.t("subjects_create_page.form.fields.birth_date")}
             placeholder="00/00/0000"
-            onKeyPress={(event) => {
-              if (event.code === "Enter") {
-                event.preventDefault();
-              }
-            }}
             {...form.getInputProps("birthDate")}
           />
           <Title mt="md" order={2}>
@@ -440,7 +440,7 @@ export default function AdminSubjectsCreatePage() {
 
           <Flex mt="xl" justify="flex-end">
             <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
-              <Button w="100%" type="submit">
+              <Button w="100%" type="button" onClick={handleSubmit}>
                 {i18n.t("subjects_create_page.form.create")}
               </Button>
             </MediaQuery>
