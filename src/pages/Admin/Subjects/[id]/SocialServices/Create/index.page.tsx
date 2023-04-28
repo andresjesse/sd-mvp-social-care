@@ -15,7 +15,6 @@ import {
   Flex,
   MediaQuery,
   List,
-  ThemeIcon,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
@@ -23,7 +22,8 @@ import { useForm, isNotEmpty, hasLength } from "@mantine/form";
 import { DateTimePicker } from "@mantine/dates";
 import i18n from "@/lang";
 
-import { faFilePdf, faFileImage } from "@fortawesome/free-solid-svg-icons";
+import { faFilePdf, faFileImage } from "@fortawesome/free-regular-svg-icons";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AdminSocialServicesCreatePage() {
@@ -71,38 +71,48 @@ export default function AdminSocialServicesCreatePage() {
   });
 
   const handleError = () => {
-    if (!form.isValid("date")) {
+    if (!form.isValid()) {
       notifications.show({
         title: i18n.t("notifications.social_services_create_page.title"),
-        message: i18n.t(
-          "notifications.social_services_create_page.date_empty_error"
-        ),
-        color: "red",
-      });
-    }
-    if (!form.isValid("origin")) {
-      notifications.show({
-        title: i18n.t("notifications.social_services_create_page.title"),
-        message: i18n.t(
-          "notifications.social_services_create_page.origin_empty_error"
-        ),
-        color: "red",
-      });
-    }
-    if (!form.isValid("demands")) {
-      notifications.show({
-        title: i18n.t("notifications.social_services_create_page.title"),
-        message: i18n.t(
-          "notifications.social_services_create_page.demands_empty_error"
-        ),
-        color: "red",
-      });
-    }
-    if (!form.isValid("otherDemand")) {
-      notifications.show({
-        title: i18n.t("notifications.social_services_create_page.title"),
-        message: i18n.t(
-          "notifications.social_services_create_page.other_demand_empty_error"
+        message: (
+          <List
+            icon={
+              <FontAwesomeIcon
+                size="sm"
+                color="#FA5252"
+                icon={faTriangleExclamation}
+              />
+            }
+          >
+            {!form.isValid("date") && (
+              <List.Item>
+                {i18n.t(
+                  "notifications.social_services_create_page.date_empty_error"
+                )}
+              </List.Item>
+            )}
+            {!form.isValid("origin") && (
+              <List.Item>
+                {i18n.t(
+                  "notifications.social_services_create_page.origin_empty_error"
+                )}
+              </List.Item>
+            )}
+            {!form.isValid("demands") && (
+              <List.Item>
+                {i18n.t(
+                  "notifications.social_services_create_page.demands_empty_error"
+                )}
+              </List.Item>
+            )}
+            {!form.isValid("other_demand") && (
+              <List.Item>
+                {i18n.t(
+                  "notifications.social_services_create_page.other_demand_error"
+                )}
+              </List.Item>
+            )}
+          </List>
         ),
         color: "red",
       });
@@ -247,19 +257,15 @@ export default function AdminSocialServicesCreatePage() {
                   <List.Item
                     key={index}
                     icon={
-                      <ThemeIcon
-                        color={file.type == "application/pdf" ? "red" : "cyan"}
-                        size={24}
-                        radius="xl"
-                      >
-                        <FontAwesomeIcon
-                          icon={
-                            file.type == "application/pdf"
-                              ? faFilePdf
-                              : faFileImage
-                          }
-                        />
-                      </ThemeIcon>
+                      <FontAwesomeIcon
+                        color={file.type == "application/pdf" ? "red" : "gray"}
+                        size="xl"
+                        icon={
+                          file.type == "application/pdf"
+                            ? faFilePdf
+                            : faFileImage
+                        }
+                      />
                     }
                   >
                     {file.name}
