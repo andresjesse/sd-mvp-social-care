@@ -4,7 +4,7 @@ import { Button, Card, Title } from "@mantine/core";
 import { useNavigate } from "react-router";
 import i18n from "@/lang";
 
-export default function AdminSubjectsList() {
+export default function AdminSubjectsPage() {
   const navigate = useNavigate();
 
   return (

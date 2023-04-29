@@ -105,10 +105,10 @@ export default function AdminSocialServicesCreatePage() {
                 )}
               </List.Item>
             )}
-            {!form.isValid("other_demand") && (
+            {!form.isValid("otherDemand") && (
               <List.Item>
                 {i18n.t(
-                  "notifications.social_services_create_page.other_demand_error"
+                  "notifications.social_services_create_page.other_demand_empty_error"
                 )}
               </List.Item>
             )}

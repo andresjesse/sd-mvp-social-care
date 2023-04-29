@@ -85,27 +85,30 @@ export default function AppLayout({
           p="xs"
         >
           <Navbar.Section grow>
-            <Anchor
-              href="/admin"
-              underline={false}
-              className={cx(classes.navbarLink, {
-                [classes.navbarLinkActive]: navbarLinkActive === "home",
-              })}
-            >
-              <FontAwesomeIcon icon={faHome} />
-              {i18n.t("layout.navbar.home")}
-            </Anchor>
-
-            <Anchor
-              href="/admin/subjects"
-              underline={false}
-              className={cx(classes.navbarLink, {
-                [classes.navbarLinkActive]: navbarLinkActive === "subjects",
-              })}
-            >
-              <FontAwesomeIcon icon={faIdCard} />
-              {i18n.t("layout.navbar.subjects")}
-            </Anchor>
+            <Link to="/admin" style={{ textDecoration: "none" }}>
+              <Anchor
+                href="#"
+                underline={false}
+                className={cx(classes.navbarLink, {
+                  [classes.navbarLinkActive]: navbarLinkActive === "home",
+                })}
+              >
+                <FontAwesomeIcon icon={faHome} />
+                {i18n.t("layout.navbar.home")}
+              </Anchor>
+            </Link>
+            <Link to="/admin/subjects" style={{ textDecoration: "none" }}>
+              <Anchor
+                href=""
+                underline={false}
+                className={cx(classes.navbarLink, {
+                  [classes.navbarLinkActive]: navbarLinkActive === "subjects",
+                })}
+              >
+                <FontAwesomeIcon icon={faIdCard} />
+                {i18n.t("layout.navbar.subjects")}
+              </Anchor>
+            </Link>
           </Navbar.Section>
 
           <Divider />

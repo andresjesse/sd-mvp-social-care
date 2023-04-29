@@ -9,8 +9,8 @@ import AdminSocialServicesPage from "@/pages/Admin/Subjects/[id]/SocialServices/
 import AdminSocialServicesCreatePage from "@/pages/Admin/Subjects/[id]/SocialServices/Create/index.page";
 import AdminSocialServicesShowPage from "@/pages/Admin/Subjects/[id]/SocialServices/[id]/index.page";
 
-import SubjectsCreate from "@/pages/Admin/Subjects/Create/index.page";
-import AdminSubjectsList from "@/pages/Admin/Subjects/index.page";
+import AdminSubjectsCreatePage from "@/pages/Admin/Subjects/Create/index.page";
+import AdminSubjectsPage from "@/pages/Admin/Subjects/index.page";
 
 const router = createBrowserRouter([
   {
@@ -35,11 +35,11 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <AdminSubjectsList />,
+            element: <AdminSubjectsPage />,
           },
           {
             path: "create",
-            element: <SubjectsCreate />,
+            element: <AdminSubjectsCreatePage />,
           },
           {
             path: ":subjectId",
