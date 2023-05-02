@@ -261,7 +261,11 @@ export default function AdminSocialServicesCreatePage() {
                     key={index}
                     icon={
                       <FontAwesomeIcon
-                        color={file.type == "application/pdf" ? "red" : "gray"}
+                        color={
+                          file.type == "application/pdf"
+                            ? theme.colors.red[8]
+                            : theme.colors.gray[7]
+                        }
                         size="xl"
                         icon={
                           file.type == "application/pdf"
