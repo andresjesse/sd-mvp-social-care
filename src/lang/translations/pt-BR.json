@@ -150,6 +150,16 @@
     },
 
     "notifications": {
+      "database_error": {
+        "title": "Ops! 🙁",
+        "send_forms": "Houve um erro ao salvar os dados, tente novamente mais tarde."
+      },
+
+      "database_success": {
+        "title": "Sucesso!",
+        "send_forms": "Dados foram salvos com sucesso."
+      },
+
       "login": {
         "title": "Ops! 🙁",
         "auth_error": "Ocorreu um erro de autenticação!",
