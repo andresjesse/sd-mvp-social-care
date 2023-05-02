@@ -29,6 +29,7 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useCollection from "@/hooks/useCollection";
 import { useNavigate } from "react-router";
+import AppLoader from "@/pages/Layouts/AppLoader";
 
 export default function AdminSubjectsCreatePage() {
   const navigate = useNavigate();
@@ -175,7 +176,8 @@ export default function AdminSubjectsCreatePage() {
     }
   };
 
-  const { create } = useCollection<Subject>("subjects");
+  const { create, loading: loadingCreateSubjects } =
+    useCollection<Subject>("subjects");
 
   const handleSubmit = async () => {
     form.validate();
@@ -203,6 +205,10 @@ export default function AdminSubjectsCreatePage() {
       }
     }
   };
+
+  if (loadingCreateSubjects) {
+    return <AppLoader />;
+  }
 
   return (
     <AppLayout navbarLinkActive="subjects">
