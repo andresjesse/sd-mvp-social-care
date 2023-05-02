@@ -15,6 +15,8 @@ import {
   SimpleGrid,
   MediaQuery,
   Textarea,
+  List,
+  useMantineTheme,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
@@ -23,8 +25,12 @@ import type { Subject } from "@/types/Subject";
 import { notifications } from "@mantine/notifications";
 import { IMaskInput } from "react-imask";
 import moment from "moment";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AdminSubjectsCreatePage() {
+  const theme = useMantineTheme();
+
   const relativeRelationOptions = i18nEntriesToSelect(
     "subjects_create_page.form.fields.relative_relation_options"
   );
@@ -120,39 +126,46 @@ export default function AdminSubjectsCreatePage() {
   });
 
   const handleError = () => {
-    if (!form.isValid("name")) {
+    if (!form.isValid()) {
       notifications.show({
         title: i18n.t("notifications.subjects_create_page.title"),
-        message: i18n.t("notifications.subjects_create_page.name_empty_error"),
-        color: "red",
-      });
-    }
-
-    if (!form.isValid("relativeName")) {
-      notifications.show({
-        title: i18n.t("notifications.subjects_create_page.title"),
-        message: i18n.t(
-          "notifications.subjects_create_page.relative_name_empty_error"
-        ),
-        color: "red",
-      });
-    }
-
-    if (!form.isValid("relativeRelation")) {
-      notifications.show({
-        title: i18n.t("notifications.subjects_create_page.title"),
-        message: i18n.t(
-          "notifications.subjects_create_page.relative_relation_empty_error"
-        ),
-        color: "red",
-      });
-    }
-
-    if (!form.isValid("otherChemicalDependency")) {
-      notifications.show({
-        title: i18n.t("notifications.subjects_create_page.title"),
-        message: i18n.t(
-          "notifications.subjects_create_page.other_chemical_dependency_empty_error"
+        message: (
+          <List
+            icon={
+              <FontAwesomeIcon
+                size="sm"
+                color={theme.colors.red[6]}
+                icon={faTriangleExclamation}
+              />
+            }
+          >
+            {!form.isValid("name") && (
+              <List.Item>
+                {i18n.t("notifications.subjects_create_page.name_empty_error")}
+              </List.Item>
+            )}
+            {!form.isValid("relativeName") && (
+              <List.Item>
+                {i18n.t(
+                  "notifications.subjects_create_page.relative_name_empty_error"
+                )}
+              </List.Item>
+            )}
+            {!form.isValid("relativeRelation") && (
+              <List.Item>
+                {i18n.t(
+                  "notifications.subjects_create_page.relative_relation_empty_error"
+                )}
+              </List.Item>
+            )}
+            {!form.isValid("otherChemicalDependency") && (
+              <List.Item>
+                {i18n.t(
+                  "notifications.subjects_create_page.other_chemical_dependency_empty_error"
+                )}
+              </List.Item>
+            )}
+          </List>
         ),
         color: "red",
       });
