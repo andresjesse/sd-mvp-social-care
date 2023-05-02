@@ -26,9 +26,20 @@ import i18n from "@/lang";
 import { faFilePdf, faFileImage } from "@fortawesome/free-regular-svg-icons";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SocialService } from "@/types/SocialService";
+import useCollection from "@/hooks/useCollection";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
+
+  const navigate = useNavigate();
+
+  const { subjectId } = useParams();
+
+  const { create } = useCollection<SocialService>(
+    `subjects/${subjectId}/social-services`
+  );
 
   //fetch demands
   const demands = [
@@ -45,7 +56,7 @@ export default function AdminSocialServicesCreatePage() {
     resetRef.current?.();
   };
 
-  const form = useForm({
+  const form = useForm<SocialService>({
     initialValues: {
       date: new Date(),
       origin: "",
@@ -122,12 +133,24 @@ export default function AdminSocialServicesCreatePage() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     form.validate();
     handleError();
-
     if (form.isValid()) {
-      console.log("form", form.values);
+      try {
+        await create(form.values);
+        notifications.show({
+          title: i18n.t("notifications.database_success.title"),
+          message: i18n.t("notifications.database_success.send_forms"),
+        });
+        navigate("/admin/subjects/");
+      } catch (error) {
+        notifications.show({
+          title: i18n.t("notifications.database_error.title"),
+          message: i18n.t("notifications.database_error.send_forms"),
+          color: "red",
+        });
+      }
     }
   };
 
