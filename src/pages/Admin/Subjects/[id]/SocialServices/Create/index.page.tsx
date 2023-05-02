@@ -15,6 +15,7 @@ import {
   Flex,
   MediaQuery,
   List,
+  useMantineTheme,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
@@ -27,6 +28,8 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AdminSocialServicesCreatePage() {
+  const theme = useMantineTheme();
+
   //fetch demands
   const demands = [
     { label: "Demanda 1", value: "Demanda 1" },
@@ -79,7 +82,7 @@ export default function AdminSocialServicesCreatePage() {
             icon={
               <FontAwesomeIcon
                 size="sm"
-                color="#FA5252"
+                color={theme.colors.red[6]}
                 icon={faTriangleExclamation}
               />
             }

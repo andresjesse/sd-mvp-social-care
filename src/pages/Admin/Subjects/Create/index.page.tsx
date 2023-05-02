@@ -16,6 +16,7 @@ import {
   MediaQuery,
   Textarea,
   List,
+  useMantineTheme,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { hasLength, isNotEmpty, useForm } from "@mantine/form";
@@ -28,6 +29,8 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AdminSubjectsCreatePage() {
+  const theme = useMantineTheme();
+
   const relativeRelationOptions = i18nEntriesToSelect(
     "subjects_create_page.form.fields.relative_relation_options"
   );
@@ -131,7 +134,7 @@ export default function AdminSubjectsCreatePage() {
             icon={
               <FontAwesomeIcon
                 size="sm"
-                color="#FA5252"
+                color={theme.colors.red[6]}
                 icon={faTriangleExclamation}
               />
             }
