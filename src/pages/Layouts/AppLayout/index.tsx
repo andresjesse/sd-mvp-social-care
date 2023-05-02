@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  Anchor,
   AppShell,
   Box,
   Burger,
@@ -86,28 +85,24 @@ export default function AppLayout({
         >
           <Navbar.Section grow>
             <Link to="/admin" style={{ textDecoration: "none" }}>
-              <Anchor
-                href="#"
-                underline={false}
+              <Box
                 className={cx(classes.navbarLink, {
                   [classes.navbarLinkActive]: navbarLinkActive === "home",
                 })}
               >
                 <FontAwesomeIcon icon={faHome} />
                 {i18n.t("layout.navbar.home")}
-              </Anchor>
+              </Box>
             </Link>
             <Link to="/admin/subjects" style={{ textDecoration: "none" }}>
-              <Anchor
-                href=""
-                underline={false}
+              <Box
                 className={cx(classes.navbarLink, {
                   [classes.navbarLinkActive]: navbarLinkActive === "subjects",
                 })}
               >
                 <FontAwesomeIcon icon={faIdCard} />
                 {i18n.t("layout.navbar.subjects")}
-              </Anchor>
+              </Box>
             </Link>
           </Navbar.Section>
 
