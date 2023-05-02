@@ -27,8 +27,11 @@ import { IMaskInput } from "react-imask";
 import moment from "moment";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useCollection from "@/hooks/useCollection";
+import { useNavigate } from "react-router";
 
 export default function AdminSubjectsCreatePage() {
+  const navigate = useNavigate();
   const theme = useMantineTheme();
 
   const relativeRelationOptions = i18nEntriesToSelect(
@@ -172,12 +175,32 @@ export default function AdminSubjectsCreatePage() {
     }
   };
 
-  const handleSubmit = () => {
+  const { create } = useCollection<Subject>("subjects");
+
+  const handleSubmit = async () => {
     form.validate();
     handleError();
 
     if (form.isValid()) {
       console.log("form", form.values);
+
+      try {
+        const subjectId = await create(form.values);
+
+        notifications.show({
+          title: i18n.t("notifications.database_success.title"),
+          message: i18n.t("notifications.database_success.send_forms"),
+          color: "green",
+        });
+
+        navigate(`/admin/subjects/${subjectId}/social-services/create`);
+      } catch (error) {
+        notifications.show({
+          title: i18n.t("notifications.database_error.title"),
+          message: i18n.t("notifications.database_error.send_forms"),
+          color: "red",
+        });
+      }
     }
   };
 
