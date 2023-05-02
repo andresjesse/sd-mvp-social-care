@@ -29,6 +29,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SocialService } from "@/types/SocialService";
 import useCollection from "@/hooks/useCollection";
 import { useNavigate, useParams } from "react-router-dom";
+import useDocument from "@/hooks/useDocument";
+import AppLoader from "@/pages/Layouts/AppLoader";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -37,8 +39,12 @@ export default function AdminSocialServicesCreatePage() {
 
   const { subjectId } = useParams();
 
-  const { create } = useCollection<SocialService>(
-    `subjects/${subjectId}/social-services`
+  const { create, loading: loadingSocialServices } =
+    useCollection<SocialService>(`subjects/${subjectId}/social-services`);
+
+  const { data, loading: loadingSubejct } = useDocument(
+    "subjects",
+    subjectId || ""
   );
 
   //fetch demands
@@ -154,13 +160,17 @@ export default function AdminSocialServicesCreatePage() {
     }
   };
 
+  if (loadingSubejct || loadingSocialServices) {
+    return <AppLoader />;
+  }
+
   return (
     <AppLayout navbarLinkActive="subjects">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("social_services_create_page.form.title")}</Title>
 
         <Group mt="md" position="apart">
-          <Chip checked>{"//subject"}</Chip>
+          <Chip checked>{data?.name}</Chip>
 
           <Chip disabled>{"//socialWorker"}</Chip>
         </Group>
