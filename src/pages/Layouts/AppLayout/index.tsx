@@ -20,7 +20,7 @@ import useAuth from "@/hooks/useAuth";
 import i18n from "@/lang";
 import {
   faCircleUser,
-  faClockRotateLeft,
+  faHandshakeAngle,
   faHome,
   faIdCard,
   faSignOut,
@@ -28,20 +28,24 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useStyles from "./styles";
 import AppLoader from "../AppLoader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface AppLayoutProps {
   children: ReactNode;
   navbarLinkActive?: string;
+  currentSubjectName?: string;
 }
 
 export default function AppLayout({
   children,
   navbarLinkActive,
+  currentSubjectName,
 }: AppLayoutProps) {
   const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
   const { user, loading, logout } = useAuth();
+
+  const navigate = useNavigate();
 
   if (loading) return <AppLoader />;
 
@@ -106,46 +110,36 @@ export default function AppLayout({
                 {i18n.t("layout.navbar.subjects")}
               </Box>
             </Link>
-            <Link
-              to="/admin/subjects/id1/social-services/create"
-              style={{ textDecoration: "none" }}
-            >
-              <Box
-                className={cx(classes.navbarLink, {
-                  [classes.navbarLinkActive]:
-                    navbarLinkActive === "social-service1",
-                })}
+            {currentSubjectName && (
+              <Link
+                to={
+                  "/admin/subjects/" +
+                  navbarLinkActive +
+                  "/social-services/create"
+                }
+                style={{ textDecoration: "none" }}
               >
-                <FontAwesomeIcon icon={faClockRotateLeft} />
-                Atendimento iniciado... João Oliveira
-                <CloseButton
-                  ml="xs"
-                  title="Close"
-                  size="lg"
-                  variant="transparent"
-                />
-              </Box>
-            </Link>
-            <Link
-              to="/admin/subjects/id2/social-services/create"
-              style={{ textDecoration: "none" }}
-            >
-              <Box
-                className={cx(classes.navbarLink, {
-                  [classes.navbarLinkActive]:
-                    navbarLinkActive === "social-service2",
-                })}
-              >
-                <FontAwesomeIcon icon={faClockRotateLeft} />
-                Atendimento iniciado... Tiago Silva
-                <CloseButton
-                  ml="xs"
-                  title="Close"
-                  size="lg"
-                  variant="transparent"
-                />
-              </Box>
-            </Link>
+                <Box
+                  className={cx(classes.navbarLink, {
+                    [classes.navbarLinkActive]: true,
+                  })}
+                >
+                  <FontAwesomeIcon icon={faHandshakeAngle} />
+                  {i18n.t("social_services_create_page.started")}{" "}
+                  {currentSubjectName}
+                  <CloseButton
+                    ml="xs"
+                    title="Close"
+                    size="lg"
+                    variant="transparent"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate("/admin/subjects");
+                    }}
+                  />
+                </Box>
+              </Link>
+            )}
           </Navbar.Section>
 
           <Divider />

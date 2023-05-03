@@ -129,6 +129,7 @@
     },
 
     "social_services_create_page": {
+      "started": "Atendimento iniciado...",
       "asterisk_info": "Campos com asteriscos * são obrigatórios",
       "form": {
         "title": "Cadastrar atendimento",
