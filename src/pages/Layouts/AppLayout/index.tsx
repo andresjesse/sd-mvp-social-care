@@ -4,6 +4,7 @@ import {
   AppShell,
   Box,
   Burger,
+  CloseButton,
   Divider,
   Flex,
   Header,
@@ -19,6 +20,7 @@ import useAuth from "@/hooks/useAuth";
 import i18n from "@/lang";
 import {
   faCircleUser,
+  faClockRotateLeft,
   faHome,
   faIdCard,
   faSignOut,
@@ -102,6 +104,46 @@ export default function AppLayout({
               >
                 <FontAwesomeIcon icon={faIdCard} />
                 {i18n.t("layout.navbar.subjects")}
+              </Box>
+            </Link>
+            <Link
+              to="/admin/subjects/id1/social-services/create"
+              style={{ textDecoration: "none" }}
+            >
+              <Box
+                className={cx(classes.navbarLink, {
+                  [classes.navbarLinkActive]:
+                    navbarLinkActive === "social-service1",
+                })}
+              >
+                <FontAwesomeIcon icon={faClockRotateLeft} />
+                Atendimento iniciado... João Oliveira
+                <CloseButton
+                  ml="xs"
+                  title="Close"
+                  size="lg"
+                  variant="transparent"
+                />
+              </Box>
+            </Link>
+            <Link
+              to="/admin/subjects/id2/social-services/create"
+              style={{ textDecoration: "none" }}
+            >
+              <Box
+                className={cx(classes.navbarLink, {
+                  [classes.navbarLinkActive]:
+                    navbarLinkActive === "social-service2",
+                })}
+              >
+                <FontAwesomeIcon icon={faClockRotateLeft} />
+                Atendimento iniciado... Tiago Silva
+                <CloseButton
+                  ml="xs"
+                  title="Close"
+                  size="lg"
+                  variant="transparent"
+                />
               </Box>
             </Link>
           </Navbar.Section>
