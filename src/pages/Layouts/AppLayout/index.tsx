@@ -19,6 +19,7 @@ import useAuth from "@/hooks/useAuth";
 import i18n from "@/lang";
 import {
   faCircleUser,
+  faHandshakeAngle,
   faHome,
   faIdCard,
   faSignOut,
@@ -31,11 +32,13 @@ import { Link } from "react-router-dom";
 interface AppLayoutProps {
   children: ReactNode;
   navbarLinkActive?: string;
+  showSocialServiceLink?: boolean;
 }
 
 export default function AppLayout({
   children,
   navbarLinkActive,
+  showSocialServiceLink,
 }: AppLayoutProps) {
   const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
@@ -104,6 +107,25 @@ export default function AppLayout({
                 {i18n.t("layout.navbar.subjects")}
               </Box>
             </Link>
+            {showSocialServiceLink && (
+              <Link
+                to={
+                  "/admin/subjects/" +
+                  navbarLinkActive +
+                  "/social-services/create"
+                }
+                style={{ textDecoration: "none" }}
+              >
+                <Box
+                  className={cx(classes.navbarLink, {
+                    [classes.navbarLinkActive]: true,
+                  })}
+                >
+                  <FontAwesomeIcon icon={faHandshakeAngle} />
+                  {i18n.t("layout.navbar.social_service")}
+                </Box>
+              </Link>
+            )}
           </Navbar.Section>
 
           <Divider />

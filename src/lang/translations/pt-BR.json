@@ -4,6 +4,7 @@
       "navbar": {
         "home": "Início",
         "subjects": "Sujeitos",
+        "social_service": "Atendimento",
         "logout": "Sair"
       }
     },
@@ -145,6 +146,7 @@
           "file_upload": "Upload de arquivo",
           "file_reset": "Resetar"
         },
+        "cancel": "Cancelar",
         "create": "Cadastrar"
       }
     },

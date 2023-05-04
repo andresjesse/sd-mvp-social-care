@@ -26,15 +26,35 @@ import i18n from "@/lang";
 import { faFilePdf, faFileImage } from "@fortawesome/free-regular-svg-icons";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SocialService } from "@/types/SocialService";
+import useCollection from "@/hooks/useCollection";
+import { useNavigate, useParams } from "react-router-dom";
+import useDocument from "@/hooks/useDocument";
+import AppLoader from "@/pages/Layouts/AppLoader";
+import { Subject } from "@/types/Subject";
+import { Static } from "@/types/Static";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
 
+  const navigate = useNavigate();
+
+  const { subjectId } = useParams();
+
+  const { create, loading: loadingSocialServices } =
+    useCollection<SocialService>(`subjects/${subjectId}/social-services`);
+
+  const { data: subject, loading: loadingSubject } = useDocument<Subject>(
+    "subjects",
+    subjectId || ""
+  );
+
   //fetch demands
-  const demands = [
-    { label: "Demanda 1", value: "Demanda 1" },
-    { label: "Demanda 2", value: "Demanda 2" },
-  ];
+  const { data: demandsData, loading: loadingDemands } = useDocument<
+    Static["demands"]
+  >("static", "demands");
+
+  const demands = demandsData?.items;
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
 
@@ -45,7 +65,7 @@ export default function AdminSocialServicesCreatePage() {
     resetRef.current?.();
   };
 
-  const form = useForm({
+  const form = useForm<SocialService>({
     initialValues: {
       date: new Date(),
       origin: "",
@@ -122,24 +142,44 @@ export default function AdminSocialServicesCreatePage() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     form.validate();
     handleError();
-
     if (form.isValid()) {
-      console.log("form", form.values);
+      try {
+        await create(form.values);
+        notifications.show({
+          title: i18n.t("notifications.database_success.title"),
+          message: i18n.t("notifications.database_success.send_forms"),
+        });
+        navigate("/admin/subjects/");
+      } catch (error) {
+        notifications.show({
+          title: i18n.t("notifications.database_error.title"),
+          message: i18n.t("notifications.database_error.send_forms"),
+          color: "red",
+        });
+      }
     }
   };
 
+  const handleCancel = () => {
+    navigate("/admin/subjects");
+  };
+
+  if (loadingSubject || loadingSocialServices || loadingDemands) {
+    return <AppLoader />;
+  }
+
   return (
-    <AppLayout navbarLinkActive="subjects">
+    <AppLayout navbarLinkActive={subjectId} showSocialServiceLink={true}>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("social_services_create_page.form.title")}</Title>
 
         <Group mt="md" position="apart">
-          <Chip checked>{"//subject"}</Chip>
+          <Chip checked>{subject?.name}</Chip>
 
-          <Chip disabled>{"//socialWorker"}</Chip>
+          {/* <Chip disabled>{"//socialWorker"}</Chip> */}
         </Group>
 
         <Input.Label mt="md">
@@ -187,13 +227,8 @@ export default function AdminSocialServicesCreatePage() {
             withAsterisk
             {...form.getInputProps("demands")}
           >
-            {demands.map((demand, index) => (
-              <Checkbox
-                key={index}
-                mt="md"
-                value={demand.value}
-                label={demand.label}
-              />
+            {demands?.map((demand, index) => (
+              <Checkbox key={index} mt="md" value={demand} label={demand} />
             ))}
           </Checkbox.Group>
 
@@ -282,13 +317,30 @@ export default function AdminSocialServicesCreatePage() {
             </Flex>
           )}
 
-          <Flex mt="xl" justify="flex-end">
-            <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
-              <Button w="100%" type="button" onClick={handleSubmit}>
-                {i18n.t("social_services_create_page.form.create")}
-              </Button>
-            </MediaQuery>
-          </Flex>
+          <MediaQuery largerThan="sm" styles={{ flexDirection: "row" }}>
+            <Flex mt="xl" direction="column" gap="md" justify="space-between">
+              <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
+                <Button
+                  variant="outline"
+                  sx={(theme) => ({
+                    color: theme.colors.red[6],
+                    borderColor: theme.colors.red[6],
+                  })}
+                  w="100%"
+                  type="button"
+                  onClick={handleCancel}
+                >
+                  {i18n.t("social_services_create_page.form.cancel")}
+                </Button>
+              </MediaQuery>
+
+              <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
+                <Button w="100%" type="button" onClick={handleSubmit}>
+                  {i18n.t("social_services_create_page.form.create")}
+                </Button>
+              </MediaQuery>
+            </Flex>
+          </MediaQuery>
         </form>
       </Card>
     </AppLayout>
