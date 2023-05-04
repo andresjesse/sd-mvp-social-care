@@ -122,7 +122,7 @@ export default function AppLayout({
                   })}
                 >
                   <FontAwesomeIcon icon={faHandshakeAngle} />
-                  {i18n.t("layout.navbar.social_service")}{" "}
+                  {i18n.t("layout.navbar.social_service")}
                 </Box>
               </Link>
             )}
