@@ -4,6 +4,7 @@
       "navbar": {
         "home": "Início",
         "subjects": "Sujeitos",
+        "social_service": "Atendimento",
         "logout": "Sair"
       }
     },
@@ -129,7 +130,6 @@
     },
 
     "social_services_create_page": {
-      "started": "Atendimento iniciado...",
       "asterisk_info": "Campos com asteriscos * são obrigatórios",
       "form": {
         "title": "Cadastrar atendimento",

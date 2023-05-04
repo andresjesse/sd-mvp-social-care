@@ -4,7 +4,6 @@ import {
   AppShell,
   Box,
   Burger,
-  CloseButton,
   Divider,
   Flex,
   Header,
@@ -28,24 +27,22 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useStyles from "./styles";
 import AppLoader from "../AppLoader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface AppLayoutProps {
   children: ReactNode;
   navbarLinkActive?: string;
-  currentSubjectName?: string;
+  showSocialServiceLink?: boolean;
 }
 
 export default function AppLayout({
   children,
   navbarLinkActive,
-  currentSubjectName,
+  showSocialServiceLink,
 }: AppLayoutProps) {
   const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
   const { user, loading, logout } = useAuth();
-
-  const navigate = useNavigate();
 
   if (loading) return <AppLoader />;
 
@@ -110,7 +107,7 @@ export default function AppLayout({
                 {i18n.t("layout.navbar.subjects")}
               </Box>
             </Link>
-            {currentSubjectName && (
+            {showSocialServiceLink && (
               <Link
                 to={
                   "/admin/subjects/" +
@@ -125,18 +122,7 @@ export default function AppLayout({
                   })}
                 >
                   <FontAwesomeIcon icon={faHandshakeAngle} />
-                  {i18n.t("social_services_create_page.started")}{" "}
-                  {currentSubjectName}
-                  <CloseButton
-                    ml="xs"
-                    title="Close"
-                    size="lg"
-                    variant="transparent"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate("/admin/subjects");
-                    }}
-                  />
+                  {i18n.t("layout.navbar.social_service")}{" "}
                 </Box>
               </Link>
             )}

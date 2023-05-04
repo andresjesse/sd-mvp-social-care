@@ -172,7 +172,7 @@ export default function AdminSocialServicesCreatePage() {
   }
 
   return (
-    <AppLayout navbarLinkActive={subjectId} currentSubjectName={subject?.name}>
+    <AppLayout navbarLinkActive={subjectId} showSocialServiceLink={true}>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("social_services_create_page.form.title")}</Title>
 
