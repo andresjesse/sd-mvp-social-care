@@ -42,13 +42,18 @@ export default function AdminSocialServicesCreatePage() {
   const { create, loading: loadingSocialServices } =
     useCollection<SocialService>(`subjects/${subjectId}/social-services`);
 
-  const { data: subject, loading: loadingSubejct } = useDocument(
+  const { data: subject, loading: loadingSubject } = useDocument(
     "subjects",
     subjectId || ""
   );
 
   //fetch demands
-  const { data: demands, loading: loadingDemands } = useCollection("demands");
+  const { data: demandsData, loading: loadingDemands } = useDocument(
+    "static",
+    "demands"
+  );
+
+  const demands = demandsData?.items;
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
 
@@ -157,7 +162,7 @@ export default function AdminSocialServicesCreatePage() {
     }
   };
 
-  if (loadingSubejct || loadingSocialServices || loadingDemands) {
+  if (loadingSubject || loadingSocialServices || loadingDemands) {
     return <AppLoader />;
   }
 
@@ -217,13 +222,8 @@ export default function AdminSocialServicesCreatePage() {
             withAsterisk
             {...form.getInputProps("demands")}
           >
-            {demands.map((demand, index) => (
-              <Checkbox
-                key={index}
-                mt="md"
-                value={demand.value}
-                label={demand.value}
-              />
+            {demands?.map((demand: string, index: string) => (
+              <Checkbox key={index} mt="md" value={demand} label={demand} />
             ))}
           </Checkbox.Group>
 
