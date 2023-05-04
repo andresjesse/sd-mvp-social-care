@@ -42,16 +42,13 @@ export default function AdminSocialServicesCreatePage() {
   const { create, loading: loadingSocialServices } =
     useCollection<SocialService>(`subjects/${subjectId}/social-services`);
 
-  const { data, loading: loadingSubejct } = useDocument(
+  const { data: subject, loading: loadingSubejct } = useDocument(
     "subjects",
     subjectId || ""
   );
 
   //fetch demands
-  const demands = [
-    { label: "Demanda 1", value: "Demanda 1" },
-    { label: "Demanda 2", value: "Demanda 2" },
-  ];
+  const { data: demands, loading: loadingDemands } = useCollection("demands");
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
 
@@ -160,17 +157,17 @@ export default function AdminSocialServicesCreatePage() {
     }
   };
 
-  if (loadingSubejct || loadingSocialServices) {
+  if (loadingSubejct || loadingSocialServices || loadingDemands) {
     return <AppLoader />;
   }
 
   return (
-    <AppLayout navbarLinkActive={subjectId} currentSubjectName={data?.name}>
+    <AppLayout navbarLinkActive={subjectId} currentSubjectName={subject?.name}>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("social_services_create_page.form.title")}</Title>
 
         <Group mt="md" position="apart">
-          <Chip checked>{data?.name}</Chip>
+          <Chip checked>{subject?.name}</Chip>
 
           <Chip disabled>{"//socialWorker"}</Chip>
         </Group>
@@ -225,7 +222,7 @@ export default function AdminSocialServicesCreatePage() {
                 key={index}
                 mt="md"
                 value={demand.value}
-                label={demand.label}
+                label={demand.value}
               />
             ))}
           </Checkbox.Group>
