@@ -32,6 +32,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useDocument from "@/hooks/useDocument";
 import AppLoader from "@/pages/Layouts/AppLoader";
 import { Subject } from "@/types/Subject";
+import { Static } from "@/types/Static";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -49,10 +50,9 @@ export default function AdminSocialServicesCreatePage() {
   );
 
   //fetch demands
-  const { data: demandsData, loading: loadingDemands } = useDocument(
-    "static",
-    "demands"
-  );
+  const { data: demandsData, loading: loadingDemands } = useDocument<
+    Static["demands"]
+  >("static", "demands");
 
   const demands = demandsData?.items;
 
@@ -227,7 +227,7 @@ export default function AdminSocialServicesCreatePage() {
             withAsterisk
             {...form.getInputProps("demands")}
           >
-            {demands.map((demand: string, index: string) => (
+            {demands?.map((demand, index) => (
               <Checkbox key={index} mt="md" value={demand} label={demand} />
             ))}
           </Checkbox.Group>
