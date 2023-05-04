@@ -179,7 +179,7 @@ export default function AdminSocialServicesCreatePage() {
         <Group mt="md" position="apart">
           <Chip checked>{subject?.name}</Chip>
 
-          <Chip disabled>{"//socialWorker"}</Chip>
+          {/* <Chip disabled>{"//socialWorker"}</Chip> */}
         </Group>
 
         <Input.Label mt="md">
