@@ -31,6 +31,7 @@ import useCollection from "@/hooks/useCollection";
 import { useNavigate, useParams } from "react-router-dom";
 import useDocument from "@/hooks/useDocument";
 import AppLoader from "@/pages/Layouts/AppLoader";
+import { Subject } from "@/types/Subject";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -42,7 +43,7 @@ export default function AdminSocialServicesCreatePage() {
   const { create, loading: loadingSocialServices } =
     useCollection<SocialService>(`subjects/${subjectId}/social-services`);
 
-  const { data: subject, loading: loadingSubject } = useDocument(
+  const { data: subject, loading: loadingSubject } = useDocument<Subject>(
     "subjects",
     subjectId || ""
   );
@@ -162,6 +163,10 @@ export default function AdminSocialServicesCreatePage() {
     }
   };
 
+  const handleCancel = () => {
+    navigate("/admin/subjects");
+  };
+
   if (loadingSubject || loadingSocialServices || loadingDemands) {
     return <AppLoader />;
   }
@@ -222,7 +227,7 @@ export default function AdminSocialServicesCreatePage() {
             withAsterisk
             {...form.getInputProps("demands")}
           >
-            {demands?.map((demand: string, index: string) => (
+            {demands.map((demand: string, index: string) => (
               <Checkbox key={index} mt="md" value={demand} label={demand} />
             ))}
           </Checkbox.Group>
@@ -312,13 +317,30 @@ export default function AdminSocialServicesCreatePage() {
             </Flex>
           )}
 
-          <Flex mt="xl" justify="flex-end">
-            <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
-              <Button w="100%" type="button" onClick={handleSubmit}>
-                {i18n.t("social_services_create_page.form.create")}
-              </Button>
-            </MediaQuery>
-          </Flex>
+          <MediaQuery largerThan="sm" styles={{ flexDirection: "row" }}>
+            <Flex mt="xl" direction="column" gap="md" justify="space-between">
+              <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
+                <Button
+                  variant="outline"
+                  sx={(theme) => ({
+                    color: theme.colors.red[6],
+                    borderColor: theme.colors.red[6],
+                  })}
+                  w="100%"
+                  type="button"
+                  onClick={handleCancel}
+                >
+                  {i18n.t("social_services_create_page.form.cancel")}
+                </Button>
+              </MediaQuery>
+
+              <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
+                <Button w="100%" type="button" onClick={handleSubmit}>
+                  {i18n.t("social_services_create_page.form.create")}
+                </Button>
+              </MediaQuery>
+            </Flex>
+          </MediaQuery>
         </form>
       </Card>
     </AppLayout>
