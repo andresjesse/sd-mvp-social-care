@@ -33,6 +33,7 @@ import useDocument from "@/hooks/useDocument";
 import AppLoader from "@/pages/Layouts/AppLoader";
 import { Subject } from "@/types/Subject";
 import { Static } from "@/types/Static";
+import dateToISOString from "@/helpers/dateToISOString";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -57,9 +58,10 @@ export default function AdminSocialServicesCreatePage() {
   const demands = demandsData?.items;
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
-
   const [files, setFiles] = useState<File[] | null>([]);
+
   const resetRef = useRef<() => void>(null);
+
   const clearFiles = () => {
     setFiles(null);
     resetRef.current?.();
@@ -147,7 +149,10 @@ export default function AdminSocialServicesCreatePage() {
     handleError();
     if (form.isValid()) {
       try {
-        await create(form.values);
+        await create({
+          ...form.values,
+          date: dateToISOString(form.values.date),
+        });
         notifications.show({
           title: i18n.t("notifications.database_success.title"),
           message: i18n.t("notifications.database_success.send_forms"),

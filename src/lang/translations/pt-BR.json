@@ -5,6 +5,7 @@
         "home": "Início",
         "subjects": "Sujeitos",
         "social_service": "Atendimento",
+        "social_services": "Atendimentos",
         "logout": "Sair"
       }
     },
@@ -127,6 +128,16 @@
         },
         "create": "Cadastrar"
       }
+    },
+
+    "social_services_page": {
+      "title": "Atendimentos de ",
+      "create": "Cadastrar",
+      "origin": "Origem",
+      "origin_internal": "Interna",
+      "origin_external": "Externa",
+      "demands": "Demandas",
+      "forward": "Encaminhamento"
     },
 
     "social_services_create_page": {

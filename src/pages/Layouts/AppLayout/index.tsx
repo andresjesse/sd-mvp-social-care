@@ -22,6 +22,7 @@ import {
   faHandshakeAngle,
   faHome,
   faIdCard,
+  faListCheck,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,12 +34,14 @@ interface AppLayoutProps {
   children: ReactNode;
   navbarLinkActive?: string;
   showSocialServiceLink?: boolean;
+  showSocialServicesLink?: boolean;
 }
 
 export default function AppLayout({
   children,
   navbarLinkActive,
   showSocialServiceLink,
+  showSocialServicesLink,
 }: AppLayoutProps) {
   const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
@@ -123,6 +126,21 @@ export default function AppLayout({
                 >
                   <FontAwesomeIcon icon={faHandshakeAngle} />
                   {i18n.t("layout.navbar.social_service")}
+                </Box>
+              </Link>
+            )}
+            {showSocialServicesLink && (
+              <Link
+                to={"/admin/subjects/" + navbarLinkActive + "/social-services"}
+                style={{ textDecoration: "none" }}
+              >
+                <Box
+                  className={cx(classes.navbarLink, {
+                    [classes.navbarLinkActive]: true,
+                  })}
+                >
+                  <FontAwesomeIcon icon={faListCheck} />
+                  {i18n.t("layout.navbar.social_services")}
                 </Box>
               </Link>
             )}

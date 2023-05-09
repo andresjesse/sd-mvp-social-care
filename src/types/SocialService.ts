@@ -1,5 +1,6 @@
 export type SocialService = {
-  date: Date;
+  id?: string;
+  date: Date | string;
   origin: string;
   demands: string[];
   otherDemand?: string;
