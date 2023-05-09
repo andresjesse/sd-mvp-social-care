@@ -6,7 +6,6 @@ import {
   getDocs,
   getFirestore,
   updateDoc,
-  // query,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -68,19 +67,6 @@ export default function useCollection<T extends { [x: string]: any }>(
     setLoading(false);
     return dataAsMap;
   };
-
-  /**
-   * Get collection for list with defined fiels.
-   * @returns An array of the collection type with all elements.
-   */
-  // const forList = async (fields: String) => {
-  // setLoading(true);
-  // const data = query(collection(db, collectionName), select(fields));
-  // setData(data);
-  // setLoading(false);
-  // return data;
-  // const query = db.collection(collectionName).select(fields).get();
-  // };
 
   /**
    * Alias to refetch all.
