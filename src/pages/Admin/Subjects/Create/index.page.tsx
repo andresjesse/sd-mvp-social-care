@@ -30,6 +30,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useCollection from "@/hooks/useCollection";
 import { useNavigate } from "react-router";
 import AppLoader from "@/pages/Layouts/AppLoader";
+import dateToISOString from "@/helpers/dateToISOString";
 
 export default function AdminSubjectsCreatePage() {
   const navigate = useNavigate();
@@ -187,7 +188,10 @@ export default function AdminSubjectsCreatePage() {
       console.log("form", form.values);
 
       try {
-        const subjectId = await create(form.values);
+        const subjectId = await create({
+          ...form.values,
+          birthDate: dateToISOString(form.values.birthDate),
+        });
 
         notifications.show({
           title: i18n.t("notifications.database_success.title"),

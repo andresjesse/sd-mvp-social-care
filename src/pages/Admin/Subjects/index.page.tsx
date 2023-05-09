@@ -21,6 +21,8 @@ export default function AdminSubjectsPage() {
 
   const { data } = useCollection<Subject>("subjects");
 
+  console.log(data[0]);
+
   return (
     <AppLayout navbarLinkActive="subjects">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
@@ -88,9 +90,7 @@ export default function AdminSubjectsPage() {
                     {i18n.t("subjects_create_page.form.fields.birth_date")}:
                   </Text>
 
-                  {moment(subject.birthDate, "yyyyMMddHHmmssfff")
-                    .toDate()
-                    .getDate()}
+                  {moment(subject.birthDate).format("DD/MM/YYYY")}
                 </Flex>
               </div>
             </SimpleGrid>
