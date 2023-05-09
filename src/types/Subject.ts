@@ -1,10 +1,11 @@
 import { Timestamp } from "firebase/firestore";
 
 export type Subject = {
+  id?: string;
   name: string;
   relativeName: string;
   relativeRelation: string;
-  birthDate?: string;
+  birthDate?: Date | string;
   cpf?: string;
   rg?: string;
   bornPlace?: string;
@@ -25,5 +26,5 @@ export type Subject = {
   otherChemicalDependency?: string;
   articleSentence?: string;
   condemnationStatus?: string;
-  lastSocialServiceDate?: string;
+  lastSocialServiceDate?: Date | string;
 };

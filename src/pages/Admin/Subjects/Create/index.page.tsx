@@ -185,8 +185,6 @@ export default function AdminSubjectsCreatePage() {
     handleError();
 
     if (form.isValid()) {
-      console.log("form", form.values);
-
       try {
         const subjectId = await create({
           ...form.values,

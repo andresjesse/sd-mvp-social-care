@@ -24,6 +24,10 @@
       "create": "Cadastrar"
     },
 
+    "social_services_page": {
+      "title": "Atendimentos"
+    },
+
     "subjects_create_page": {
       "asterisk_info": "Campos com asteriscos * são obrigatórios",
       "form": {

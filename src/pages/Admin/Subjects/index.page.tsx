@@ -1,15 +1,6 @@
 import React from "react";
 import AppLayout from "@/pages/Layouts/AppLayout";
-import {
-  Button,
-  Card,
-  Flex,
-  Grid,
-  Input,
-  SimpleGrid,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Button, Card, Grid, Input, Text, Title } from "@mantine/core";
 import { useNavigate } from "react-router";
 import i18n from "@/lang";
 import useCollection from "@/hooks/useCollection";
@@ -20,8 +11,6 @@ export default function AdminSubjectsPage() {
   const navigate = useNavigate();
 
   const { data } = useCollection<Subject>("subjects");
-
-  console.log(data[0]);
 
   return (
     <AppLayout navbarLinkActive="subjects">
@@ -51,49 +40,51 @@ export default function AdminSubjectsPage() {
             withBorder
             mb="sm"
           >
-            <SimpleGrid cols={1} spacing="xs" verticalSpacing="xs">
-              <div>
-                <Flex
-                  gap="sm"
-                  justify="flex-start"
-                  align="flex-start"
-                  direction="row"
-                >
-                  <Text fw={700}>
+            <Grid>
+              <Grid.Col span={10}>
+                <Text mt="sm">
+                  <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.name")}:
                   </Text>
-                  {subject.name}
-                </Flex>
-                <Flex
-                  gap="sm"
-                  justify="flex-start"
-                  align="flex-start"
-                  direction="row"
-                >
-                  <Text fw={700}>
+                  <Text span ml="5px">
+                    {subject.name}
+                  </Text>
+                </Text>
+
+                <Text mt="sm">
+                  <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.relative_name")}:
                   </Text>
-                  {subject.relativeName} (
-                  {i18n.t(
-                    `subjects_create_page.form.fields.relative_relation_options.${subject.relativeRelation}`
-                  )}
-                  )
-                </Flex>
+                  <Text span ml="5px">
+                    {subject.relativeName} (
+                    {i18n.t(
+                      `subjects_create_page.form.fields.relative_relation_options.${subject.relativeRelation}`
+                    )}
+                    )
+                  </Text>
+                </Text>
 
-                <Flex
-                  gap="sm"
-                  justify="flex-start"
-                  align="flex-start"
-                  direction="row"
-                >
-                  <Text fw={700}>
+                <Text mt="sm">
+                  <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.birth_date")}:
                   </Text>
+                  <Text span ml="5px">
+                    {moment(subject.birthDate).format("DD/MM/YYYY")}
+                  </Text>
+                </Text>
+              </Grid.Col>
 
-                  {moment(subject.birthDate).format("DD/MM/YYYY")}
-                </Flex>
-              </div>
-            </SimpleGrid>
+              <Grid.Col md={2} sm={10}>
+                <Button
+                  w="100%"
+                  onClick={() => {
+                    navigate(`${subject.id}/social-services`);
+                  }}
+                >
+                  {i18n.t("social_services_page.title")}
+                </Button>
+              </Grid.Col>
+            </Grid>
           </Card>
         ))}
       </Card>
