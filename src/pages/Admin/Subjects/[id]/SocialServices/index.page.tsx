@@ -4,7 +4,6 @@ import {
   Accordion,
   Button,
   Card,
-  Divider,
   Group,
   List,
   Paper,
@@ -30,6 +29,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import i18n from "@/lang";
+import moment from "moment";
 
 export default function AdminSocialServicesPage() {
   const theme = useMantineTheme();
@@ -66,13 +66,14 @@ export default function AdminSocialServicesPage() {
         </Button>
         <Accordion mt="lg" variant="separated" radius="md" defaultValue="0">
           {socialServices.map((socialService, index) => (
-            <Accordion.Item value={"" + index} key={index}>
+            <Accordion.Item value={index.toString()} key={index}>
               <Accordion.Control>
                 <Group noWrap>
                   <FontAwesomeIcon size="xl" icon={faFileCircleCheck} />
 
-                  {/* <Text>{moment(socialService.date).format()}</Text> */}
-                  <Text>09/05/23 08:45</Text>
+                  <Text>
+                    {moment(socialService.date).format("DD/MM/YYYY  HH:mm")}
+                  </Text>
 
                   <div>
                     <Text size="sm" color={theme.colors.gray[6]}>
@@ -84,10 +85,10 @@ export default function AdminSocialServicesPage() {
               <Accordion.Panel>
                 {socialService.forward && (
                   <>
-                    <Divider
-                      variant="dashed"
-                      label={i18n.t("social_services_page.forward")}
-                    />
+                    <Text fw="700">
+                      {i18n.t("social_services_page.forward")}
+                    </Text>
+
                     <Paper
                       mt="md"
                       shadow="xs"
@@ -102,27 +103,29 @@ export default function AdminSocialServicesPage() {
                     </Paper>
                   </>
                 )}
-                <Divider
-                  mt="md"
-                  variant="dashed"
-                  label={i18n.t("social_services_page.origin")}
-                />
-                <Text mt="md">
+
+                <Text fw="700" mt="md">
+                  {i18n.t("social_services_page.origin")}
+                  {": "}
                   {i18n.t(
                     "social_services_page.origin_" + socialService.origin
                   )}
                 </Text>
-                <Divider
-                  mt="md"
-                  variant="dashed"
-                  label={i18n.t("social_services_page.demands")}
-                />
-                <List mt="md">
+
+                <Text fw="700" mt="md">
+                  {i18n.t("social_services_page.demands")}
+                </Text>
+
+                <List>
                   {socialService.demands.map((demand, index) => (
-                    <List.Item key={index}>{demand}</List.Item>
+                    <List.Item icon={<div />} key={index} fz="md">
+                      {demand}
+                    </List.Item>
                   ))}
                   {socialService.otherDemand && (
-                    <List.Item>{socialService.otherDemand}</List.Item>
+                    <List.Item icon={<div />} fz="md">
+                      {socialService.otherDemand}
+                    </List.Item>
                   )}
                 </List>
               </Accordion.Panel>
