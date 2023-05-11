@@ -5,6 +5,9 @@ import {
   doc,
   getDocs,
   getFirestore,
+  limitToLast,
+  orderBy,
+  query,
   updateDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -81,5 +84,34 @@ export default function useCollection<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data, loading, create, remove, update, all, refreshData };
+  // Custom functions
+
+  const filterLast = async (limit: number) => {
+    const q = query(
+      collection(db, collectionName),
+      orderBy("birthDate", "asc"),
+      limitToLast(limit)
+    );
+
+    const querySnapshot = await getDocs(q);
+    const dataAsMap = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as T;
+      return { id: doc.id, ...data };
+    });
+
+    console.log(dataAsMap);
+
+    return dataAsMap;
+  };
+
+  return {
+    data,
+    loading,
+    create,
+    remove,
+    update,
+    all,
+    refreshData,
+    filterLast,
+  };
 }

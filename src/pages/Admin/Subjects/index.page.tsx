@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppLayout from "@/pages/Layouts/AppLayout";
 import { Button, Card, Grid, Input, Text, Title } from "@mantine/core";
 import { useNavigate } from "react-router";
@@ -10,7 +10,16 @@ import moment from "moment";
 export default function AdminSubjectsPage() {
   const navigate = useNavigate();
 
-  const { data } = useCollection<Subject>("subjects");
+  const [subjects, setSubjects] = useState<Array<Subject>>([]);
+  const { filterLast } = useCollection<Subject>("subjects", false);
+
+  const filterSujects = async () => {
+    setSubjects(await filterLast(10));
+  };
+
+  useEffect(() => {
+    filterSujects();
+  }, []);
 
   return (
     <AppLayout navbarLinkActive="subjects">
@@ -31,7 +40,7 @@ export default function AdminSubjectsPage() {
           </Grid.Col>
         </Grid>
 
-        {data.map((subject, index) => (
+        {subjects.map((subject, index) => (
           <Card
             key={index}
             shadow="sm"
