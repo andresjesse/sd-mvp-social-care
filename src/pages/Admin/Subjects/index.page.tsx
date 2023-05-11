@@ -90,7 +90,7 @@ export default function AdminSubjectsPage() {
                     navigate(`${subject.id}/social-services`);
                   }}
                 >
-                  {i18n.t("social_services_page.title")}
+                  {i18n.t("subjects_page.social_services")}
                 </Button>
               </Grid.Col>
             </Grid>
