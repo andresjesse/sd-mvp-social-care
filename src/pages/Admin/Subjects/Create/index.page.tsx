@@ -189,6 +189,7 @@ export default function AdminSubjectsCreatePage() {
         const subjectId = await create({
           ...form.values,
           birthDate: dateToISOString(form.values.birthDate),
+          lastSocialServiceDate: "",
         });
 
         notifications.show({

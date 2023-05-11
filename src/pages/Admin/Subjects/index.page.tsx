@@ -14,7 +14,7 @@ export default function AdminSubjectsPage() {
   const { filterLast } = useCollection<Subject>("subjects", false);
 
   const filterSujects = async () => {
-    setSubjects(await filterLast(10));
+    setSubjects(await filterLast(10, "lastSocialServiceDate"));
   };
 
   useEffect(() => {
