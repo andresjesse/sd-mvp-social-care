@@ -1,5 +1,3 @@
-import { Timestamp } from "firebase/firestore";
-
 export type Subject = {
   id?: string;
   name: string;
