@@ -16,6 +16,7 @@ import {
   MediaQuery,
   List,
   useMantineTheme,
+  Skeleton,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
@@ -30,7 +31,6 @@ import { SocialService } from "@/types/SocialService";
 import useCollection from "@/hooks/useCollection";
 import { useNavigate, useParams } from "react-router-dom";
 import useDocument from "@/hooks/useDocument";
-import AppLoader from "@/pages/Layouts/AppLoader";
 import { Subject } from "@/types/Subject";
 import { Static } from "@/types/Static";
 import dateToISOString from "@/helpers/dateToISOString";
@@ -173,11 +173,29 @@ export default function AdminSocialServicesCreatePage() {
   };
 
   if (loadingSubject || loadingSocialServices || loadingDemands) {
-    return <AppLoader />;
+    return (
+      <AppLayout navbarLinkActive={subjectId} showSocialServiceLinks={true}>
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
+          <Skeleton height={30} width="35%" mb="xl" />
+          <Skeleton mt="xl" height={30} width="6%" radius="xl" />
+          <Skeleton mt="md" height={20} width="25%" radius="xl" />
+          <Skeleton mt="xl" height={20} width="10%" radius="xl" />
+          <Skeleton mt="xs" height={35} radius="sm" />
+          <Skeleton mt="xl" height={20} width="10%" radius="xl" />
+          <Skeleton mt="xs" height={20} width="25%" radius="sm" />
+          <Skeleton mt="xl" height={20} width="10%" radius="xl" />
+          <Skeleton mt="xs" height={20} width="25%" radius="sm" />
+          <Skeleton mt="xs" height={20} width="20%" radius="sm" />
+          <Skeleton mt="xs" height={20} width="35%" radius="sm" />
+          <Skeleton mt="xs" height={20} width="30%" radius="sm" />
+          <Skeleton mt="xl" height={50} width="25%" radius="sm" />
+        </Card>
+      </AppLayout>
+    );
   }
 
   return (
-    <AppLayout navbarLinkActive={subjectId} showSocialServiceLink={true}>
+    <AppLayout navbarLinkActive={subjectId} showSocialServiceLinks={true}>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("social_services_create_page.form.title")}</Title>
 

@@ -4,7 +4,7 @@
       "navbar": {
         "home": "Início",
         "subjects": "Sujeitos",
-        "social_service": "Atendimento",
+        "social_service": "Cadastrar atendimento",
         "social_services": "Atendimentos",
         "logout": "Sair"
       }

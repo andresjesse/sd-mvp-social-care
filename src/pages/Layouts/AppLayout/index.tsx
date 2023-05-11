@@ -19,7 +19,7 @@ import useAuth from "@/hooks/useAuth";
 import i18n from "@/lang";
 import {
   faCircleUser,
-  faHandshakeAngle,
+  faFileSignature,
   faHome,
   faIdCard,
   faListCheck,
@@ -28,26 +28,26 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useStyles from "./styles";
 import AppLoader from "../AppLoader";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface AppLayoutProps {
   children: ReactNode;
   navbarLinkActive?: string;
-  showSocialServiceLink?: boolean;
-  showSocialServicesLink?: boolean;
+  showSocialServiceLinks?: boolean;
 }
 
 export default function AppLayout({
   children,
   navbarLinkActive,
-  showSocialServiceLink,
-  showSocialServicesLink,
+  showSocialServiceLinks,
 }: AppLayoutProps) {
   const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
   const { user, loading, logout } = useAuth();
 
   if (loading) return <AppLoader />;
+
+  const location = useLocation();
 
   return (
     <AppShell
@@ -110,39 +110,44 @@ export default function AppLayout({
                 {i18n.t("layout.navbar.subjects")}
               </Box>
             </Link>
-            {showSocialServiceLink && (
-              <Link
-                to={
-                  "/admin/subjects/" +
-                  navbarLinkActive +
-                  "/social-services/create"
-                }
-                style={{ textDecoration: "none" }}
-              >
-                <Box
-                  className={cx(classes.navbarLink, {
-                    [classes.navbarLinkActive]: true,
-                  })}
+            {showSocialServiceLinks && (
+              <Box className={cx(classes.navbarLinkGroup)}>
+                <Link
+                  to={
+                    "/admin/subjects/" + navbarLinkActive + "/social-services"
+                  }
+                  style={{ textDecoration: "none" }}
                 >
-                  <FontAwesomeIcon icon={faHandshakeAngle} />
-                  {i18n.t("layout.navbar.social_service")}
-                </Box>
-              </Link>
-            )}
-            {showSocialServicesLink && (
-              <Link
-                to={"/admin/subjects/" + navbarLinkActive + "/social-services"}
-                style={{ textDecoration: "none" }}
-              >
-                <Box
-                  className={cx(classes.navbarLink, {
-                    [classes.navbarLinkActive]: true,
-                  })}
+                  <Box
+                    className={cx(classes.navbarLink, {
+                      [classes.navbarLinkActive]:
+                        !location.pathname.includes("create"),
+                    })}
+                  >
+                    <FontAwesomeIcon icon={faListCheck} />
+                    {i18n.t("layout.navbar.social_services")}
+                  </Box>
+                </Link>
+
+                <Link
+                  to={
+                    "/admin/subjects/" +
+                    navbarLinkActive +
+                    "/social-services/create"
+                  }
+                  style={{ textDecoration: "none" }}
                 >
-                  <FontAwesomeIcon icon={faListCheck} />
-                  {i18n.t("layout.navbar.social_services")}
-                </Box>
-              </Link>
+                  <Box
+                    className={cx(classes.navbarLink, {
+                      [classes.navbarLinkActive]:
+                        location.pathname.includes("create"),
+                    })}
+                  >
+                    <FontAwesomeIcon icon={faFileSignature} />
+                    {i18n.t("layout.navbar.social_service")}
+                  </Box>
+                </Link>
+              </Box>
             )}
           </Navbar.Section>
 

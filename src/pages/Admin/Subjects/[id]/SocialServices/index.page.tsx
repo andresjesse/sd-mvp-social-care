@@ -7,6 +7,7 @@ import {
   Group,
   List,
   Paper,
+  Skeleton,
   Text,
   Title,
   useMantineTheme,
@@ -21,7 +22,6 @@ import { Subject } from "@/types/Subject";
 import { SocialService } from "@/types/SocialService";
 
 import AppLayout from "@/pages/Layouts/AppLayout";
-import AppLoader from "@/pages/Layouts/AppLoader";
 
 import {
   faFileCircleCheck,
@@ -47,11 +47,20 @@ export default function AdminSocialServicesPage() {
   );
 
   if (loadingSubject || loadingSocialServices) {
-    return <AppLoader />;
+    return (
+      <AppLayout navbarLinkActive={subjectId} showSocialServiceLinks={true}>
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
+          <Skeleton height={30} width="35%" mb="xl" />
+          <Skeleton mt="xl" height={35} width="9%" radius="md" />
+          <Skeleton mt="xl" height={400} radius="md" />
+          <Skeleton mt="xl" height={40} radius="md" />
+        </Card>
+      </AppLayout>
+    );
   }
 
   return (
-    <AppLayout navbarLinkActive={subjectId} showSocialServicesLink={true}>
+    <AppLayout navbarLinkActive={subjectId} showSocialServiceLinks={true}>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>
           {i18n.t("social_services_page.title")} {subject?.name}
