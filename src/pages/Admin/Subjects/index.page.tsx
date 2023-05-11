@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import AppLayout from "@/pages/Layouts/AppLayout";
-import { Button, Card, Grid, Input, Text, Title } from "@mantine/core";
+import {
+  Button,
+  Card,
+  Flex,
+  Input,
+  MediaQuery,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useNavigate } from "react-router";
 import i18n from "@/lang";
 import useCollection from "@/hooks/useCollection";
@@ -25,11 +33,11 @@ export default function AdminSubjectsPage() {
     <AppLayout navbarLinkActive="subjects">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("subjects_page.title")}</Title>
-        <Grid mt="md" mb="sm">
-          <Grid.Col span={6}>
-            <Input placeholder="Busca" />
-          </Grid.Col>
-          <Grid.Col span={6}>
+
+        <MediaQuery smallerThan="sm" styles={{ flexDirection: "column" }}>
+          <Flex mt="md" mb="md" direction="row" gap="md">
+            <Input placeholder="Busca" style={{ flex: 1 }} />
+
             <Button
               onClick={() => {
                 navigate("create");
@@ -37,8 +45,8 @@ export default function AdminSubjectsPage() {
             >
               {i18n.t("subjects_page.create")}
             </Button>
-          </Grid.Col>
-        </Grid>
+          </Flex>
+        </MediaQuery>
 
         {subjects.map((subject, index) => (
           <Card
@@ -49,51 +57,51 @@ export default function AdminSubjectsPage() {
             withBorder
             mb="sm"
           >
-            <Grid>
-              <Grid.Col span={10}>
-                <Text mt="sm">
-                  <Text fw={700} span>
-                    {i18n.t("subjects_create_page.form.fields.name")}:
+            <MediaQuery smallerThan="sm" styles={{ flexDirection: "column" }}>
+              <Flex mt="md" mb="md" direction="row" gap="md">
+                <Flex direction="column" w="100%">
+                  <Text mt="sm">
+                    <Text fw={700} span>
+                      {i18n.t("subjects_create_page.form.fields.name")}:
+                    </Text>
+                    <Text span ml="5px">
+                      {subject.name}
+                    </Text>
                   </Text>
-                  <Text span ml="5px">
-                    {subject.name}
-                  </Text>
-                </Text>
 
-                <Text mt="sm">
-                  <Text fw={700} span>
-                    {i18n.t("subjects_create_page.form.fields.relative_name")}:
+                  <Text mt="sm">
+                    <Text fw={700} span>
+                      {i18n.t("subjects_create_page.form.fields.relative_name")}
+                      :
+                    </Text>
+                    <Text span ml="5px">
+                      {subject.relativeName} (
+                      {i18n.t(
+                        `subjects_create_page.form.fields.relative_relation_options.${subject.relativeRelation}`
+                      )}
+                      )
+                    </Text>
                   </Text>
-                  <Text span ml="5px">
-                    {subject.relativeName} (
-                    {i18n.t(
-                      `subjects_create_page.form.fields.relative_relation_options.${subject.relativeRelation}`
-                    )}
-                    )
-                  </Text>
-                </Text>
 
-                <Text mt="sm">
-                  <Text fw={700} span>
-                    {i18n.t("subjects_create_page.form.fields.birth_date")}:
+                  <Text mt="sm">
+                    <Text fw={700} span>
+                      {i18n.t("subjects_create_page.form.fields.birth_date")}:
+                    </Text>
+                    <Text span ml="5px">
+                      {moment(subject.birthDate).format("DD/MM/YYYY")}
+                    </Text>
                   </Text>
-                  <Text span ml="5px">
-                    {moment(subject.birthDate).format("DD/MM/YYYY")}
-                  </Text>
-                </Text>
-              </Grid.Col>
+                </Flex>
 
-              <Grid.Col md={2} sm={10}>
                 <Button
-                  w="100%"
                   onClick={() => {
                     navigate(`${subject.id}/social-services`);
                   }}
                 >
                   {i18n.t("subjects_page.social_services")}
                 </Button>
-              </Grid.Col>
-            </Grid>
+              </Flex>
+            </MediaQuery>
           </Card>
         ))}
       </Card>
