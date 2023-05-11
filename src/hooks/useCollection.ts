@@ -5,6 +5,9 @@ import {
   doc,
   getDocs,
   getFirestore,
+  limitToLast,
+  orderBy,
+  query,
   updateDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -81,5 +84,36 @@ export default function useCollection<T extends { [x: string]: any }>(
     // eslint-disable-next-line
   }, []);
 
-  return { data, loading, create, remove, update, all, refreshData };
+  // Custom functions
+
+  /**
+   * Get documents (limited) from the collection ordering by a given attribute.
+   * @returns An array of the collection type with filtered elements.
+   */
+  const filterLast = async (limit: number, orderAttribute: string) => {
+    const q = query(
+      collection(db, collectionName),
+      orderBy(orderAttribute, "asc"),
+      limitToLast(limit)
+    );
+
+    const querySnapshot = await getDocs(q);
+    const dataAsMap = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as T;
+      return { id: doc.id, ...data };
+    });
+
+    return dataAsMap.reverse();
+  };
+
+  return {
+    data,
+    loading,
+    create,
+    remove,
+    update,
+    all,
+    refreshData,
+    filterLast,
+  };
 }

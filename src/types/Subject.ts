@@ -1,8 +1,9 @@
 export type Subject = {
+  id?: string;
   name: string;
   relativeName: string;
   relativeRelation: string;
-  birthDate?: Date;
+  birthDate?: Date | string;
   cpf?: string;
   rg?: string;
   bornPlace?: string;
@@ -23,5 +24,5 @@ export type Subject = {
   otherChemicalDependency?: string;
   articleSentence?: string;
   condemnationStatus?: string;
-  lastSocialServiceDate?: Date;
+  lastSocialServiceDate?: Date | string;
 };

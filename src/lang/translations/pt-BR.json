@@ -23,7 +23,8 @@
 
     "subjects_page": {
       "title": "Sujeitos",
-      "create": "Cadastrar"
+      "create": "Cadastrar",
+      "social_services": "Atendimentos"
     },
 
     "subjects_create_page": {
