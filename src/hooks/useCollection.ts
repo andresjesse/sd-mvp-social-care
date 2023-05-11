@@ -99,8 +99,6 @@ export default function useCollection<T extends { [x: string]: any }>(
       return { id: doc.id, ...data };
     });
 
-    console.log(dataAsMap);
-
     return dataAsMap;
   };
 
