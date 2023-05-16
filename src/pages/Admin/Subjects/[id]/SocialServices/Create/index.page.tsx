@@ -16,7 +16,6 @@ import {
   MediaQuery,
   List,
   useMantineTheme,
-  Skeleton,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
@@ -34,6 +33,7 @@ import useDocument from "@/hooks/useDocument";
 import { Subject } from "@/types/Subject";
 import { Static } from "@/types/Static";
 import dateToISOString from "@/helpers/dateToISOString";
+import PageSkeleton from "./_PageSkeleton";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -172,200 +172,185 @@ export default function AdminSocialServicesCreatePage() {
     navigate("/admin/subjects");
   };
 
-  if (loadingSubject || loadingSocialServices || loadingDemands) {
-    return (
-      <AppLayout navbarLinkActive={subjectId} showSocialServiceLinks={true}>
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
-          <Skeleton height={30} width="35%" mb="xl" />
-          <Skeleton mt="xl" height={30} width="6%" radius="xl" />
-          <Skeleton mt="md" height={20} width="25%" radius="xl" />
-          <Skeleton mt="xl" height={20} width="10%" radius="xl" />
-          <Skeleton mt="xs" height={35} radius="sm" />
-          <Skeleton mt="xl" height={20} width="10%" radius="xl" />
-          <Skeleton mt="xs" height={20} width="25%" radius="sm" />
-          <Skeleton mt="xl" height={20} width="10%" radius="xl" />
-          <Skeleton mt="xs" height={20} width="25%" radius="sm" />
-          <Skeleton mt="xs" height={20} width="20%" radius="sm" />
-          <Skeleton mt="xs" height={20} width="35%" radius="sm" />
-          <Skeleton mt="xs" height={20} width="30%" radius="sm" />
-          <Skeleton mt="xl" height={50} width="25%" radius="sm" />
-        </Card>
-      </AppLayout>
-    );
-  }
+  const showSkeleton =
+    loadingSubject || loadingSocialServices || loadingDemands;
 
   return (
     <AppLayout navbarLinkActive={subjectId} showSocialServiceLinks={true}>
-      <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Title>{i18n.t("social_services_create_page.form.title")}</Title>
+      {showSkeleton ? (
+        <PageSkeleton />
+      ) : (
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
+          <Title>{i18n.t("social_services_create_page.form.title")}</Title>
 
-        <Group mt="md" position="apart">
-          <Chip checked>{subject?.name}</Chip>
+          <Group mt="md" position="apart">
+            <Chip checked>{subject?.name}</Chip>
 
-          {/* <Chip disabled>{"//socialWorker"}</Chip> */}
-        </Group>
-
-        <Input.Label mt="md">
-          {i18n.t("subjects_create_page.asterisk_info")}
-        </Input.Label>
-
-        <form>
-          <DateTimePicker
-            mt="md"
-            clearable
-            withAsterisk
-            label={i18n.t(
-              "social_services_create_page.form.fields.date_and_time"
-            )}
-            {...form.getInputProps("date")}
-          />
-
-          <Radio.Group
-            mt="md"
-            name="origin"
-            label={i18n.t("social_services_create_page.form.fields.origin")}
-            withAsterisk
-            {...form.getInputProps("origin")}
-          >
-            <Group>
-              <Radio
-                value="internal"
-                label={i18n.t(
-                  "social_services_create_page.form.fields.origin_internal"
-                )}
-              />
-
-              <Radio
-                value="external"
-                label={i18n.t(
-                  "social_services_create_page.form.fields.origin_external"
-                )}
-              />
-            </Group>
-          </Radio.Group>
-
-          <Checkbox.Group
-            label={i18n.t("social_services_create_page.form.fields.demands")}
-            mt="md"
-            withAsterisk
-            {...form.getInputProps("demands")}
-          >
-            {demands?.map((demand, index) => (
-              <Checkbox key={index} mt="md" value={demand} label={demand} />
-            ))}
-          </Checkbox.Group>
-
-          <Flex mt="md" wrap="wrap" gap="md" align="center">
-            <Checkbox
-              value="other"
-              label={i18n.t(
-                "social_services_create_page.form.fields.other_demand"
-              )}
-              onChange={() => {
-                setHasOtherDemand(!hasOtherDemand);
-              }}
-            />
-
-            <Textarea
-              placeholder={i18n.t(
-                "social_services_create_page.form.fields.other_demand_placeholder"
-              )}
-              disabled={!hasOtherDemand}
-              {...form.getInputProps("otherDemand")}
-              sx={{ flexGrow: 1 }}
-              minRows={1}
-              autosize
-            />
-          </Flex>
-
-          <Textarea
-            mt="md"
-            label={i18n.t("social_services_create_page.form.fields.forward")}
-            placeholder={i18n.t(
-              "social_services_create_page.form.fields.forward_placeholder"
-            )}
-            autosize
-            minRows={2}
-            maxRows={10}
-            {...form.getInputProps("forward")}
-          />
-
-          <Group position="center" mt="md">
-            <FileButton
-              multiple
-              resetRef={resetRef}
-              onChange={setFiles}
-              accept="application/pdf,image/png,image/jpeg"
-            >
-              {(props) => (
-                <Button {...props}>
-                  {i18n.t(
-                    "social_services_create_page.form.fields.file_upload"
-                  )}
-                </Button>
-              )}
-            </FileButton>
-
-            <Button disabled={!files} color="red" onClick={clearFiles}>
-              {i18n.t("social_services_create_page.form.fields.file_reset")}
-            </Button>
+            {/* <Chip disabled>{"//socialWorker"}</Chip> */}
           </Group>
 
-          {files && (
-            <Flex justify="center" mt="md">
-              <List spacing="xs" size="xs">
-                {files.map((file: File, index) => (
-                  <List.Item
-                    key={index}
-                    icon={
-                      <FontAwesomeIcon
-                        color={
-                          file.type == "application/pdf"
-                            ? theme.colors.red[8]
-                            : theme.colors.gray[7]
-                        }
-                        size="xl"
-                        icon={
-                          file.type == "application/pdf"
-                            ? faFilePdf
-                            : faFileImage
-                        }
-                      />
-                    }
+          <Input.Label mt="md">
+            {i18n.t("subjects_create_page.asterisk_info")}
+          </Input.Label>
+
+          <form>
+            <DateTimePicker
+              mt="md"
+              clearable
+              withAsterisk
+              label={i18n.t(
+                "social_services_create_page.form.fields.date_and_time"
+              )}
+              {...form.getInputProps("date")}
+            />
+
+            <Radio.Group
+              mt="md"
+              name="origin"
+              label={i18n.t("social_services_create_page.form.fields.origin")}
+              withAsterisk
+              {...form.getInputProps("origin")}
+            >
+              <Group>
+                <Radio
+                  value="internal"
+                  label={i18n.t(
+                    "social_services_create_page.form.fields.origin_internal"
+                  )}
+                />
+
+                <Radio
+                  value="external"
+                  label={i18n.t(
+                    "social_services_create_page.form.fields.origin_external"
+                  )}
+                />
+              </Group>
+            </Radio.Group>
+
+            <Checkbox.Group
+              label={i18n.t("social_services_create_page.form.fields.demands")}
+              mt="md"
+              withAsterisk
+              {...form.getInputProps("demands")}
+            >
+              {demands?.map((demand, index) => (
+                <Checkbox key={index} mt="md" value={demand} label={demand} />
+              ))}
+            </Checkbox.Group>
+
+            <Flex mt="md" wrap="wrap" gap="md" align="center">
+              <Checkbox
+                value="other"
+                label={i18n.t(
+                  "social_services_create_page.form.fields.other_demand"
+                )}
+                onChange={() => {
+                  setHasOtherDemand(!hasOtherDemand);
+                }}
+              />
+
+              <Textarea
+                placeholder={i18n.t(
+                  "social_services_create_page.form.fields.other_demand_placeholder"
+                )}
+                disabled={!hasOtherDemand}
+                {...form.getInputProps("otherDemand")}
+                sx={{ flexGrow: 1 }}
+                minRows={1}
+                autosize
+              />
+            </Flex>
+
+            <Textarea
+              mt="md"
+              label={i18n.t("social_services_create_page.form.fields.forward")}
+              placeholder={i18n.t(
+                "social_services_create_page.form.fields.forward_placeholder"
+              )}
+              autosize
+              minRows={2}
+              maxRows={10}
+              {...form.getInputProps("forward")}
+            />
+
+            <Group position="center" mt="md">
+              <FileButton
+                multiple
+                resetRef={resetRef}
+                onChange={setFiles}
+                accept="application/pdf,image/png,image/jpeg"
+              >
+                {(props) => (
+                  <Button {...props}>
+                    {i18n.t(
+                      "social_services_create_page.form.fields.file_upload"
+                    )}
+                  </Button>
+                )}
+              </FileButton>
+
+              <Button disabled={!files} color="red" onClick={clearFiles}>
+                {i18n.t("social_services_create_page.form.fields.file_reset")}
+              </Button>
+            </Group>
+
+            {files && (
+              <Flex justify="center" mt="md">
+                <List spacing="xs" size="xs">
+                  {files.map((file: File, index) => (
+                    <List.Item
+                      key={index}
+                      icon={
+                        <FontAwesomeIcon
+                          color={
+                            file.type == "application/pdf"
+                              ? theme.colors.red[8]
+                              : theme.colors.gray[7]
+                          }
+                          size="xl"
+                          icon={
+                            file.type == "application/pdf"
+                              ? faFilePdf
+                              : faFileImage
+                          }
+                        />
+                      }
+                    >
+                      {file.name}
+                    </List.Item>
+                  ))}
+                </List>
+              </Flex>
+            )}
+
+            <MediaQuery largerThan="sm" styles={{ flexDirection: "row" }}>
+              <Flex mt="xl" direction="column" gap="md" justify="space-between">
+                <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
+                  <Button
+                    variant="outline"
+                    sx={(theme) => ({
+                      color: theme.colors.red[6],
+                      borderColor: theme.colors.red[6],
+                    })}
+                    w="100%"
+                    type="button"
+                    onClick={handleCancel}
                   >
-                    {file.name}
-                  </List.Item>
-                ))}
-              </List>
-            </Flex>
-          )}
+                    {i18n.t("social_services_create_page.form.cancel")}
+                  </Button>
+                </MediaQuery>
 
-          <MediaQuery largerThan="sm" styles={{ flexDirection: "row" }}>
-            <Flex mt="xl" direction="column" gap="md" justify="space-between">
-              <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
-                <Button
-                  variant="outline"
-                  sx={(theme) => ({
-                    color: theme.colors.red[6],
-                    borderColor: theme.colors.red[6],
-                  })}
-                  w="100%"
-                  type="button"
-                  onClick={handleCancel}
-                >
-                  {i18n.t("social_services_create_page.form.cancel")}
-                </Button>
-              </MediaQuery>
-
-              <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
-                <Button w="100%" type="button" onClick={handleSubmit}>
-                  {i18n.t("social_services_create_page.form.create")}
-                </Button>
-              </MediaQuery>
-            </Flex>
-          </MediaQuery>
-        </form>
-      </Card>
+                <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
+                  <Button w="100%" type="button" onClick={handleSubmit}>
+                    {i18n.t("social_services_create_page.form.create")}
+                  </Button>
+                </MediaQuery>
+              </Flex>
+            </MediaQuery>
+          </form>
+        </Card>
+      )}
     </AppLayout>
   );
 }
