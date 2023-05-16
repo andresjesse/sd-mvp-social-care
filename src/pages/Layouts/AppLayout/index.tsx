@@ -38,13 +38,11 @@ interface AppLayoutProps {
     | "subjects-create"
     | "social-services"
     | "social-services-create";
-  showSocialServiceLinks?: boolean;
 }
 
 export default function AppLayout({
   children,
   navbarLinkActive,
-  showSocialServiceLinks,
 }: AppLayoutProps) {
   const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
@@ -131,7 +129,7 @@ export default function AppLayout({
               </Box>
             </Link>
 
-            {showSocialServiceLinks && (
+            {subjectId && (
               <Box className={classes.navbarLinkGroup}>
                 <Link
                   to={"/admin/subjects/" + subjectId + "/social-services"}

@@ -176,10 +176,7 @@ export default function AdminSocialServicesCreatePage() {
     loadingSubject || loadingSocialServices || loadingDemands;
 
   return (
-    <AppLayout
-      navbarLinkActive={"social-services-create"}
-      showSocialServiceLinks={true}
-    >
+    <AppLayout navbarLinkActive={"social-services-create"}>
       {showSkeleton ? (
         <PageSkeleton />
       ) : (
