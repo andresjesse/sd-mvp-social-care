@@ -9,6 +9,7 @@ import {
   orderBy,
   query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -106,6 +107,27 @@ export default function useCollection<T extends { [x: string]: any }>(
     return dataAsMap.reverse();
   };
 
+  /**
+   * Get documents (limited) from the collection ordering by a given attribute.
+   * @returns An array of the collection type with filtered elements.
+   */
+  const filterByQueryString = async (collum: string, queryString: string) => {
+    const q = query(
+      collection(db, collectionName),
+      orderBy(collum, "asc"),
+      where(collum, ">=", queryString),
+      where(collum, "<=", queryString + "\uf8ff")
+    );
+
+    const querySnapshot = await getDocs(q);
+    const dataAsMap = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as T;
+      return { id: doc.id, ...data };
+    });
+
+    return dataAsMap;
+  };
+
   return {
     data,
     loading,
@@ -115,5 +137,6 @@ export default function useCollection<T extends { [x: string]: any }>(
     all,
     refreshData,
     filterLast,
+    filterByQueryString,
   };
 }
