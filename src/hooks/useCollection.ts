@@ -108,7 +108,7 @@ export default function useCollection<T extends { [x: string]: any }>(
   };
 
   /**
-   * Get documents (limited) from the collection ordering by a given attribute.
+   * Get documents from the collection filtering by a given collum and search query.
    * @returns An array of the collection type with filtered elements.
    */
   const filterByQueryString = async (collum: string, queryString: string) => {
