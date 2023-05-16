@@ -49,10 +49,9 @@ export default function AppLayout({
   const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
   const { user, loading, logout } = useAuth();
+  const { subjectId } = useParams();
 
   if (loading) return <AppLoader />;
-
-  const { subjectId } = useParams();
 
   return (
     <AppShell
