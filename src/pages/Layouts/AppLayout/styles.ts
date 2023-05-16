@@ -47,7 +47,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   navbarLinkGroup: {
-    padding: "4px",
+    padding: `calc(${theme.spacing.xs} * 0.5)`,
     border: "1px solid",
     borderColor: theme.fn.lighten(
       /* eslint-disable */
