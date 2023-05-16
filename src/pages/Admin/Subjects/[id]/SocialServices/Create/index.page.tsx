@@ -34,11 +34,14 @@ import { Subject } from "@/types/Subject";
 import { Static } from "@/types/Static";
 import dateToISOString from "@/helpers/dateToISOString";
 import PageSkeleton from "./_PageSkeleton";
+import useAuth from "@/hooks/useAuth";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
 
   const navigate = useNavigate();
+
+  const { user } = useAuth();
 
   const { subjectId } = useParams();
 
@@ -152,6 +155,7 @@ export default function AdminSocialServicesCreatePage() {
         await create({
           ...form.values,
           date: dateToISOString(form.values.date),
+          createdBy: user?.email,
         });
         notifications.show({
           title: i18n.t("notifications.database_success.title"),
@@ -185,8 +189,7 @@ export default function AdminSocialServicesCreatePage() {
 
           <Group mt="md" position="apart">
             <Chip checked>{subject?.name}</Chip>
-
-            {/* <Chip disabled>{"//socialWorker"}</Chip> */}
+            <Chip disabled>{user?.email}</Chip>
           </Group>
 
           <Input.Label mt="md">

@@ -134,6 +134,7 @@
 
     "social_services_page": {
       "title": "Atendimentos de ",
+      "created_by": "Atendido por:",
       "create": "Cadastrar",
       "origin": "Origem",
       "origin_internal": "Interna",
