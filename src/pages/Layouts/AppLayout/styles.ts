@@ -45,6 +45,19 @@ const useStyles = createStyles((theme) => ({
       color: theme.black,
     },
   },
+
+  navbarLinkGroup: {
+    padding: `calc(${theme.spacing.xs} * 0.5)`,
+    border: "1px solid",
+    borderColor: theme.fn.lighten(
+      /* eslint-disable */
+      theme.fn.variant({ variant: "filled", color: theme.primaryColor })
+        .background!,
+      /* eslint-enable */
+      0.9
+    ),
+    borderRadius: theme.defaultRadius,
+  },
 }));
 
 export default useStyles;

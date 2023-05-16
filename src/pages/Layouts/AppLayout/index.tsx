@@ -19,7 +19,7 @@ import useAuth from "@/hooks/useAuth";
 import i18n from "@/lang";
 import {
   faCircleUser,
-  faHandshakeAngle,
+  faFileSignature,
   faHome,
   faIdCard,
   faListCheck,
@@ -28,24 +28,26 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useStyles from "./styles";
 import AppLoader from "../AppLoader";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface AppLayoutProps {
   children: ReactNode;
-  navbarLinkActive?: string;
-  showSocialServiceLink?: boolean;
-  showSocialServicesLink?: boolean;
+  navbarLinkActive?:
+    | "home"
+    | "subjects"
+    | "subjects-create"
+    | "social-services"
+    | "social-services-create";
 }
 
 export default function AppLayout({
   children,
   navbarLinkActive,
-  showSocialServiceLink,
-  showSocialServicesLink,
 }: AppLayoutProps) {
   const { classes, cx } = useStyles();
   const [opened, setOpened] = useState(false);
   const { user, loading, logout } = useAuth();
+  const { subjectId } = useParams();
 
   if (loading) return <AppLoader />;
 
@@ -100,6 +102,7 @@ export default function AppLayout({
                 {i18n.t("layout.navbar.home")}
               </Box>
             </Link>
+
             <Link to="/admin/subjects" style={{ textDecoration: "none" }}>
               <Box
                 className={cx(classes.navbarLink, {
@@ -110,39 +113,56 @@ export default function AppLayout({
                 {i18n.t("layout.navbar.subjects")}
               </Box>
             </Link>
-            {showSocialServiceLink && (
-              <Link
-                to={
-                  "/admin/subjects/" +
-                  navbarLinkActive +
-                  "/social-services/create"
-                }
-                style={{ textDecoration: "none" }}
+
+            <Link
+              to="/admin/subjects/create"
+              style={{ textDecoration: "none" }}
+            >
+              <Box
+                className={cx(classes.navbarLink, {
+                  [classes.navbarLinkActive]:
+                    navbarLinkActive === "subjects-create",
+                })}
               >
-                <Box
-                  className={cx(classes.navbarLink, {
-                    [classes.navbarLinkActive]: true,
-                  })}
+                <FontAwesomeIcon icon={faFileSignature} />
+                {i18n.t("layout.navbar.subjects_create")}
+              </Box>
+            </Link>
+
+            {subjectId && (
+              <Box className={classes.navbarLinkGroup}>
+                <Link
+                  to={"/admin/subjects/" + subjectId + "/social-services"}
+                  style={{ textDecoration: "none" }}
                 >
-                  <FontAwesomeIcon icon={faHandshakeAngle} />
-                  {i18n.t("layout.navbar.social_service")}
-                </Box>
-              </Link>
-            )}
-            {showSocialServicesLink && (
-              <Link
-                to={"/admin/subjects/" + navbarLinkActive + "/social-services"}
-                style={{ textDecoration: "none" }}
-              >
-                <Box
-                  className={cx(classes.navbarLink, {
-                    [classes.navbarLinkActive]: true,
-                  })}
+                  <Box
+                    className={cx(classes.navbarLink, {
+                      [classes.navbarLinkActive]:
+                        navbarLinkActive === "social-services",
+                    })}
+                  >
+                    <FontAwesomeIcon icon={faListCheck} />
+                    {i18n.t("layout.navbar.social_services")}
+                  </Box>
+                </Link>
+
+                <Link
+                  to={
+                    "/admin/subjects/" + subjectId + "/social-services/create"
+                  }
+                  style={{ textDecoration: "none" }}
                 >
-                  <FontAwesomeIcon icon={faListCheck} />
-                  {i18n.t("layout.navbar.social_services")}
-                </Box>
-              </Link>
+                  <Box
+                    className={cx(classes.navbarLink, {
+                      [classes.navbarLinkActive]:
+                        navbarLinkActive === "social-services-create",
+                    })}
+                  >
+                    <FontAwesomeIcon icon={faFileSignature} />
+                    {i18n.t("layout.navbar.social_services_create")}
+                  </Box>
+                </Link>
+              </Box>
             )}
           </Navbar.Section>
 

@@ -214,7 +214,7 @@ export default function AdminSubjectsCreatePage() {
   }
 
   return (
-    <AppLayout navbarLinkActive="subjects">
+    <AppLayout navbarLinkActive="subjects-create">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Title>{i18n.t("subjects_create_page.form.title")}</Title>
 
