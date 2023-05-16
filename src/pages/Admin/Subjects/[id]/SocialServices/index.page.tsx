@@ -78,7 +78,7 @@ export default function AdminSocialServicesPage() {
 
                     <div>
                       <Text size="sm" color={theme.colors.gray[6]}>
-                        SocialWorker
+                        {socialService.createdBy}
                       </Text>
                     </div>
                   </Group>

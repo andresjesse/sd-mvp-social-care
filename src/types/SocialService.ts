@@ -5,4 +5,5 @@ export type SocialService = {
   demands: string[];
   otherDemand?: string;
   forward?: string;
+  createdBy?: string | null;
 };
