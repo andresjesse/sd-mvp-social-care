@@ -9,7 +9,6 @@ import {
   orderBy,
   query,
   updateDoc,
-  where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -112,20 +111,25 @@ export default function useCollection<T extends { [x: string]: any }>(
    * @returns An array of the collection type with filtered elements.
    */
   const filterByQueryString = async (collum: string, queryString: string) => {
-    const q = query(
-      collection(db, collectionName),
-      orderBy(collum, "asc"),
-      where(collum, ">=", queryString),
-      where(collum, "<=", queryString + "\uf8ff")
-    );
+    // eslint-disable-next-line
+    const data = (await all()) as any[];
 
-    const querySnapshot = await getDocs(q);
-    const dataAsMap = querySnapshot.docs.map((doc) => {
-      const data = doc.data() as T;
-      return { id: doc.id, ...data };
+    // Firestore does not have full text search for now.
+    const found = data.filter((d) => {
+      return Object.keys(d).find((k) => {
+        if (k === collum) {
+          if (typeof d[k] === "string") {
+            if (
+              (d[k] as string).toLowerCase().includes(queryString.toLowerCase())
+            ) {
+              return d;
+            }
+          }
+        }
+      });
     });
 
-    return dataAsMap;
+    return found;
   };
 
   return {

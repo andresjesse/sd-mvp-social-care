@@ -31,46 +31,45 @@ export default function AdminSubjectsPage() {
     setSubjects(await filterLast(10, "lastSocialServiceDate"));
   };
 
-  const filterBySearchString = async () => {
-    setSubjects(await filterByQueryString("name", searchString));
-  };
-
   useEffect(() => {
     filterSujects();
   }, []);
 
+  const filterBySearchString = async () => {
+    setSubjects(await filterByQueryString("name", searchString));
+  };
+
   return (
     <AppLayout navbarLinkActive="subjects">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Title>{i18n.t("subjects_page.title")}</Title>
+        <Flex justify="space-between">
+          <Title>{i18n.t("subjects_page.title")}</Title>
+          <Button
+            onClick={() => {
+              navigate("create");
+            }}
+          >
+            {i18n.t("subjects_page.create")}
+          </Button>
+        </Flex>
 
-        <MediaQuery smallerThan="sm" styles={{ flexDirection: "column" }}>
-          <Flex mt="md" mb="md" direction="row" gap="md">
-            <Input
-              onChange={(e) => {
-                setSearchString(e.target.value);
-              }}
-              placeholder="Busca"
-              style={{ flex: 1 }}
-              rightSection={
-                <Button
-                  onClick={() => {
-                    filterBySearchString();
-                  }}
-                >
-                  <FontAwesomeIcon icon={faSearch} />
-                </Button>
+        <Flex mt="md" mb="md" direction="row" gap="md" wrap="nowrap">
+          <Input
+            onChange={(e) => {
+              setSearchString(e.target.value);
+            }}
+            onKeyUp={(event) => {
+              if (event.key === "Enter") {
+                filterBySearchString();
               }
-            />
-            <Button
-              onClick={() => {
-                navigate("create");
-              }}
-            >
-              {i18n.t("subjects_page.create")}
-            </Button>
-          </Flex>
-        </MediaQuery>
+            }}
+            placeholder="Busca"
+            style={{ flex: 1 }}
+          />
+          <Button onClick={filterBySearchString}>
+            <FontAwesomeIcon icon={faSearch} />
+          </Button>
+        </Flex>
 
         {subjects.length > 0 ? (
           subjects.map((subject, index) => (
