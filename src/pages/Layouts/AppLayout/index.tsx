@@ -28,11 +28,16 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useStyles from "./styles";
 import AppLoader from "../AppLoader";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface AppLayoutProps {
   children: ReactNode;
-  navbarLinkActive?: string;
+  navbarLinkActive?:
+    | "home"
+    | "subjects"
+    | "subjects-create"
+    | "social-services"
+    | "social-services-create";
   showSocialServiceLinks?: boolean;
 }
 
@@ -47,7 +52,7 @@ export default function AppLayout({
 
   if (loading) return <AppLoader />;
 
-  const location = useLocation();
+  const { subjectId } = useParams();
 
   return (
     <AppShell
@@ -100,6 +105,7 @@ export default function AppLayout({
                 {i18n.t("layout.navbar.home")}
               </Box>
             </Link>
+
             <Link to="/admin/subjects" style={{ textDecoration: "none" }}>
               <Box
                 className={cx(classes.navbarLink, {
@@ -110,18 +116,32 @@ export default function AppLayout({
                 {i18n.t("layout.navbar.subjects")}
               </Box>
             </Link>
+
+            <Link
+              to="/admin/subjects/create"
+              style={{ textDecoration: "none" }}
+            >
+              <Box
+                className={cx(classes.navbarLink, {
+                  [classes.navbarLinkActive]:
+                    navbarLinkActive === "subjects-create",
+                })}
+              >
+                <FontAwesomeIcon icon={faFileSignature} />
+                {i18n.t("layout.navbar.subjects_create")}
+              </Box>
+            </Link>
+
             {showSocialServiceLinks && (
-              <Box className={cx(classes.navbarLinkGroup)}>
+              <Box className={classes.navbarLinkGroup}>
                 <Link
-                  to={
-                    "/admin/subjects/" + navbarLinkActive + "/social-services"
-                  }
+                  to={"/admin/subjects/" + subjectId + "/social-services"}
                   style={{ textDecoration: "none" }}
                 >
                   <Box
                     className={cx(classes.navbarLink, {
                       [classes.navbarLinkActive]:
-                        !location.pathname.includes("create"),
+                        navbarLinkActive === "social-services",
                     })}
                   >
                     <FontAwesomeIcon icon={faListCheck} />
@@ -131,20 +151,18 @@ export default function AppLayout({
 
                 <Link
                   to={
-                    "/admin/subjects/" +
-                    navbarLinkActive +
-                    "/social-services/create"
+                    "/admin/subjects/" + subjectId + "/social-services/create"
                   }
                   style={{ textDecoration: "none" }}
                 >
                   <Box
                     className={cx(classes.navbarLink, {
                       [classes.navbarLinkActive]:
-                        location.pathname.includes("create"),
+                        navbarLinkActive === "social-services-create",
                     })}
                   >
                     <FontAwesomeIcon icon={faFileSignature} />
-                    {i18n.t("layout.navbar.social_service")}
+                    {i18n.t("layout.navbar.social_services_create")}
                   </Box>
                 </Link>
               </Box>

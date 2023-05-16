@@ -49,7 +49,10 @@ export default function AdminSocialServicesPage() {
   const showSkeleton = loadingSubject || loadingSocialServices;
 
   return (
-    <AppLayout navbarLinkActive={subjectId} showSocialServiceLinks={true}>
+    <AppLayout
+      navbarLinkActive={"social-services"}
+      showSocialServiceLinks={true}
+    >
       {showSkeleton ? (
         <PageSkeleton />
       ) : (
