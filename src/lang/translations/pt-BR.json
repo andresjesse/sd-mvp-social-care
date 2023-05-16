@@ -25,7 +25,8 @@
     "subjects_page": {
       "title": "Sujeitos",
       "create": "Cadastrar",
-      "social_services": "Atendimentos"
+      "social_services": "Atendimentos",
+      "empty_subjects": "Nenhum sujeito encontrado"
     },
 
     "subjects_create_page": {

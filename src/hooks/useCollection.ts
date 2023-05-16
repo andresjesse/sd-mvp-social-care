@@ -106,6 +106,32 @@ export default function useCollection<T extends { [x: string]: any }>(
     return dataAsMap.reverse();
   };
 
+  /**
+   * Get documents from the collection filtering by a given collum and search query.
+   * @returns An array of the collection type with filtered elements.
+   */
+  const filterByQueryString = async (collum: string, queryString: string) => {
+    // eslint-disable-next-line
+    const data = (await all()) as any[];
+
+    // Firestore does not have full text search for now.
+    const found = data.filter((d) => {
+      return Object.keys(d).find((k) => {
+        if (k === collum) {
+          if (typeof d[k] === "string") {
+            if (
+              (d[k] as string).toLowerCase().includes(queryString.toLowerCase())
+            ) {
+              return d;
+            }
+          }
+        }
+      });
+    });
+
+    return found;
+  };
+
   return {
     data,
     loading,
@@ -115,5 +141,6 @@ export default function useCollection<T extends { [x: string]: any }>(
     all,
     refreshData,
     filterLast,
+    filterByQueryString,
   };
 }
