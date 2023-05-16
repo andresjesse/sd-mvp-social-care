@@ -69,18 +69,17 @@ export default function AdminSocialServicesPage() {
             {socialServices.map((socialService, index) => (
               <Accordion.Item value={index.toString()} key={index}>
                 <Accordion.Control>
-                  <Group noWrap>
+                  <Group>
                     <FontAwesomeIcon size="xl" icon={faFileCircleCheck} />
 
                     <Text>
                       {moment(socialService.date).format("DD/MM/YYYY  HH:mm")}
                     </Text>
 
-                    <div>
-                      <Text size="sm" color={theme.colors.gray[6]}>
-                        {socialService.createdBy}
-                      </Text>
-                    </div>
+                    <Text size="sm" color={theme.colors.gray[6]}>
+                      {i18n.t("social_services_page.created_by")}{" "}
+                      {socialService.createdBy}
+                    </Text>
                   </Group>
                 </Accordion.Control>
                 <Accordion.Panel>
