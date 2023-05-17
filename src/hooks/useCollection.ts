@@ -91,6 +91,7 @@ export default function useCollection<T extends { [x: string]: any }>(
    * @returns An array of the collection type with filtered elements.
    */
   const filterLast = async (limit: number, orderAttribute: string) => {
+    setLoading(true);
     const q = query(
       collection(db, collectionName),
       orderBy(orderAttribute, "asc"),
@@ -102,7 +103,7 @@ export default function useCollection<T extends { [x: string]: any }>(
       const data = doc.data() as T;
       return { id: doc.id, ...data };
     });
-
+    setLoading(false);
     return dataAsMap.reverse();
   };
 
@@ -111,6 +112,7 @@ export default function useCollection<T extends { [x: string]: any }>(
    * @returns An array of the collection type with filtered elements.
    */
   const filterByQueryString = async (collum: string, queryString: string) => {
+    setLoading(true);
     // eslint-disable-next-line
     const data = (await all()) as any[];
 
@@ -129,6 +131,7 @@ export default function useCollection<T extends { [x: string]: any }>(
       });
     });
 
+    setLoading(false);
     return found;
   };
 
