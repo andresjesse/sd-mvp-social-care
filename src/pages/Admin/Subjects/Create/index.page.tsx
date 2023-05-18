@@ -177,7 +177,7 @@ export default function AdminSubjectsCreatePage() {
     }
   };
 
-  const { create, loading } = useCollection<Subject>("subjects");
+  const { create, loading } = useCollection<Subject>("subjects", false);
 
   const handleSubmit = async () => {
     form.validate();

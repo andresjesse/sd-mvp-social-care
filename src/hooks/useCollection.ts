@@ -80,7 +80,11 @@ export default function useCollection<T extends { [x: string]: any }>(
 
   // Initial call to fill 'data' with all documents when precache is active.
   useEffect(() => {
-    if (precache) all();
+    if (precache) {
+      all();
+    } else {
+      setLoading(false);
+    }
     // eslint-disable-next-line
   }, []);
 
