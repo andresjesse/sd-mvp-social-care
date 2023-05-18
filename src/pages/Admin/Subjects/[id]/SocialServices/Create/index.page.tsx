@@ -48,12 +48,12 @@ export default function AdminSocialServicesCreatePage() {
   const { create, loading: loadingSocialServices } =
     useCollection<SocialService>(`subjects/${subjectId}/social-services`);
 
-  const { data: subject, loading: loadingSubject } = useDocument<Subject>(
-    "subjects",
-    subjectId || ""
-  );
+  const {
+    data: subject,
+    loading: loadingSubject,
+    upsert: updateSubject,
+  } = useDocument<Subject>("subjects", subjectId || "");
 
-  //fetch demands
   const { data: demandsData, loading: loadingDemands } = useDocument<
     Static["demands"]
   >("static", "demands");
@@ -157,10 +157,20 @@ export default function AdminSocialServicesCreatePage() {
           date: dateToISOString(form.values.date),
           createdBy: user?.email,
         });
+
+        if (subject) {
+          updateSubject({
+            ...subject,
+            lastSocialServiceDate: dateToISOString(new Date()),
+          });
+        }
+
         notifications.show({
           title: i18n.t("notifications.database_success.title"),
           message: i18n.t("notifications.database_success.send_forms"),
+          color: "green",
         });
+
         navigate("/admin/subjects/");
       } catch (error) {
         notifications.show({

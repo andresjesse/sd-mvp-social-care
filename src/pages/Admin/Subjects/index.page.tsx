@@ -117,6 +117,20 @@ export default function AdminSubjectsPage() {
                         {moment(subject.birthDate).format("DD/MM/YYYY")}
                       </Text>
                     </Text>
+
+                    <Text mt="sm">
+                      <Text fw={700} span>
+                        {i18n.t(
+                          "subjects_create_page.form.fields.last_social_service_date"
+                        )}
+                        :
+                      </Text>
+                      <Text span ml="5px">
+                        {moment(subject.lastSocialServiceDate).format(
+                          "DD/MM/YYYY"
+                        )}
+                      </Text>
+                    </Text>
                   </Flex>
 
                   <Button
