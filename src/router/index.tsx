@@ -10,6 +10,7 @@ import AdminSocialServicesCreatePage from "@/pages/Admin/Subjects/[id]/SocialSer
 import AdminSocialServicesShowPage from "@/pages/Admin/Subjects/[id]/SocialServices/[id]/index.page";
 
 import AdminSubjectsCreatePage from "@/pages/Admin/Subjects/Create/index.page";
+import AdminSubjectsEditPage from "@/pages/Admin/Subjects/Edit/index.page";
 import AdminSubjectsPage from "@/pages/Admin/Subjects/index.page";
 
 const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <div>Subject ID + LIST Social Services</div>,
+              },
+              {
+                path: "edit",
+                element: <AdminSubjectsEditPage />,
               },
               {
                 path: "social-services",

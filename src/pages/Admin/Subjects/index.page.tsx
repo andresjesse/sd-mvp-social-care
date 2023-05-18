@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Flex,
+  Group,
   Input,
   MediaQuery,
   Text,
@@ -119,13 +120,24 @@ export default function AdminSubjectsPage() {
                     </Text>
                   </Flex>
 
-                  <Button
-                    onClick={() => {
-                      navigate(`${subject.id}/social-services`);
-                    }}
-                  >
-                    {i18n.t("subjects_page.social_services")}
-                  </Button>
+                  <Group>
+                    <Button
+                      onClick={() => {
+                        navigate(`${subject.id}/social-services`);
+                      }}
+                    >
+                      {i18n.t("subjects_page.social_services")}
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        navigate(`${subject.id}/edit`);
+                      }}
+                    >
+                      {i18n.t("subjects_page.edit")}
+                    </Button>
+                  </Group>
                 </Flex>
               </MediaQuery>
             </Card>
