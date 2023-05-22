@@ -26,7 +26,13 @@
       "title": "Sujeitos",
       "create": "Cadastrar",
       "social_services": "Atendimentos",
-      "empty_subjects": "Nenhum sujeito encontrado"
+      "empty_subjects": "Nenhum sujeito encontrado",
+      "edit": "Editar sujeito"
+    },
+
+    "subjects_edit_page": {
+      "edit": "Editar",
+      "form": { "title": "Editar um sujeito" }
     },
 
     "subjects_create_page": {
