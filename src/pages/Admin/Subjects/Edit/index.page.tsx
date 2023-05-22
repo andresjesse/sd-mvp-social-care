@@ -39,7 +39,15 @@ export default function AdminSubjectsCreatePage() {
 
   const { subjectId } = useParams();
 
-  const { data: subject } = useDocument<Subject>("subjects", subjectId || "");
+  const { update, loading: loadingCollection } = useCollection<Subject>(
+    "subjects",
+    false
+  );
+
+  const { data: subject, loading: loadingSubject } = useDocument<Subject>(
+    "subjects",
+    subjectId || ""
+  );
 
   const relativeRelationOptions = i18nEntriesToSelect(
     "subjects_create_page.form.fields.relative_relation_options"
@@ -214,8 +222,6 @@ export default function AdminSubjectsCreatePage() {
     }
   };
 
-  const { update, loading } = useCollection<Subject>("subjects", false);
-
   const handleSubmit = async () => {
     form.validate();
     handleError();
@@ -244,7 +250,7 @@ export default function AdminSubjectsCreatePage() {
     }
   };
 
-  const showSkeleton = loading;
+  const showSkeleton = loadingCollection && loadingSubject;
 
   return (
     <AppLayout navbarLinkActive="subjects">
@@ -252,7 +258,7 @@ export default function AdminSubjectsCreatePage() {
         <PageSkeleton />
       ) : (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
-          <Title>{i18n.t("subjects_create_page.form.title")}</Title>
+          <Title>{i18n.t("subjects_edit_page.form.title")}</Title>
 
           <Input.Label mt="md">
             {i18n.t("subjects_create_page.asterisk_info")}

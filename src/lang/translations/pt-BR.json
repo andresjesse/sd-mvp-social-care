@@ -31,7 +31,8 @@
     },
 
     "subjects_edit_page": {
-      "edit": "Editar"
+      "edit": "Editar",
+      "form": { "title": "Editar um sujeito" }
     },
 
     "subjects_create_page": {
