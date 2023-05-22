@@ -93,7 +93,13 @@ export default function AdminSubjectsPage() {
                   smallerThan="sm"
                   styles={{ flexDirection: "column" }}
                 >
-                  <Flex mt="md" mb="md" direction="row" gap="md">
+                  <Flex
+                    mt="md"
+                    mb="md"
+                    direction="row"
+                    gap="md"
+                    justify="space-between"
+                  >
                     <Flex direction="column" w="100%">
                       <Text mt="sm">
                         <Text fw={700} span>
@@ -147,23 +153,27 @@ export default function AdminSubjectsPage() {
                       </Text>
                     </Flex>
 
-                    <Group>
-                      <Button
-                        onClick={() => {
-                          navigate(`${subject.id}/social-services`);
-                        }}
-                      >
-                        {i18n.t("subjects_page.social_services")}
-                      </Button>
+                    <Group sx={{ flex: 1 }}>
+                      <MediaQuery smallerThan="sm" styles={{ width: "100%" }}>
+                        <Button
+                          onClick={() => {
+                            navigate(`${subject.id}/social-services`);
+                          }}
+                        >
+                          {i18n.t("subjects_page.social_services")}
+                        </Button>
+                      </MediaQuery>
 
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          navigate(`${subject.id}/edit`);
-                        }}
-                      >
-                        {i18n.t("subjects_page.edit")}
-                      </Button>
+                      <MediaQuery smallerThan="sm" styles={{ width: "100%" }}>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            navigate(`${subject.id}/edit`);
+                          }}
+                        >
+                          {i18n.t("subjects_page.edit")}
+                        </Button>
+                      </MediaQuery>
                     </Group>
                   </Flex>
                 </MediaQuery>
