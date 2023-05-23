@@ -159,6 +159,7 @@ export default function useCollection<T extends { [x: string]: any }>(
     remove,
     update,
     all,
+    count,
     refreshData,
     filterLast,
     filterByQueryString,
