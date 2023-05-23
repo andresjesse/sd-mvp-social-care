@@ -46,7 +46,10 @@ export default function AdminSocialServicesCreatePage() {
   const { subjectId } = useParams();
 
   const { create, loading: loadingSocialServices } =
-    useCollection<SocialService>(`subjects/${subjectId}/social-services`);
+    useCollection<SocialService>(
+      `subjects/${subjectId}/social-services`,
+      false
+    );
 
   const {
     data: subject,
