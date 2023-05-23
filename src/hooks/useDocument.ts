@@ -42,9 +42,10 @@ export default function useDocument<T extends { [x: string]: any }>(
     setLoading(true);
     const docSnap = await getDoc(docRef);
     const data = docSnap.data() as T;
-    setData(data);
+    const dataWithId = { id: docSnap.id, ...data };
+    setData(dataWithId);
     setLoading(false);
-    return data;
+    return dataWithId;
   };
 
   // Initial call to fill 'data' with all documents when precache is active.
