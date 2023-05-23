@@ -42,10 +42,9 @@ export default function useDocument<T extends { [x: string]: any }>(
     setLoading(true);
     const docSnap = await getDoc(docRef);
     const data = docSnap.data() as T;
-    const dataWithId = { id: docSnap.id, ...data };
-    setData(dataWithId);
+    setData({ id: docSnap.id, ...data });
     setLoading(false);
-    return dataWithId;
+    return data;
   };
 
   // Initial call to fill 'data' with all documents when precache is active.
@@ -55,7 +54,7 @@ export default function useDocument<T extends { [x: string]: any }>(
     const unsub = realtime
       ? onSnapshot(docRef, (docSnap) => {
           const data = docSnap.data() as T;
-          setData(data);
+          setData({ id: docSnap.id, ...data });
         })
       : // eslint-disable-next-line
         () => {};
