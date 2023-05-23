@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getCountFromServer,
   getDocs,
   getFirestore,
   limitToLast,
@@ -139,6 +140,18 @@ export default function useCollection<T extends { [x: string]: any }>(
     return found;
   };
 
+  /**
+   * get the number of Documents
+   * @returns the count as number
+   */
+  const count = async () => {
+    setLoading(true);
+    const snapshot = await getCountFromServer(collection(db, collectionName));
+    const count = snapshot.data().count;
+    setLoading(false);
+    return count;
+  };
+
   return {
     data,
     loading,
@@ -146,6 +159,7 @@ export default function useCollection<T extends { [x: string]: any }>(
     remove,
     update,
     all,
+    count,
     refreshData,
     filterLast,
     filterByQueryString,
