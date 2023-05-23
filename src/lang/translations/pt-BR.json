@@ -19,7 +19,8 @@
     },
 
     "admin_page": {
-      "subjects": "Sujeitos"
+      "subjects": "Sujeitos",
+      "subjects_attended": "Sujeitos atendidos até o momento"
     },
 
     "subjects_page": {

@@ -1,55 +1,82 @@
 import React from "react";
-import { Group, Paper, Text, createStyles } from "@mantine/core";
+import { Text, createStyles, rem } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
   root: {
+    display: "flex",
+    backgroundImage: `linear-gradient(-60deg, ${
+      theme.colors[theme.primaryColor][4]
+    } 0%, ${theme.colors[theme.primaryColor][7]} 100%)`,
     padding: `calc(${theme.spacing.xl} * 1.5)`,
+    borderRadius: theme.radius.md,
+
+    [theme.fn.smallerThan("sm")]: {
+      flexDirection: "column",
+    },
   },
 
-  label: {
+  title: {
+    color: theme.white,
+    textTransform: "uppercase",
+    fontWeight: 700,
+    fontSize: theme.fontSizes.sm,
+  },
+
+  count: {
+    color: theme.white,
+    fontSize: rem(32),
+    lineHeight: 1,
+    fontWeight: 700,
+    marginBottom: theme.spacing.md,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+  },
+
+  stat: {
+    flex: 1,
+
+    "& + &": {
+      paddingLeft: theme.spacing.xl,
+      marginLeft: theme.spacing.xl,
+      borderLeft: `${rem(1)} solid ${theme.colors[theme.primaryColor][3]}`,
+
+      [theme.fn.smallerThan("sm")]: {
+        paddingLeft: 0,
+        marginLeft: 0,
+        borderLeft: 0,
+        paddingTop: theme.spacing.xl,
+        marginTop: theme.spacing.xl,
+        borderTop: `${rem(1)} solid ${theme.colors[theme.primaryColor][3]}`,
+      },
+    },
+  },
+
+  description: {
+    color: theme.colors[theme.primaryColor][0],
+    fontSize: theme.fontSizes.sm,
+    marginTop: rem(5),
   },
 }));
 
-export default function CardDashboard() {
+interface CardDashboardProps {
+  count: number;
+  title: string;
+  description: string;
+}
+
+export default function CardDashboard({
+  count,
+  title,
+  description,
+}: CardDashboardProps) {
   const { classes } = useStyles();
 
   return (
-    <Paper withBorder p="md" radius="md">
-      <Group position="apart">
-        <div>
-          <Text
-            c="dimmed"
-            tt="uppercase"
-            fw={700}
-            fz="xs"
-            className={classes.label}
-          >
-            teste
-          </Text>
-          <Text fw={700} fz="xl">
-            teste
-          </Text>
-        </div>
-
-        {/* <ThemeIcon
-          color="gray"
-          variant="light"
-          sx={(theme) => ({
-            color: stat.diff > 0 ? theme.colors.teal[6] : theme.colors.red[6],
-          })}
-          size={38}
-          radius="md"
-        >
-          <DiffIcon size="1.8rem" stroke={1.5} />
-        </ThemeIcon> */}
-      </Group>
-      <Text c="dimmed" fz="sm" mt="md">
-        <Text component="span" fw={700}>
-          10
-        </Text>{" "}
-        compared to last month
-      </Text>
-    </Paper>
+    <div className={classes.root}>
+      <div className={classes.stat}>
+        <Text className={classes.count}>{count}</Text>
+        <Text className={classes.title}>{title}</Text>
+        <Text className={classes.description}>{description}</Text>
+      </div>
+    </div>
   );
 }

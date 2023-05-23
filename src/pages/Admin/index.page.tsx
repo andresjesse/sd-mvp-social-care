@@ -19,8 +19,16 @@ export default function Admin() {
         >
           {i18n.t("admin_page.subjects")}
         </Button> */}
-        <SimpleGrid cols={3} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
-          <CardDashboard />
+        <SimpleGrid
+          mt="lg"
+          cols={2}
+          breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+        >
+          <CardDashboard
+            count={123}
+            title={i18n.t("admin_page.subjects")}
+            description={i18n.t("admin_page.subjects_attended")}
+          />
         </SimpleGrid>
       </Card>
     </AppLayout>
