@@ -27,6 +27,7 @@ export default function useCollection<T extends { [x: string]: any }>(
   const db = getFirestore();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Array<T>>([]);
+  const [count, setCount] = useState(0);
 
   /**
    * Create a new document in the collection.
@@ -35,6 +36,7 @@ export default function useCollection<T extends { [x: string]: any }>(
    */
   const create = async (newVal: T) => {
     const docRef = await addDoc(collection(db, collectionName), newVal);
+    await refreshCount();
     return docRef.id;
   };
 
@@ -44,6 +46,7 @@ export default function useCollection<T extends { [x: string]: any }>(
    */
   const remove = async (id: string) => {
     await deleteDoc(doc(db, collectionName, id));
+    await refreshCount();
   };
 
   /**
@@ -86,6 +89,7 @@ export default function useCollection<T extends { [x: string]: any }>(
     } else {
       setLoading(false);
     }
+    refreshCount();
     // eslint-disable-next-line
   }, []);
 
@@ -141,15 +145,11 @@ export default function useCollection<T extends { [x: string]: any }>(
   };
 
   /**
-   * get the number of Documents
-   * @returns the count as number
+   * refresh the number of Documents in the current collection
    */
-  const count = async () => {
-    setLoading(true);
+  const refreshCount = async () => {
     const snapshot = await getCountFromServer(collection(db, collectionName));
-    const count = snapshot.data().count;
-    setLoading(false);
-    return count;
+    setCount(snapshot.data().count);
   };
 
   return {
