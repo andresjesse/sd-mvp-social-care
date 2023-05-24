@@ -1,5 +1,7 @@
 import React from "react";
-import { Text, createStyles, rem } from "@mantine/core";
+import { Flex, Text, UnstyledButton, createStyles, rem } from "@mantine/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -61,19 +63,30 @@ interface CardDashboardProps {
   count: number;
   title: string;
   description: string;
+  icon?: IconDefinition;
+  onClickIcon?: () => void;
 }
 
 export default function CardDashboard({
   count,
   title,
   description,
+  icon,
+  onClickIcon,
 }: CardDashboardProps) {
   const { classes } = useStyles();
 
   return (
     <div className={classes.root}>
       <div className={classes.stat}>
-        <Text className={classes.count}>{count}</Text>
+        <Flex justify="space-between" align="flex-start">
+          <Text className={classes.count}>{count}</Text>
+          {icon && (
+            <UnstyledButton onClick={() => onClickIcon?.()}>
+              <FontAwesomeIcon color="white" size="xl" icon={icon} />
+            </UnstyledButton>
+          )}
+        </Flex>
         <Text className={classes.title}>{title}</Text>
         <Text className={classes.description}>{description}</Text>
       </div>
