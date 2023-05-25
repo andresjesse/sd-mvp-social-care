@@ -35,6 +35,7 @@ import { Static } from "@/types/Static";
 import dateToISOString from "@/helpers/dateToISOString";
 import PageSkeleton from "./_PageSkeleton";
 import useAuth from "@/hooks/useAuth";
+import useStorage from "@/hooks/useStorage";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -62,6 +63,8 @@ export default function AdminSocialServicesCreatePage() {
   >("static", "demands");
 
   const demands = demandsData?.items;
+
+  const storage = useStorage();
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
   const [files, setFiles] = useState<File[] | null>([]);
@@ -308,6 +311,15 @@ export default function AdminSocialServicesCreatePage() {
 
               <Button disabled={!files} color="red" onClick={clearFiles}>
                 {i18n.t("social_services_create_page.form.fields.file_reset")}
+              </Button>
+              <Button
+                onClick={() => {
+                  // eslint-disable-next-line
+                  storage.uploadFiles("images/", files!);
+                  storage.listFiles("images/");
+                }}
+              >
+                test storage
               </Button>
             </Group>
 
