@@ -1,3 +1,6 @@
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { UnstyledButton } from "@mantine/core";
 import React, { ReactNode } from "react";
 import useStyles from "./styles";
 
@@ -10,8 +13,17 @@ export default function StyledCard({ children, onClick }: StyledCardProps) {
   const { classes } = useStyles();
 
   return (
-    <div onClick={onClick} className={classes.root}>
-      <div className={classes.body}>{children}</div>
+    <div className={classes.root}>
+      <div className={classes.body}>
+        <UnstyledButton onClick={onClick} pos="absolute" right={0}>
+          <FontAwesomeIcon
+            color="white"
+            size="xl"
+            icon={faArrowUpRightFromSquare}
+          />
+        </UnstyledButton>
+        {children}
+      </div>
     </div>
   );
 }

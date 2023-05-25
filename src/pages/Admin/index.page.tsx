@@ -1,25 +1,13 @@
 import React from "react";
 import AppLayout from "../Layouts/AppLayout";
-import {
-  Card,
-  Flex,
-  SimpleGrid,
-  Text,
-  Title,
-  UnstyledButton,
-} from "@mantine/core";
+import { Card, SimpleGrid, Text, Title } from "@mantine/core";
 import i18n from "@/lang";
 import StyledCard from "../Layouts/StyledCard";
 import useCollection from "@/hooks/useCollection";
 import { Subject } from "@/types/Subject";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useStyles from "./styles";
 
 export default function Admin() {
-  const { classes } = useStyles();
-
   const navigate = useNavigate();
 
   const { count: subjectsCount } = useCollection<Subject>("subjects", false);
@@ -38,20 +26,15 @@ export default function Admin() {
               navigate("subjects");
             }}
           >
-            <Flex justify="space-between" align="flex-start">
-              <Text className={classes.count}>{subjectsCount}</Text>
-              <UnstyledButton>
-                <FontAwesomeIcon
-                  color="white"
-                  size="xl"
-                  icon={faArrowUpRightFromSquare}
-                />
-              </UnstyledButton>
-            </Flex>
-            <Text className={classes.title}>
+            <Text c="white" fw="bold" fz="2.5rem">
+              {subjectsCount}
+            </Text>
+
+            <Text c="white" tt="uppercase" fw="bold" fz="md" mt="md">
               {i18n.t("admin_page.subjects")}
             </Text>
-            <Text className={classes.description}>
+
+            <Text c="white" fz="sm" mt="xs">
               {i18n.t("admin_page.subjects_attended")}
             </Text>
           </StyledCard>
