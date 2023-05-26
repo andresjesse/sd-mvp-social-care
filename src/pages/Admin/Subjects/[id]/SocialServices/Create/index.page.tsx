@@ -313,13 +313,24 @@ export default function AdminSocialServicesCreatePage() {
                 {i18n.t("social_services_create_page.form.fields.file_reset")}
               </Button>
               <Button
-                onClick={() => {
+                onClick={async () => {
+                  // uploadFile
                   // eslint-disable-next-line
                   storage.uploadFiles("images/", files!);
-                  storage.listFiles("images/");
+
+                  // listFiles
+                  (await storage.listFiles("images/")).forEach((file) => {
+                    console.log(file.fullPath);
+                  });
+
+                  // deleteFile
+                  storage.deleteFile("images/image.png");
+
+                  // getFile
+                  console.log(await storage.getFile("images/image.png"));
                 }}
               >
-                test storage
+                storage test
               </Button>
             </Group>
 
