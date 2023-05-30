@@ -24,7 +24,10 @@ import { DateTimePicker } from "@mantine/dates";
 import i18n from "@/lang";
 
 import { faFilePdf, faFileImage } from "@fortawesome/free-regular-svg-icons";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFire,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SocialService } from "@/types/SocialService";
 import useCollection from "@/hooks/useCollection";
@@ -312,7 +315,21 @@ export default function AdminSocialServicesCreatePage() {
               <Button disabled={!files} color="red" onClick={clearFiles}>
                 {i18n.t("social_services_create_page.form.fields.file_reset")}
               </Button>
+
               <Button
+                leftIcon={
+                  <FontAwesomeIcon
+                    color="#eac044"
+                    size="lg"
+                    icon={faFire}
+                    fade
+                  />
+                }
+                variant="outline"
+                sx={(theme) => ({
+                  color: theme.colors.dark[3],
+                  borderColor: theme.colors.dark[3],
+                })}
                 onClick={async () => {
                   // uploadFiles
                   // eslint-disable-next-line
@@ -330,7 +347,7 @@ export default function AdminSocialServicesCreatePage() {
                   // storage.deleteFile("images/image.png");
                 }}
               >
-                storage test
+                Firestore Test
               </Button>
             </Group>
 
