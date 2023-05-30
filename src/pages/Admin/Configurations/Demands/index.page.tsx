@@ -123,19 +123,28 @@ export default function AdminDemands() {
           <Title>{i18n.t("demands_page.title")}</Title>
 
           <form>
-            <Flex mt="md" gap="md" align="center" wrap="nowrap">
-              <TextInput
-                w="90%"
-                withAsterisk
-                label={i18n.t("demands_page.form.new")}
-                placeholder={i18n.t("demands_page.form.example")}
-                {...formNewDemand.getInputProps("name")}
-              />
+            <MediaQuery smallerThan="sm" styles={{ flexDirection: "column" }}>
+              <Flex mt="md" gap="md" align="center" wrap="nowrap">
+                <MediaQuery smallerThan="sm" styles={{ width: "100%" }}>
+                  <TextInput
+                    w="90%"
+                    withAsterisk
+                    label={i18n.t("demands_page.form.new")}
+                    placeholder={i18n.t("demands_page.form.example")}
+                    {...formNewDemand.getInputProps("name")}
+                  />
+                </MediaQuery>
 
-              <Button mt="xl" type="button" onClick={handleSubmit}>
-                {i18n.t("demands_page.form.create")}
-              </Button>
-            </Flex>
+                <MediaQuery
+                  smallerThan="sm"
+                  styles={{ width: "100%", marginTop: "0" }}
+                >
+                  <Button mt="xl" type="button" onClick={handleSubmit}>
+                    {i18n.t("demands_page.form.create")}
+                  </Button>
+                </MediaQuery>
+              </Flex>
+            </MediaQuery>
           </form>
 
           {demands && demands.items.length > 0 ? (
