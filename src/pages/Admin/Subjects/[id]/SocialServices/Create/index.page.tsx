@@ -67,7 +67,7 @@ export default function AdminSocialServicesCreatePage() {
 
   const demands = demandsData?.items;
 
-  const storage = useStorage();
+  const { loading: storageLoading, getFileUrl } = useStorage();
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
   const [files, setFiles] = useState<File[] | null>([]);
@@ -333,21 +333,21 @@ export default function AdminSocialServicesCreatePage() {
                 onClick={async () => {
                   // uploadFiles
                   // eslint-disable-next-line
-                  // storage.uploadFiles("images/", files!);
+                  // await uploadFiles("images/", files!);
+                  // console.log("End upload!!");
                   //
                   // listFiles
-                  const all = await storage.listFiles("images/");
-                  console.log(all);
-
+                  // const all = await listFiles("images/");
+                  // console.log(all);
                   //
                   // getFile
-                  // console.log(await storage.getFile("images/img1.jpg"));
+                  // console.log(await getFileUrl("images/img1.jpg"));
                   //
                   // deleteFile
                   // storage.deleteFile("images/img1.jpg");
                 }}
               >
-                Firestore Test
+                Firestore Test {storageLoading ? "LLL" : ""}
               </Button>
             </Group>
 

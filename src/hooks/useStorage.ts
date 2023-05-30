@@ -6,8 +6,10 @@ import {
   getStorage,
   ref,
 } from "firebase/storage";
+import { useState } from "react";
 
 export default function useStorage() {
+  const [loading, setLoading] = useState(false);
   const storage = getStorage();
 
   const listFiles = async (path: string) => {
@@ -17,19 +19,17 @@ export default function useStorage() {
   };
 
   const uploadFiles = async (path: string, files: File[]) => {
-    files.forEach((file) => {
+    setLoading(true);
+    for (const file of Array.from(files)) {
       const storageRef = ref(storage, path + file.name);
-      uploadBytes(storageRef, file);
-    });
+      await uploadBytes(storageRef, file);
+    }
+    setLoading(false);
   };
 
-  const getFile = async (path: string) => {
-    try {
-      const fileUrl = await getDownloadURL(ref(storage, path));
-      return fileUrl;
-    } catch (error) {
-      console.log("get: file not found");
-    }
+  const getFileUrl = async (path: string) => {
+    const fileUrl = await getDownloadURL(ref(storage, path));
+    return fileUrl;
   };
 
   const deleteFile = async (path: string) => {
@@ -42,9 +42,10 @@ export default function useStorage() {
   };
 
   return {
+    loading,
     listFiles,
     uploadFiles,
-    getFile,
+    getFileUrl,
     deleteFile,
   };
 }
