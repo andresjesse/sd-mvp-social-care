@@ -314,20 +314,20 @@ export default function AdminSocialServicesCreatePage() {
               </Button>
               <Button
                 onClick={async () => {
-                  // uploadFile
+                  // uploadFiles
                   // eslint-disable-next-line
                   storage.uploadFiles("images/", files!);
-
+                  //
                   // listFiles
-                  (await storage.listFiles("images/")).forEach((file) => {
-                    console.log(file.fullPath);
-                  });
-
-                  // deleteFile
-                  storage.deleteFile("images/image.png");
-
+                  // (await storage.listFiles("images/")).forEach((file) => {
+                  //   console.log(file.fullPath);
+                  // });
+                  //
                   // getFile
-                  console.log(await storage.getFile("images/image.png"));
+                  // console.log(await storage.getFile("images/image.png"));
+                  //
+                  // deleteFile
+                  // storage.deleteFile("images/image.png");
                 }}
               >
                 storage test

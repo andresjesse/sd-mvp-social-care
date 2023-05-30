@@ -1,21 +1,14 @@
 import {
-  deleteObject,
-  getDownloadURL,
-  getStorage,
   listAll,
-  ref,
   uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  getStorage,
+  ref,
 } from "firebase/storage";
 
 export default function useStorage() {
   const storage = getStorage();
-
-  const uploadFiles = async (path: string, files: File[]) => {
-    files.forEach((file) => {
-      const storageRef = ref(storage, path + file.name);
-      uploadBytes(storageRef, file);
-    });
-  };
 
   const listFiles = async (path: string) => {
     const listRef = ref(storage, path);
@@ -33,6 +26,22 @@ export default function useStorage() {
     return all.items;
   };
 
+  const uploadFiles = async (path: string, files: File[]) => {
+    files.forEach((file) => {
+      const storageRef = ref(storage, path + file.name);
+      uploadBytes(storageRef, file);
+    });
+  };
+
+  const getFile = async (path: string) => {
+    try {
+      const fileUrl = await getDownloadURL(ref(storage, path));
+      return fileUrl;
+    } catch (error) {
+      console.log("get: file not found");
+    }
+  };
+
   const deleteFile = async (path: string) => {
     const desertRef = ref(storage, path);
     try {
@@ -42,18 +51,10 @@ export default function useStorage() {
     }
   };
 
-  const getFile = async (path: string) => {
-    try {
-      return await getDownloadURL(ref(storage, path));
-    } catch (error) {
-      console.log("get: file not found");
-    }
-  };
-
   return {
-    uploadFiles,
     listFiles,
-    deleteFile,
+    uploadFiles,
     getFile,
+    deleteFile,
   };
 }
