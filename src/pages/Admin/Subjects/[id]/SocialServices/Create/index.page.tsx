@@ -333,18 +333,18 @@ export default function AdminSocialServicesCreatePage() {
                 onClick={async () => {
                   // uploadFiles
                   // eslint-disable-next-line
-                  storage.uploadFiles("images/", files!);
+                  // storage.uploadFiles("images/", files!);
                   //
                   // listFiles
-                  // (await storage.listFiles("images/")).forEach((file) => {
-                  //   console.log(file.fullPath);
-                  // });
+                  const all = await storage.listFiles("images/");
+                  console.log(all);
+
                   //
                   // getFile
-                  // console.log(await storage.getFile("images/image.png"));
+                  // console.log(await storage.getFile("images/img1.jpg"));
                   //
                   // deleteFile
-                  // storage.deleteFile("images/image.png");
+                  // storage.deleteFile("images/img1.jpg");
                 }}
               >
                 Firestore Test
