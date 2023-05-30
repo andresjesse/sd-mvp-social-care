@@ -24,10 +24,7 @@ import { DateTimePicker } from "@mantine/dates";
 import i18n from "@/lang";
 
 import { faFilePdf, faFileImage } from "@fortawesome/free-regular-svg-icons";
-import {
-  faFire,
-  faTriangleExclamation,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SocialService } from "@/types/SocialService";
 import useCollection from "@/hooks/useCollection";
@@ -38,7 +35,7 @@ import { Static } from "@/types/Static";
 import dateToISOString from "@/helpers/dateToISOString";
 import PageSkeleton from "./_PageSkeleton";
 import useAuth from "@/hooks/useAuth";
-import useStorage from "@/hooks/useStorage";
+// import useStorage from "@/hooks/useStorage";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -67,7 +64,7 @@ export default function AdminSocialServicesCreatePage() {
 
   const demands = demandsData?.items;
 
-  const { loading: storageLoading, getFileUrl } = useStorage();
+  // const { loading: storageLoading, deleteFile } = useStorage();
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
   const [files, setFiles] = useState<File[] | null>([]);
@@ -314,40 +311,6 @@ export default function AdminSocialServicesCreatePage() {
 
               <Button disabled={!files} color="red" onClick={clearFiles}>
                 {i18n.t("social_services_create_page.form.fields.file_reset")}
-              </Button>
-
-              <Button
-                leftIcon={
-                  <FontAwesomeIcon
-                    color="#eac044"
-                    size="lg"
-                    icon={faFire}
-                    fade
-                  />
-                }
-                variant="outline"
-                sx={(theme) => ({
-                  color: theme.colors.dark[3],
-                  borderColor: theme.colors.dark[3],
-                })}
-                onClick={async () => {
-                  // uploadFiles
-                  // eslint-disable-next-line
-                  // await uploadFiles("images/", files!);
-                  // console.log("End upload!!");
-                  //
-                  // listFiles
-                  // const all = await listFiles("images/");
-                  // console.log(all);
-                  //
-                  // getFile
-                  // console.log(await getFileUrl("images/img1.jpg"));
-                  //
-                  // deleteFile
-                  // storage.deleteFile("images/img1.jpg");
-                }}
-              >
-                Firestore Test {storageLoading ? "LLL" : ""}
               </Button>
             </Group>
 

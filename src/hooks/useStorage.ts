@@ -13,8 +13,8 @@ export default function useStorage() {
   const storage = getStorage();
 
   const listFiles = async (path: string) => {
-    const listRef = ref(storage, path);
-    const all = await listAll(listRef);
+    const storageRef = ref(storage, path);
+    const all = await listAll(storageRef);
     return all.items.map((item) => item.fullPath);
   };
 
@@ -28,17 +28,14 @@ export default function useStorage() {
   };
 
   const getFileUrl = async (path: string) => {
-    const fileUrl = await getDownloadURL(ref(storage, path));
+    const storageRef = ref(storage, path);
+    const fileUrl = await getDownloadURL(storageRef);
     return fileUrl;
   };
 
   const deleteFile = async (path: string) => {
-    const desertRef = ref(storage, path);
-    try {
-      await deleteObject(desertRef);
-    } catch (error) {
-      console.log("delete: file not found");
-    }
+    const storageRef = ref(storage, path);
+    await deleteObject(storageRef);
   };
 
   return {
