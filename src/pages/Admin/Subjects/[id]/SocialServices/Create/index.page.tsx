@@ -35,6 +35,7 @@ import { Static } from "@/types/Static";
 import dateToISOString from "@/helpers/dateToISOString";
 import PageSkeleton from "./_PageSkeleton";
 import useAuth from "@/hooks/useAuth";
+// import useStorage from "@/hooks/useStorage";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -62,6 +63,8 @@ export default function AdminSocialServicesCreatePage() {
   >("static", "demands");
 
   const demands = demandsData?.items;
+
+  // const { loading: storageLoading, deleteFile } = useStorage();
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
   const [files, setFiles] = useState<File[] | null>([]);
