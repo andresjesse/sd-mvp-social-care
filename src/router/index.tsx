@@ -12,6 +12,8 @@ import AdminSocialServicesShowPage from "@/pages/Admin/Subjects/[id]/SocialServi
 import AdminSubjectsCreatePage from "@/pages/Admin/Subjects/Create/index.page";
 import AdminSubjectsEditPage from "@/pages/Admin/Subjects/Edit/index.page";
 import AdminSubjectsPage from "@/pages/Admin/Subjects/index.page";
+import AdminConfigurationsPage from "@/pages/Admin/Configurations/index.page";
+import AdminDemandsPage from "@/pages/Admin/Configurations/Demands/index.page";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +81,20 @@ const router = createBrowserRouter([
                 ],
               },
             ],
+          },
+        ],
+      },
+      {
+        path: "configurations",
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <AdminConfigurationsPage />,
+          },
+          {
+            path: "demands",
+            element: <AdminDemandsPage />,
           },
         ],
       },

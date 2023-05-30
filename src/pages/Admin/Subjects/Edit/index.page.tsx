@@ -33,7 +33,7 @@ import dateToISOString from "@/helpers/dateToISOString";
 import useDocument from "@/hooks/useDocument";
 import PageSkeleton from "./_PageSkeleton";
 
-export default function AdminSubjectsCreatePage() {
+export default function AdminSubjectsEditPage() {
   const navigate = useNavigate();
   const theme = useMantineTheme();
 

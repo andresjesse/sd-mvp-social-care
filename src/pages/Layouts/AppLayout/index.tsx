@@ -19,6 +19,7 @@ import useAuth from "@/hooks/useAuth";
 import i18n from "@/lang";
 import {
   faCircleUser,
+  faGear,
   faFileSignature,
   faHome,
   faIdCard,
@@ -37,7 +38,8 @@ interface AppLayoutProps {
     | "subjects"
     | "subjects-create"
     | "social-services"
-    | "social-services-create";
+    | "social-services-create"
+    | "configurations";
 }
 
 export default function AppLayout({
@@ -164,6 +166,18 @@ export default function AppLayout({
                 </Link>
               </Box>
             )}
+
+            <Link to="/admin/configurations" style={{ textDecoration: "none" }}>
+              <Box
+                className={cx(classes.navbarLink, {
+                  [classes.navbarLinkActive]:
+                    navbarLinkActive === "configurations",
+                })}
+              >
+                <FontAwesomeIcon icon={faGear} />
+                {i18n.t("layout.navbar.configurations")}
+              </Box>
+            </Link>
           </Navbar.Section>
 
           <Divider />

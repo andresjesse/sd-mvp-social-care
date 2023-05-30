@@ -7,7 +7,8 @@
         "subjects_create": "Cadastrar sujeito",
         "social_services": "Atendimentos",
         "social_services_create": "Cadastrar atendimento",
-        "logout": "Sair"
+        "logout": "Sair",
+        "configurations": "Configurações"
       }
     },
 
@@ -205,7 +206,30 @@
         "origin_empty_error": "O campo 'origem' é obrigatório!",
         "demands_empty_error": "Selecione pelo menos uma demanda!",
         "other_demand_empty_error": "O campo 'outra demanda' é obrigatório se estiver selecionada!"
+      },
+
+      "demands_create_page": {
+        "title": "Ops! 🙁",
+        "name_empty_error": "O campo 'Nome' é obrigatório!"
       }
+    },
+
+    "demands_page": {
+      "title": "Configurar demandas",
+      "empty_demands": "Nenhuma demanda cadastrada",
+      "delete": "Excluir demanda",
+
+      "form": {
+        "new": "Nova demanda",
+        "create": "Criar demanda",
+        "example": "Exemplo"
+      }
+    },
+
+    "configuration_page": {
+      "title": "Configurações",
+      "empty_configurations": "Não existem configurações para o sistema.",
+      "edit": "Editar"
     }
   }
 }
