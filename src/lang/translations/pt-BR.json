@@ -229,7 +229,7 @@
 
       "demands_create_page": {
         "title": "Ops! 🙁",
-        "name_empty_error": "O campo 'Nome' é obrigatório!"
+        "name_empty_error": "O campo 'Nova demanda' é obrigatório!"
       }
     }
   }
