@@ -24,6 +24,25 @@
       "subjects_attended": "Sujeitos atendidos até o momento"
     },
 
+    "configuration_page": {
+      "title": "Configurações",
+      "empty_configurations": "Não existem configurações para o sistema.",
+      "edit": "Editar",
+      "demands": "Demandas"
+    },
+
+    "configuration_demands_page": {
+      "title": "Configurar demandas",
+      "empty_demands": "Nenhuma demanda cadastrada",
+      "delete": "Excluir demanda",
+
+      "form": {
+        "new": "Nova demanda",
+        "create": "Criar demanda",
+        "example": "Exemplo"
+      }
+    },
+
     "subjects_page": {
       "title": "Sujeitos",
       "create": "Cadastrar",
@@ -212,24 +231,6 @@
         "title": "Ops! 🙁",
         "name_empty_error": "O campo 'Nome' é obrigatório!"
       }
-    },
-
-    "demands_page": {
-      "title": "Configurar demandas",
-      "empty_demands": "Nenhuma demanda cadastrada",
-      "delete": "Excluir demanda",
-
-      "form": {
-        "new": "Nova demanda",
-        "create": "Criar demanda",
-        "example": "Exemplo"
-      }
-    },
-
-    "configuration_page": {
-      "title": "Configurações",
-      "empty_configurations": "Não existem configurações para o sistema.",
-      "edit": "Editar"
     }
   }
 }

@@ -120,7 +120,7 @@ export default function AdminDemands() {
         <PageSkeleton />
       ) : (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
-          <Title>{i18n.t("demands_page.title")}</Title>
+          <Title>{i18n.t("configuration_demands_page.title")}</Title>
 
           <form>
             <MediaQuery smallerThan="sm" styles={{ flexDirection: "column" }}>
@@ -129,8 +129,10 @@ export default function AdminDemands() {
                   <TextInput
                     w="90%"
                     withAsterisk
-                    label={i18n.t("demands_page.form.new")}
-                    placeholder={i18n.t("demands_page.form.example")}
+                    label={i18n.t("configuration_demands_page.form.new")}
+                    placeholder={i18n.t(
+                      "configuration_demands_page.form.example"
+                    )}
                     {...formNewDemand.getInputProps("name")}
                   />
                 </MediaQuery>
@@ -140,7 +142,7 @@ export default function AdminDemands() {
                   styles={{ width: "100%", marginTop: "0" }}
                 >
                   <Button mt="xl" type="button" onClick={handleSubmit}>
-                    {i18n.t("demands_page.form.create")}
+                    {i18n.t("configuration_demands_page.form.create")}
                   </Button>
                 </MediaQuery>
               </Flex>
@@ -178,7 +180,7 @@ export default function AdminDemands() {
                           handleDelete(index);
                         }}
                       >
-                        {i18n.t("demands_page.delete")}
+                        {i18n.t("configuration_demands_page.delete")}
                       </Button>
                     </MediaQuery>
                   </Flex>
@@ -186,7 +188,10 @@ export default function AdminDemands() {
               </Card>
             ))
           ) : (
-            <Text mt="md"> {i18n.t("demands_page.empty_demands")} </Text>
+            <Text mt="md">
+              {" "}
+              {i18n.t("configuration_demands_page.empty_demands")}{" "}
+            </Text>
           )}
         </Card>
       )}

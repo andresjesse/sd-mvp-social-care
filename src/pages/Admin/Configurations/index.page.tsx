@@ -14,16 +14,16 @@ import { useNavigate } from "react-router-dom";
 import { faFileCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+const configurations = [
+  {
+    name: i18n.t("configuration_page.demands"),
+    url: "/admin/configurations/demands/",
+    icon: <FontAwesomeIcon icon={faFileCirclePlus} size="xl" />,
+  },
+];
+
 export default function AdminDemands() {
   const navigate = useNavigate();
-
-  const configurations = [
-    {
-      name: "Demandas",
-      url: "/admin/configurations/demands/",
-      icon: <FontAwesomeIcon icon={faFileCirclePlus} size="xl" />,
-    },
-  ];
 
   return (
     <AppLayout navbarLinkActive="configurations">
