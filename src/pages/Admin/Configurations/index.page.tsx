@@ -1,6 +1,14 @@
 import React from "react";
 import AppLayout from "@/pages/Layouts/AppLayout";
-import { Button, Card, Flex, Title, Text, MediaQuery } from "@mantine/core";
+import {
+  Button,
+  Card,
+  Flex,
+  Title,
+  Text,
+  MediaQuery,
+  Group,
+} from "@mantine/core";
 import i18n from "@/lang";
 import { useNavigate } from "react-router-dom";
 import { faFileCirclePlus } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +21,7 @@ export default function AdminDemands() {
     {
       name: "Demandas",
       url: "/admin/configurations/demands/",
-      icon: <FontAwesomeIcon icon={faFileCirclePlus} />,
+      icon: <FontAwesomeIcon icon={faFileCirclePlus} size="xl" />,
     },
   ];
 
@@ -41,9 +49,10 @@ export default function AdminDemands() {
                   gap="md"
                   justify="space-between"
                 >
-                  <Text>
-                    {configuration.icon} {configuration.name}
-                  </Text>
+                  <Group>
+                    {configuration.icon}
+                    <Text>{configuration.name}</Text>
+                  </Group>
 
                   <MediaQuery smallerThan="sm" styles={{ width: "100%" }}>
                     <Button
