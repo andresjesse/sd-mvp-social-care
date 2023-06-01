@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import {
   Accordion,
+  Anchor,
   Button,
   Card,
   Center,
@@ -14,7 +15,6 @@ import {
   rem,
   Text,
   Title,
-  UnstyledButton,
   useMantineTheme,
 } from "@mantine/core";
 
@@ -52,7 +52,7 @@ export default function AdminSocialServicesPage() {
     setImages(null);
     try {
       const files = await listFiles(
-        `subjects/${subjectId}/social-services/${socialServiceId}`
+        `subjects/${subjectId}/social-services/${socialServiceId}/attachments/`
       );
       const urls = await Promise.all(
         files.map(async (item) => {
@@ -218,23 +218,16 @@ export default function AdminSocialServicesPage() {
                       >
                         {images?.map((url, index) => (
                           <Carousel.Slide key={index}>
-                            <UnstyledButton
-                              component="a"
-                              target="_blank"
-                              href={url}
-                            >
+                            <Anchor target="_blank" href={url}>
                               <Image
                                 src={url}
                                 width={150}
                                 height={150}
                                 fit="cover"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                }}
                                 radius="md"
                                 caption="image.png"
                               />
-                            </UnstyledButton>
+                            </Anchor>
                           </Carousel.Slide>
                         ))}
                       </Carousel>
