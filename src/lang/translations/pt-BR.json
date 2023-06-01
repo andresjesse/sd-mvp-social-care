@@ -168,7 +168,8 @@
       "origin_internal": "Interna",
       "origin_external": "Externa",
       "demands": "Demandas",
-      "forward": "Encaminhamento"
+      "forward": "Encaminhamento",
+      "attachments": "Anexos"
     },
 
     "social_services_create_page": {

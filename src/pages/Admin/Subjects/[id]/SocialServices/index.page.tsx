@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Accordion,
   Button,
   Card,
+  Center,
+  getStylesRef,
   Group,
+  Image,
   List,
+  Loader,
   Paper,
+  rem,
   Text,
   Title,
+  UnstyledButton,
   useMantineTheme,
 } from "@mantine/core";
 
@@ -30,11 +36,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import i18n from "@/lang";
 import moment from "moment";
 import PageSkeleton from "./_PageSkeleton";
+import { Carousel } from "@mantine/carousel";
+import useStorage from "@/hooks/useStorage";
 
 export default function AdminSocialServicesPage() {
   const theme = useMantineTheme();
 
   const navigate = useNavigate();
+
+  const { listFiles, getFileUrl, loading: imagesIsLoading } = useStorage();
+
+  const [images, setImages] = useState<string[] | null>(null);
+
+  const updateImages = async (socialServiceId: string) => {
+    setImages(null);
+    try {
+      const files = await listFiles(
+        `subjects/${subjectId}/social-services/${socialServiceId}`
+      );
+      const urls = await Promise.all(
+        files.map(async (item) => {
+          return await getFileUrl(item);
+        })
+      );
+      urls.length > 0 ? setImages(urls) : setImages(null);
+    } catch {
+      console.log("loading images error");
+    }
+  };
 
   const { subjectId } = useParams();
 
@@ -68,7 +97,12 @@ export default function AdminSocialServicesPage() {
           <Accordion mt="lg" variant="separated" radius="md" defaultValue="0">
             {socialServices.map((socialService, index) => (
               <Accordion.Item value={index.toString()} key={index}>
-                <Accordion.Control>
+                <Accordion.Control
+                  onClick={() => {
+                    // eslint-disable-next-line
+                    updateImages(socialService.id!);
+                  }}
+                >
                   <Group>
                     <FontAwesomeIcon size="xl" icon={faFileCircleCheck} />
 
@@ -128,6 +162,71 @@ export default function AdminSocialServicesPage() {
                       </List.Item>
                     )}
                   </List>
+                  {imagesIsLoading && (
+                    <Center>
+                      <Loader variant="dots" size="xl" />
+                    </Center>
+                  )}
+                  {images && (
+                    <Card mt="md" withBorder>
+                      <Text fw="700">
+                        {i18n.t("social_services_page.attachments")}
+                      </Text>
+                      <Carousel
+                        mt="md"
+                        withIndicators
+                        height={200}
+                        slideSize="33.333333%"
+                        slideGap="xs"
+                        align="start"
+                        breakpoints={[
+                          { maxWidth: "md", slideSize: "50%" },
+                          { maxWidth: "sm", slideSize: "100%", slideGap: 0 },
+                        ]}
+                        styles={{
+                          controls: {
+                            ref: getStylesRef("controls"),
+                            transition: "opacity 150ms ease",
+                            opacity: 0,
+                          },
+                          root: {
+                            "&:hover": {
+                              [`& .${getStylesRef("controls")}`]: {
+                                opacity: 1,
+                              },
+                            },
+                          },
+                          indicator: {
+                            width: rem(12),
+                            height: rem(4),
+                            transition: "width 250ms ease",
+
+                            "&[data-active]": {
+                              width: rem(40),
+                            },
+                          },
+                        }}
+                        loop
+                      >
+                        {images?.map((url, index) => (
+                          <Carousel.Slide key={index}>
+                            <UnstyledButton
+                              component="a"
+                              target="_blank"
+                              href={url}
+                            >
+                              <Image
+                                src={url}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
+                              />
+                            </UnstyledButton>
+                          </Carousel.Slide>
+                        ))}
+                      </Carousel>
+                    </Card>
+                  )}
                 </Accordion.Panel>
               </Accordion.Item>
             ))}

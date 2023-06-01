@@ -13,8 +13,10 @@ export default function useStorage() {
   const storage = getStorage();
 
   const listFiles = async (path: string) => {
+    setLoading(true);
     const storageRef = ref(storage, path);
     const all = await listAll(storageRef);
+    setLoading(false);
     return all.items.map((item) => item.fullPath);
   };
 
@@ -28,8 +30,10 @@ export default function useStorage() {
   };
 
   const getFileUrl = async (path: string) => {
+    setLoading(true);
     const storageRef = ref(storage, path);
     const fileUrl = await getDownloadURL(storageRef);
+    setLoading(false);
     return fileUrl;
   };
 
