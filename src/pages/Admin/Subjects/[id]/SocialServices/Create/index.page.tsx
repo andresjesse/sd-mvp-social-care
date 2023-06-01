@@ -212,7 +212,7 @@ export default function AdminSocialServicesCreatePage() {
             {i18n.t("subjects_create_page.asterisk_info")}
           </Input.Label>
 
-          <form>
+          <form onSubmit={() => handleSubmit}>
             <DateTimePicker
               mt="md"
               clearable

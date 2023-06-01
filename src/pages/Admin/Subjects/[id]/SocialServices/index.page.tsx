@@ -94,7 +94,15 @@ export default function AdminSocialServicesPage() {
           >
             {i18n.t("social_services_page.create")}
           </Button>
-          <Accordion mt="lg" variant="separated" radius="md" defaultValue="0">
+          <Accordion
+            mt="lg"
+            variant="separated"
+            radius="md"
+            defaultValue="0"
+            onChange={() => {
+              console.log("teste");
+            }}
+          >
             {socialServices.map((socialService, index) => (
               <Accordion.Item value={index.toString()} key={index}>
                 <Accordion.Control
@@ -175,8 +183,8 @@ export default function AdminSocialServicesPage() {
                       <Carousel
                         mt="md"
                         withIndicators
-                        height={200}
-                        slideSize="33.333333%"
+                        height={180}
+                        slideSize="10%"
                         slideGap="xs"
                         align="start"
                         breakpoints={[
@@ -217,9 +225,14 @@ export default function AdminSocialServicesPage() {
                             >
                               <Image
                                 src={url}
+                                width={150}
+                                height={150}
+                                fit="cover"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                 }}
+                                radius="md"
+                                caption="image.png"
                               />
                             </UnstyledButton>
                           </Carousel.Slide>
