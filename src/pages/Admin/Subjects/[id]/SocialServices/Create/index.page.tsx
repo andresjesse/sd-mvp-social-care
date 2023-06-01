@@ -178,7 +178,6 @@ export default function AdminSocialServicesCreatePage() {
         }
 
         await handleUploadFiles(newId);
-        setUploading(false);
 
         notifications.show({
           title: i18n.t("notifications.database_success.title"),
@@ -188,21 +187,21 @@ export default function AdminSocialServicesCreatePage() {
 
         navigate("/admin/subjects/");
       } catch (error) {
-        setUploading(false);
         notifications.show({
           title: i18n.t("notifications.database_error.title"),
           message: i18n.t("notifications.database_error.send_forms"),
           color: "red",
         });
+      } finally {
+        setUploading(false);
       }
     }
   };
 
   const handleUploadFiles = async (socialServiceId: string) => {
-    if (subject && socialServiceId) {
-      const path = `subjects/${subject.id}/social-services/${socialServiceId}/attachments`;
-      // eslint-disable-next-line
-      await uploadFiles(path, files!);
+    if (subject && socialServiceId && files) {
+      const path = `subjects/${subject.id}/social-services/${socialServiceId}/attachments/`;
+      await uploadFiles(path, files);
     }
   };
 
