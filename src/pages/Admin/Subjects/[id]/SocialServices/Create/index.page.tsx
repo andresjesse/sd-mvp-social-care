@@ -16,6 +16,7 @@ import {
   MediaQuery,
   List,
   useMantineTheme,
+  Loader,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
@@ -35,7 +36,7 @@ import { Static } from "@/types/Static";
 import dateToISOString from "@/helpers/dateToISOString";
 import PageSkeleton from "./_PageSkeleton";
 import useAuth from "@/hooks/useAuth";
-// import useStorage from "@/hooks/useStorage";
+import useStorage from "@/hooks/useStorage";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -64,12 +65,14 @@ export default function AdminSocialServicesCreatePage() {
 
   const demands = demandsData?.items;
 
-  // const { loading: storageLoading, deleteFile } = useStorage();
+  const { uploadFiles } = useStorage();
 
   const [hasOtherDemand, setHasOtherDemand] = useState(false);
   const [files, setFiles] = useState<File[] | null>([]);
 
   const resetRef = useRef<() => void>(null);
+
+  const [uploading, setUploading] = useState(false);
 
   const clearFiles = () => {
     setFiles(null);
@@ -156,9 +159,12 @@ export default function AdminSocialServicesCreatePage() {
   const handleSubmit = async () => {
     form.validate();
     handleError();
+
     if (form.isValid()) {
+      setUploading(true);
+
       try {
-        await create({
+        const newId = await create({
           ...form.values,
           date: dateToISOString(form.values.date),
           createdBy: user?.email,
@@ -170,6 +176,8 @@ export default function AdminSocialServicesCreatePage() {
             lastSocialServiceDate: dateToISOString(new Date()),
           });
         }
+
+        await handleUploadFiles(newId);
 
         notifications.show({
           title: i18n.t("notifications.database_success.title"),
@@ -184,7 +192,16 @@ export default function AdminSocialServicesCreatePage() {
           message: i18n.t("notifications.database_error.send_forms"),
           color: "red",
         });
+      } finally {
+        setUploading(false);
       }
+    }
+  };
+
+  const handleUploadFiles = async (socialServiceId: string) => {
+    if (subject && socialServiceId && files) {
+      const path = `subjects/${subject.id}/social-services/${socialServiceId}/attachments/`;
+      await uploadFiles(path, files);
     }
   };
 
@@ -361,7 +378,14 @@ export default function AdminSocialServicesCreatePage() {
                 </MediaQuery>
 
                 <MediaQuery largerThan="sm" styles={{ width: "30%" }}>
-                  <Button w="100%" type="button" onClick={handleSubmit}>
+                  <Button
+                    w="100%"
+                    type="button"
+                    onClick={handleSubmit}
+                    disabled={uploading}
+                  >
+                    {uploading && <Loader size="sm" color="gray" mr="sm" />}
+
                     {i18n.t("social_services_create_page.form.create")}
                   </Button>
                 </MediaQuery>
