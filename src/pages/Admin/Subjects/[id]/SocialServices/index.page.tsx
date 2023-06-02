@@ -31,6 +31,9 @@ import AppLayout from "@/pages/Layouts/AppLayout";
 import {
   faFileCircleCheck,
   faThumbTack,
+  faFileWord,
+  faFilePdf,
+  faFile,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import i18n from "@/lang";
@@ -44,24 +47,41 @@ export default function AdminSocialServicesPage() {
 
   const navigate = useNavigate();
 
-  const { listFiles, getFileUrl, loading: imagesIsLoading } = useStorage();
+  const { listFiles, getFileUrl, loading: filesIsLoading } = useStorage();
 
-  const [images, setImages] = useState<string[] | null>(null);
+  type FileRef = {
+    name?: string;
+    url?: string;
+    extension?: string;
+  };
 
-  const updateImages = async (socialServiceId: string) => {
-    setImages(null);
+  const [files, setFiles] = useState<Array<FileRef> | null>(null);
+
+  const updateFiles = async (socialServiceId: string) => {
+    setFiles(null);
     try {
       const files = await listFiles(
         `subjects/${subjectId}/social-services/${socialServiceId}/attachments/`
       );
       const urls = await Promise.all(
         files.map(async (item) => {
-          return await getFileUrl(item);
+          let splitItem = item.split("/");
+          const fileName = splitItem[splitItem.length - 1];
+          splitItem = item.split(".");
+          const fileExtension = splitItem[splitItem.length - 1];
+          const fileUrl = await getFileUrl(item);
+          const fileRef: FileRef = {
+            name: fileName,
+            url: fileUrl,
+            extension: fileExtension,
+          };
+          console.log(item);
+          return fileRef;
         })
       );
-      urls.length > 0 ? setImages(urls) : setImages(null);
+      urls.length > 0 ? setFiles(urls) : setFiles(null);
     } catch {
-      console.log("loading images error");
+      console.log("loading files error");
     }
   };
 
@@ -108,7 +128,7 @@ export default function AdminSocialServicesPage() {
                 <Accordion.Control
                   onClick={() => {
                     // eslint-disable-next-line
-                    updateImages(socialService.id!);
+                    updateFiles(socialService.id!);
                   }}
                 >
                   <Group>
@@ -170,12 +190,12 @@ export default function AdminSocialServicesPage() {
                       </List.Item>
                     )}
                   </List>
-                  {imagesIsLoading && (
+                  {filesIsLoading && (
                     <Center>
                       <Loader variant="dots" size="xl" />
                     </Center>
                   )}
-                  {images && (
+                  {files && (
                     <Card mt="md" withBorder>
                       <Text fw="700">
                         {i18n.t("social_services_page.attachments")}
@@ -183,7 +203,7 @@ export default function AdminSocialServicesPage() {
                       <Carousel
                         mt="md"
                         withIndicators
-                        height={180}
+                        height={200}
                         slideSize="10%"
                         slideGap="xs"
                         align="start"
@@ -216,17 +236,49 @@ export default function AdminSocialServicesPage() {
                         }}
                         loop
                       >
-                        {images?.map((url, index) => (
+                        {files?.map((fileRef: FileRef, index) => (
                           <Carousel.Slide key={index}>
-                            <Anchor target="_blank" href={url}>
-                              <Image
-                                src={url}
-                                width={150}
-                                height={150}
-                                fit="cover"
-                                radius="md"
-                                caption="image.png"
-                              />
+                            <Anchor target="_blank" href={fileRef.url}>
+                              {fileRef.extension == "png" ||
+                              fileRef.extension == "jpg" ||
+                              fileRef.extension == "jpeg" ? (
+                                <Image
+                                  src={fileRef.url}
+                                  width={150}
+                                  height={150}
+                                  fit="cover"
+                                  radius="md"
+                                  caption={fileRef.name}
+                                />
+                              ) : (
+                                <Image
+                                  src={null}
+                                  width={150}
+                                  height={150}
+                                  fit="cover"
+                                  radius="md"
+                                  caption={fileRef.name}
+                                  withPlaceholder
+                                  placeholder={
+                                    <FontAwesomeIcon
+                                      size="lg"
+                                      icon={(() => {
+                                        switch (fileRef.extension) {
+                                          case "docx": {
+                                            return faFileWord;
+                                          }
+                                          case "pdf": {
+                                            return faFilePdf;
+                                          }
+                                          default: {
+                                            return faFile;
+                                          }
+                                        }
+                                      })()}
+                                    />
+                                  }
+                                />
+                              )}
                             </Anchor>
                           </Carousel.Slide>
                         ))}
