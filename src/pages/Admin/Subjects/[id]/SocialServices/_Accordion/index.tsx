@@ -28,11 +28,11 @@ interface _AccordionProps {
 
 export default function index({ socialServices }: _AccordionProps) {
   // eslint-disable-next-line
-  const firsSocialServiceId = socialServices[0].id!;
+  const defaultOppenedId = socialServices[0].id!;
 
   useEffect(() => {
-    setSocialServiceOppened(firsSocialServiceId);
-    updateFiles(firsSocialServiceId);
+    setSocialServiceOppened(defaultOppenedId);
+    updateFiles(defaultOppenedId);
   }, []);
 
   const theme = useMantineTheme();
@@ -79,7 +79,7 @@ export default function index({ socialServices }: _AccordionProps) {
       mt="lg"
       variant="separated"
       radius="md"
-      defaultValue={firsSocialServiceId}
+      defaultValue={defaultOppenedId}
       onChange={(id) => {
         setSocialServiceOppened(id);
         updateFiles(id + "");
