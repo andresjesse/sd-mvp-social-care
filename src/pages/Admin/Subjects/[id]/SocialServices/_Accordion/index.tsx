@@ -21,6 +21,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import FileCarousel from "./_FIleCarousel";
+import { notifications } from "@mantine/notifications";
 
 interface _AccordionProps {
   socialServices: SocialService[];
@@ -50,27 +51,33 @@ export default function index({ socialServices }: _AccordionProps) {
   const updateFiles = async (socialServiceId: string) => {
     setFiles(null);
     try {
-      const files = await listFiles(
+      const fileList = await listFiles(
         `subjects/${subjectId}/social-services/${socialServiceId}/attachments/`
       );
-      const urls = await Promise.all(
-        files.map(async (item) => {
+      const files = await Promise.all(
+        fileList.map(async (item) => {
           let splitItem = item.split("/");
-          const fileName = splitItem[splitItem.length - 1];
+          const name = splitItem[splitItem.length - 1];
           splitItem = item.split(".");
-          const fileExtension = splitItem[splitItem.length - 1];
-          const fileUrl = await getFileUrl(item);
+          const extension = splitItem[splitItem.length - 1];
+          const url = await getFileUrl(item);
           const fileRef: FileRef = {
-            name: fileName,
-            url: fileUrl,
-            extension: fileExtension,
+            name: name,
+            url: url,
+            extension: extension,
           };
           return fileRef;
         })
       );
-      urls.length > 0 ? setFiles(urls) : setFiles(null);
+      if (files.length) {
+        setFiles(files);
+      }
     } catch {
-      console.log("loading files error");
+      notifications.show({
+        title: i18n.t("notifications.attachments_error.title"),
+        message: i18n.t("notifications.attachments_error.message"),
+        color: "red",
+      });
     }
   };
 

@@ -206,6 +206,11 @@
         "send_forms": "Dados foram salvos com sucesso."
       },
 
+      "attachments_error": {
+        "title": "Ops! 🙁",
+        "message": "Ocorreu um erro ao buscar anexos..."
+      },
+
       "login": {
         "title": "Ops! 🙁",
         "auth_error": "Ocorreu um erro de autenticação!",
