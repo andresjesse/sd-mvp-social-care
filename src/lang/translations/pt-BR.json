@@ -169,7 +169,8 @@
       "origin_external": "Externa",
       "demands": "Demandas",
       "forward": "Encaminhamento",
-      "attachments": "Anexos"
+      "attachments": "Anexos",
+      "no_attachments": "Sem anexos..."
     },
 
     "social_services_create_page": {
