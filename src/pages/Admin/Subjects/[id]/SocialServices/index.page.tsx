@@ -50,9 +50,7 @@ export default function AdminSocialServicesPage() {
             {i18n.t("social_services_page.create")}
           </Button>
 
-          {!loadingSocialServices && (
-            <Accordion socialServices={socialServices} />
-          )}
+          <Accordion socialServices={socialServices} />
         </Card>
       )}
     </AppLayout>
