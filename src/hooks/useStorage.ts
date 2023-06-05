@@ -12,7 +12,7 @@ export default function useStorage() {
   const [loading, setLoading] = useState(false);
   const storage = getStorage();
 
-  const listFiles = async (path: string) => {
+  const listFiles = async (path: string): Promise<string[]> => {
     setLoading(true);
     const storageRef = ref(storage, path);
     const all = await listAll(storageRef);
@@ -20,7 +20,7 @@ export default function useStorage() {
     return all.items.map((item) => item.fullPath);
   };
 
-  const uploadFiles = async (path: string, files: File[]) => {
+  const uploadFiles = async (path: string, files: File[]): Promise<void> => {
     setLoading(true);
     for (const file of Array.from(files)) {
       const storageRef = ref(storage, path + file.name);
@@ -29,7 +29,7 @@ export default function useStorage() {
     setLoading(false);
   };
 
-  const getFileUrl = async (path: string) => {
+  const getFileUrl = async (path: string): Promise<string> => {
     setLoading(true);
     const storageRef = ref(storage, path);
     const fileUrl = await getDownloadURL(storageRef);
@@ -37,7 +37,7 @@ export default function useStorage() {
     return fileUrl;
   };
 
-  const deleteFile = async (path: string) => {
+  const deleteFile = async (path: string): Promise<void> => {
     const storageRef = ref(storage, path);
     await deleteObject(storageRef);
   };
