@@ -10,7 +10,6 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useParams } from "react-router-dom";
-import { FileRef } from "@/types/FileRef";
 import useStorage from "@/hooks/useStorage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
@@ -22,6 +21,7 @@ import {
 
 import FileCarousel from "./_FileCarousel";
 import { notifications } from "@mantine/notifications";
+import { SocialServiceAttachmentFile } from "@/types/SocialServiceAttachmentFile";
 
 interface SocialServicesAccordionProps {
   socialServices: SocialService[];
@@ -48,7 +48,7 @@ export default function SocialServicesAccordion({
 
   const { listFiles, getFileUrl, loading: filesIsLoading } = useStorage();
 
-  const [files, setFiles] = useState<Array<FileRef>>([]);
+  const [files, setFiles] = useState<Array<SocialServiceAttachmentFile>>([]);
 
   const updateFiles = async (socialServiceId: string) => {
     setFiles([]);
@@ -65,7 +65,7 @@ export default function SocialServicesAccordion({
           splitItem = item.split(".");
           const extension = splitItem[splitItem.length - 1];
           const url = await getFileUrl(item);
-          const fileRef: FileRef = {
+          const fileRef: SocialServiceAttachmentFile = {
             name: name,
             url: url,
             extension: extension,

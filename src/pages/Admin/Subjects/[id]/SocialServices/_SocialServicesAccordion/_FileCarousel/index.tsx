@@ -13,13 +13,13 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { FileRef } from "@/types/FileRef";
 import i18n from "@/lang";
 import isImage from "@/helpers/isImage";
 import fileExtensionToFontAwesomeIcon from "@/helpers/fileExtensionToFontAwesomeIcon";
+import { SocialServiceAttachmentFile } from "@/types/SocialServiceAttachmentFile";
 
 interface FileCarouselProps {
-  files: Array<FileRef>;
+  files: Array<SocialServiceAttachmentFile>;
 }
 
 export default function FileCarousel({ files }: FileCarouselProps) {
@@ -83,7 +83,7 @@ export default function FileCarousel({ files }: FileCarouselProps) {
           },
         }}
       >
-        {files.map((fileRef: FileRef) => (
+        {files.map((fileRef: SocialServiceAttachmentFile) => (
           <Carousel.Slide key={fileRef.name}>
             <Anchor target="_blank" href={fileRef.url}>
               {isImage(fileRef.extension) ? (
