@@ -170,7 +170,7 @@
       "demands": "Demandas",
       "forward": "Encaminhamento",
       "attachments": "Anexos",
-      "load_attachments": "Carregando...",
+      "load_attachments": "Carregando anexos...",
       "no_attachments": "Este atendimento não possui anexos."
     },
 

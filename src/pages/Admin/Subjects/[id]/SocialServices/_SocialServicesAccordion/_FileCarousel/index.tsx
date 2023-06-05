@@ -5,14 +5,12 @@ import {
   Anchor,
   Card,
   Image,
-  Loader,
   Text,
   getStylesRef,
   rem,
   useMantineTheme,
 } from "@mantine/core";
 
-import { faFileCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FileRef } from "@/types/FileRef";
@@ -20,16 +18,20 @@ import i18n from "@/lang";
 import isImage from "@/helpers/isImage";
 import fileExtensionToFontAwesomeIcon from "@/helpers/fileExtensionToFontAwesomeIcon";
 
-interface _FileCarouselProps {
-  files: Array<FileRef> | null;
-  isLoading?: boolean | false;
+interface FileCarouselProps {
+  files: Array<FileRef>;
 }
 
-export default function _FileCarousel({
-  files,
-  isLoading,
-}: _FileCarouselProps) {
+export default function FileCarousel({ files }: FileCarouselProps) {
   const theme = useMantineTheme();
+
+  if (files.length == 0)
+    return (
+      <Card mt="md" withBorder>
+        <Text>{i18n.t("social_services_page.no_attachments")}</Text>
+      </Card>
+    );
+
   return (
     <Card mt="md" withBorder>
       <Text fw="700">{i18n.t("social_services_page.attachments")}</Text>
@@ -81,7 +83,7 @@ export default function _FileCarousel({
           },
         }}
       >
-        {files?.map((fileRef: FileRef) => (
+        {files.map((fileRef: FileRef) => (
           <Carousel.Slide key={fileRef.name}>
             <Anchor target="_blank" href={fileRef.url}>
               {isImage(fileRef.extension) ? (
@@ -113,36 +115,6 @@ export default function _FileCarousel({
             </Anchor>
           </Carousel.Slide>
         ))}
-        {isLoading && (
-          <Carousel.Slide>
-            <Image
-              src={null}
-              width={150}
-              height={150}
-              fit={"cover"}
-              radius="md"
-              caption={i18n.t("social_services_page.load_attachments")}
-              withPlaceholder
-              placeholder={<Loader />}
-            />
-          </Carousel.Slide>
-        )}
-        {!files && !isLoading && (
-          <Carousel.Slide>
-            <Image
-              src={null}
-              width={150}
-              height={150}
-              fit="cover"
-              radius="md"
-              caption={i18n.t("social_services_page.no_attachments")}
-              withPlaceholder
-              placeholder={
-                <FontAwesomeIcon size="2xl" icon={faFileCircleExclamation} />
-              }
-            />
-          </Carousel.Slide>
-        )}
       </Carousel>
     </Card>
   );

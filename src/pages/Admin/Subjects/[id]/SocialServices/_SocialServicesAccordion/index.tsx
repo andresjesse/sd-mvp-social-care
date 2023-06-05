@@ -20,7 +20,7 @@ import {
   faThumbTack,
 } from "@fortawesome/free-solid-svg-icons";
 
-import FileCarousel from "./_FIleCarousel";
+import FileCarousel from "./_FileCarousel";
 import { notifications } from "@mantine/notifications";
 
 interface SocialServicesAccordionProps {
@@ -48,14 +48,16 @@ export default function SocialServicesAccordion({
 
   const { listFiles, getFileUrl, loading: filesIsLoading } = useStorage();
 
-  const [files, setFiles] = useState<Array<FileRef> | null>(null);
+  const [files, setFiles] = useState<Array<FileRef>>([]);
 
   const updateFiles = async (socialServiceId: string) => {
-    setFiles(null);
+    setFiles([]);
+
     try {
       const fileList = await listFiles(
         `subjects/${subjectId}/social-services/${socialServiceId}/attachments/`
       );
+
       const files = await Promise.all(
         fileList.map(async (item) => {
           let splitItem = item.split("/");
@@ -152,9 +154,15 @@ export default function SocialServicesAccordion({
                 </List.Item>
               )}
             </List>
-            {socialServiceOppened == socialService.id && (
-              <FileCarousel files={files} isLoading={filesIsLoading} />
-            )}
+
+            {socialServiceOppened == socialService.id &&
+              (filesIsLoading ? (
+                <Text align="center">
+                  {i18n.t("social_services_page.load_attachments")}
+                </Text>
+              ) : (
+                <FileCarousel files={files} />
+              ))}
           </Accordion.Panel>
         </Accordion.Item>
       ))}
