@@ -1,19 +1,23 @@
 export default function isImage(fileExtension: string | undefined) {
-  const extension = (fileExtension + "").toLowerCase();
+  const extension = (fileExtension || "").toLowerCase();
 
   switch (extension) {
     default:
       return false;
 
+    case "apng":
+    case "gif":
+    case "ico":
+    case "cur":
     case "jpg":
     case "jpeg":
+    case "jfif":
+    case "pjpeg":
+    case "pjp":
     case "png":
-    case "gif":
-    case "bmp":
-    case "tiff":
-    case "raw":
+    case "svg":
       return true;
   }
 }
-// Other possibles 'image' types
-// EXIF, PPM, PGM, PBM e PNM.
+
+//source: https://www.w3schools.com/html/html_images.asp

@@ -12,7 +12,7 @@ import {
 export default function fileExtensionToFontAwesomeIcon(
   fileExtension: string | undefined
 ) {
-  const extension = (fileExtension + "").toLowerCase();
+  const extension = (fileExtension || "").toLowerCase();
 
   switch (extension) {
     default:
