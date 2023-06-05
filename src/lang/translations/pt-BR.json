@@ -170,6 +170,7 @@
       "demands": "Demandas",
       "forward": "Encaminhamento",
       "attachments": "Anexos",
+      "load_attachments": "Carregando...",
       "no_attachments": "Sem anexos..."
     },
 

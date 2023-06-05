@@ -12,15 +12,13 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 
-import {
-  faFile,
-  faFilePdf,
-  faFileWord,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFileCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FileRef } from "@/types/FileRef";
 import i18n from "@/lang";
+import isImage from "@/helpers/isImage";
+import fileExtensionToFontAwesomeIcon from "@/helpers/fileExtensionToFontAwesomeIcon";
 
 interface _FileCarouselProps {
   files: Array<FileRef> | null;
@@ -86,9 +84,7 @@ export default function _FileCarousel({
         {files?.map((fileRef: FileRef) => (
           <Carousel.Slide key={fileRef.name}>
             <Anchor target="_blank" href={fileRef.url}>
-              {fileRef.extension == "png" ||
-              fileRef.extension == "jpg" ||
-              fileRef.extension == "jpeg" ? (
+              {isImage(fileRef.extension) ? (
                 <Image
                   src={fileRef.url}
                   width={150}
@@ -108,20 +104,8 @@ export default function _FileCarousel({
                   withPlaceholder
                   placeholder={
                     <FontAwesomeIcon
-                      size="lg"
-                      icon={(() => {
-                        switch (fileRef.extension) {
-                          case "docx": {
-                            return faFileWord;
-                          }
-                          case "pdf": {
-                            return faFilePdf;
-                          }
-                          default: {
-                            return faFile;
-                          }
-                        }
-                      })()}
+                      size="2xl"
+                      icon={fileExtensionToFontAwesomeIcon(fileRef.extension)}
                     />
                   }
                 />
@@ -137,8 +121,9 @@ export default function _FileCarousel({
               height={150}
               fit={"cover"}
               radius="md"
+              caption={i18n.t("social_services_page.load_attachments")}
               withPlaceholder
-              placeholder={<Loader size="xl" />}
+              placeholder={<Loader />}
             />
           </Carousel.Slide>
         )}
@@ -152,6 +137,9 @@ export default function _FileCarousel({
               radius="md"
               caption={i18n.t("social_services_page.no_attachments")}
               withPlaceholder
+              placeholder={
+                <FontAwesomeIcon size="2xl" icon={faFileCircleExclamation} />
+              }
             />
           </Carousel.Slide>
         )}
