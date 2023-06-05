@@ -171,7 +171,7 @@
       "forward": "Encaminhamento",
       "attachments": "Anexos",
       "load_attachments": "Carregando...",
-      "no_attachments": "Sem anexos..."
+      "no_attachments": "Este atendimento não possui anexos."
     },
 
     "social_services_create_page": {
@@ -209,7 +209,7 @@
 
       "attachments_error": {
         "title": "Ops! 🙁",
-        "message": "Ocorreu um erro ao buscar anexos..."
+        "message": "Ocorreu um erro ao buscar anexos."
       },
 
       "login": {
