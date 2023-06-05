@@ -14,7 +14,7 @@ import AppLayout from "@/pages/Layouts/AppLayout";
 
 import i18n from "@/lang";
 import PageSkeleton from "./_PageSkeleton";
-import Accordion from "./_Accordion";
+import SocialServicesAccordion from "./_SocialServicesAccordion";
 
 export default function AdminSocialServicesPage() {
   const navigate = useNavigate();
@@ -49,8 +49,9 @@ export default function AdminSocialServicesPage() {
           >
             {i18n.t("social_services_page.create")}
           </Button>
+
           {socialServices.length > 0 && (
-            <Accordion socialServices={socialServices} />
+            <SocialServicesAccordion socialServices={socialServices} />
           )}
         </Card>
       )}

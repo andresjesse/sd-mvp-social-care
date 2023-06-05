@@ -23,11 +23,13 @@ import {
 import FileCarousel from "./_FIleCarousel";
 import { notifications } from "@mantine/notifications";
 
-interface _AccordionProps {
+interface SocialServicesAccordionProps {
   socialServices: SocialService[];
 }
 
-export default function index({ socialServices }: _AccordionProps) {
+export default function SocialServicesAccordion({
+  socialServices,
+}: SocialServicesAccordionProps) {
   // eslint-disable-next-line
   const defaultOppenedId = socialServices[0].id!;
 
