@@ -168,7 +168,10 @@
       "origin_internal": "Interna",
       "origin_external": "Externa",
       "demands": "Demandas",
-      "forward": "Encaminhamento"
+      "forward": "Encaminhamento",
+      "attachments": "Anexos",
+      "load_attachments": "Carregando anexos...",
+      "no_attachments": "Este atendimento não possui anexos."
     },
 
     "social_services_create_page": {
@@ -202,6 +205,11 @@
       "database_success": {
         "title": "Sucesso!",
         "send_forms": "Dados foram salvos com sucesso."
+      },
+
+      "attachments_error": {
+        "title": "Ops! 🙁",
+        "message": "Ocorreu um erro ao buscar anexos."
       },
 
       "login": {
