@@ -99,13 +99,19 @@ export default function useCollection<T extends { [x: string]: any }>(
    * Get documents (limited) from the collection ordering by a given attribute.
    * @returns An array of the collection type with filtered elements.
    */
-  const filterLast = async (limit: number, orderAttribute: string) => {
+  const filter = async (
+    attribute: string,
+    order: "asc" | "desc",
+    limit: number | null = null
+  ) => {
     setLoading(true);
-    const q = query(
-      collection(db, collectionName),
-      orderBy(orderAttribute, "asc"),
-      limitToLast(limit)
-    );
+    const q = limit
+      ? query(
+          collection(db, collectionName),
+          orderBy(attribute, order),
+          limitToLast(limit)
+        )
+      : query(collection(db, collectionName), orderBy(attribute, order));
 
     const querySnapshot = await getDocs(q);
     const dataAsMap = querySnapshot.docs.map((doc) => {
@@ -161,7 +167,7 @@ export default function useCollection<T extends { [x: string]: any }>(
     all,
     count,
     refreshData,
-    filterLast,
+    filter,
     filterByQueryString,
   };
 }
