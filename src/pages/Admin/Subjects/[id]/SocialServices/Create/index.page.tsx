@@ -23,9 +23,10 @@ import { notifications } from "@mantine/notifications";
 import { useForm, isNotEmpty, hasLength } from "@mantine/form";
 import { DateTimePicker } from "@mantine/dates";
 import i18n from "@/lang";
-
-import { faFilePdf, faFileImage } from "@fortawesome/free-regular-svg-icons";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFile,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SocialService } from "@/types/SocialService";
 import useCollection from "@/hooks/useCollection";
@@ -311,12 +312,7 @@ export default function AdminSocialServicesCreatePage() {
             />
 
             <Group position="center" mt="md">
-              <FileButton
-                multiple
-                resetRef={resetRef}
-                onChange={setFiles}
-                accept="application/pdf,image/png,image/jpeg"
-              >
+              <FileButton multiple resetRef={resetRef} onChange={setFiles}>
                 {(props) => (
                   <Button {...props}>
                     {i18n.t(
@@ -339,17 +335,9 @@ export default function AdminSocialServicesCreatePage() {
                       key={index}
                       icon={
                         <FontAwesomeIcon
-                          color={
-                            file.type == "application/pdf"
-                              ? theme.colors.red[8]
-                              : theme.colors.gray[7]
-                          }
+                          color={theme.colors.gray[4]}
                           size="xl"
-                          icon={
-                            file.type == "application/pdf"
-                              ? faFilePdf
-                              : faFileImage
-                          }
+                          icon={faFile}
                         />
                       }
                     >
