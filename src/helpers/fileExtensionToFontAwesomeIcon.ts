@@ -1,6 +1,7 @@
 import {
   faFile,
   faFileExcel,
+  faFileImage,
   faFileLines,
   faFilePdf,
   faFilePowerpoint,
@@ -48,5 +49,14 @@ export default function fileExtensionToFontAwesomeIcon(
 
     case "txt":
       return faFileLines;
+
+    case "bmp":
+    case "tiff":
+    case "raw":
+    case "exif":
+    case "ppm":
+    case "pgm":
+    case "pnm":
+      return faFileImage;
   }
 }
