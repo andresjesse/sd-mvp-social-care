@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button, Card, Title } from "@mantine/core";
 
@@ -21,8 +21,20 @@ export default function AdminSocialServicesPage() {
 
   const { subjectId } = useParams();
 
-  const { data: socialServices, loading: loadingSocialServices } =
+  const { filter, loading: loadingSocialServices } =
     useCollection<SocialService>(`subjects/${subjectId}/social-services`);
+
+  const [socialServices, setSocialServices] = useState<Array<SocialService>>(
+    []
+  );
+
+  const filterSocialSerices = async () => {
+    setSocialServices(await filter("date", "asc"));
+  };
+
+  useEffect(() => {
+    filterSocialSerices();
+  }, []);
 
   const { data: subject, loading: loadingSubject } = useDocument<Subject>(
     "subjects",
