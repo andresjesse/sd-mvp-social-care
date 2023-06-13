@@ -50,12 +50,20 @@
       "create": "Cadastrar",
       "social_services": "Atendimentos",
       "empty_subjects": "Nenhum sujeito encontrado",
-      "edit": "Editar sujeito"
+      "edit": "Editar sujeito",
+      "show": "Visualizar sujeito"
     },
 
     "subjects_edit_page": {
       "edit": "Editar",
       "form": { "title": "Editar um sujeito" }
+    },
+
+    "subjects_show_page": {
+      "title": "Visualizar sujeito",
+      "principal_info": "Informações principais",
+      "empty_info": "Não informado",
+      "go_back": "Voltar"
     },
 
     "subjects_create_page": {
