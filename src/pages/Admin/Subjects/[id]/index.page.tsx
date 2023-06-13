@@ -9,6 +9,14 @@ import i18n from "@/lang";
 import moment from "moment";
 import incomeOptions from "@/helpers/generateIncomeOptions";
 
+const getSx = (val: string | undefined) => {
+  return !val
+    ? {
+        color: "grey",
+      }
+    : {};
+};
+
 export default function AdminSocialServicesShowPage() {
   const navigate = useNavigate();
 
@@ -105,7 +113,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.cpf")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.cpf)}>
                 {subject.cpf || i18n.t("subjects_show_page.empty_info")}
               </Text>
             </Text>
@@ -114,7 +122,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.rg")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.rg)}>
                 {subject.rg || i18n.t("subjects_show_page.empty_info")}
               </Text>
             </Text>
