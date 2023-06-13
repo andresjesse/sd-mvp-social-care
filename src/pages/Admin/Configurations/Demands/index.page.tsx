@@ -18,7 +18,6 @@ import { useForm, isNotEmpty } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
-import useCollection from "@/hooks/useCollection";
 import { useNavigate } from "react-router-dom";
 import PageSkeleton from "./_PageSkeleton";
 
@@ -26,13 +25,12 @@ export default function AdminDemands() {
   const theme = useMantineTheme();
   const navigate = useNavigate();
 
-  const { update } = useCollection<Demand>("static", false);
-  const { data, loading } = useDocument<Demand>("static", "demands");
+  const { data, loading, upsert } = useDocument<Demand>("static", "demands");
   const [demands, setDemands] = useState<Demand>();
 
   useEffect(() => {
     if (data) {
-      setDemands(data);
+      setDemands({ id: data.id, items: data.items || [] });
     }
   }, [data]);
 
@@ -82,7 +80,7 @@ export default function AdminDemands() {
       demands.items.push(formNewDemand.values.name);
       setDemands(demands);
 
-      await update("demands", demands);
+      await upsert(demands);
 
       notifications.show({
         title: i18n.t("notifications.database_success.title"),
@@ -100,7 +98,7 @@ export default function AdminDemands() {
       demands.items.splice(index, 1);
       setDemands(demands);
 
-      await update("demands", demands);
+      await upsert(demands);
 
       notifications.show({
         title: i18n.t("notifications.database_success.title"),
