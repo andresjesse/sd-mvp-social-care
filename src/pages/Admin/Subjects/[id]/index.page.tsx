@@ -131,7 +131,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.born_place")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.bornPlace)}>
                 {subject.bornPlace || i18n.t("subjects_show_page.empty_info")}
               </Text>
             </Text>
@@ -140,7 +140,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.origin_unit")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.originUnit)}>
                 {subject.originUnit || i18n.t("subjects_show_page.empty_info")}
               </Text>
             </Text>
@@ -149,7 +149,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.destination_unit")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.destinationUnit)}>
                 {subject.destinationUnit ||
                   i18n.t("subjects_show_page.empty_info")}
               </Text>
@@ -165,7 +165,7 @@ export default function AdminSocialServicesShowPage() {
                   <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.phone")}:
                   </Text>
-                  <Text span ml="5px">
+                  <Text span ml="5px" sx={getSx(subject.contactPhone)}>
                     {subject.contactPhone ||
                       i18n.t("subjects_show_page.empty_info")}
                   </Text>
@@ -175,7 +175,7 @@ export default function AdminSocialServicesShowPage() {
                   <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.address")}:
                   </Text>
-                  <Text span ml="5px">
+                  <Text span ml="5px" sx={getSx(subject.contactAddress)}>
                     {subject.contactAddress ||
                       i18n.t("subjects_show_page.empty_info")}
                   </Text>
@@ -187,7 +187,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.family_bond")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.familyBond)}>
                 {subject.familyBond
                   ? i18n.t(
                       `subjects_create_page.form.fields.family_bond_options.${subject.familyBond}`
@@ -206,7 +206,7 @@ export default function AdminSocialServicesShowPage() {
                   <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.address_state")}:
                   </Text>
-                  <Text span ml="5px">
+                  <Text span ml="5px" sx={getSx(subject.addressState)}>
                     {subject.addressState ||
                       i18n.t("subjects_show_page.empty_info")}
                   </Text>
@@ -216,7 +216,7 @@ export default function AdminSocialServicesShowPage() {
                   <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.address_city")}:
                   </Text>
-                  <Text span ml="5px">
+                  <Text span ml="5px" sx={getSx(subject.addressCity)}>
                     {subject.addressCity ||
                       i18n.t("subjects_show_page.empty_info")}
                   </Text>
@@ -229,7 +229,7 @@ export default function AdminSocialServicesShowPage() {
                     )}
                     :
                   </Text>
-                  <Text span ml="5px">
+                  <Text span ml="5px" sx={getSx(subject.addressDistrict)}>
                     {subject.addressDistrict ||
                       i18n.t("subjects_show_page.empty_info")}
                   </Text>
@@ -239,7 +239,7 @@ export default function AdminSocialServicesShowPage() {
                   <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.address_street")}:
                   </Text>
-                  <Text span ml="5px">
+                  <Text span ml="5px" sx={getSx(subject.addressStreet)}>
                     {subject.addressStreet ||
                       i18n.t("subjects_show_page.empty_info")}
                   </Text>
@@ -249,7 +249,7 @@ export default function AdminSocialServicesShowPage() {
                   <Text fw={700} span>
                     {i18n.t("subjects_create_page.form.fields.address_number")}:
                   </Text>
-                  <Text span ml="5px">
+                  <Text span ml="5px" sx={getSx(subject.addressNumber)}>
                     {subject.addressNumber ||
                       i18n.t("subjects_show_page.empty_info")}
                   </Text>
@@ -267,7 +267,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.religion")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.religion)}>
                 {subject.religion || i18n.t("subjects_show_page.empty_info")}
               </Text>
             </Text>
@@ -276,7 +276,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.skin_color")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.skinColor)}>
                 {subject.skinColor
                   ? i18n.t(
                       `subjects_create_page.form.fields.skin_color_options.${subject.skinColor}`
@@ -289,7 +289,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.income")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subjectIconme)}>
                 {subjectIconme
                   ? subjectIconme
                   : i18n.t("subjects_show_page.empty_info")}
@@ -305,7 +305,7 @@ export default function AdminSocialServicesShowPage() {
                 {i18n.t("subjects_create_page.form.fields.chemical_dependency")}
                 :
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subjectChemicalDependency)}>
                 {subjectChemicalDependency
                   ? subjectChemicalDependency
                   : i18n.t("subjects_show_page.empty_info")}
@@ -316,7 +316,7 @@ export default function AdminSocialServicesShowPage() {
               <Text fw={700} span>
                 {i18n.t("subjects_create_page.form.fields.article_sentence")}:
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.articleSentence)}>
                 {subject.articleSentence ||
                   i18n.t("subjects_show_page.empty_info")}
               </Text>
@@ -327,7 +327,7 @@ export default function AdminSocialServicesShowPage() {
                 {i18n.t("subjects_create_page.form.fields.condemnation_status")}
                 :
               </Text>
-              <Text span ml="5px">
+              <Text span ml="5px" sx={getSx(subject.condemnationStatus)}>
                 {subject.condemnationStatus ||
                   i18n.t("subjects_show_page.empty_info")}
               </Text>
