@@ -28,12 +28,12 @@ export default function AdminSocialServicesPage() {
     []
   );
 
-  const filterSocialSerices = async () => {
+  const filterSocialServices = async () => {
     setSocialServices(await filter("date", "asc"));
   };
 
   useEffect(() => {
-    filterSocialSerices();
+    filterSocialServices();
   }, []);
 
   const { data: subject, loading: loadingSubject } = useDocument<Subject>(

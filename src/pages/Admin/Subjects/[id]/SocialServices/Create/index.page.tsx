@@ -38,6 +38,7 @@ import dateToISOString from "@/helpers/dateToISOString";
 import PageSkeleton from "./_PageSkeleton";
 import useAuth from "@/hooks/useAuth";
 import useStorage from "@/hooks/useStorage";
+import { SocialServiceStats } from "@/types/SocialServiceStats";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -79,6 +80,9 @@ export default function AdminSocialServicesCreatePage() {
     setFiles(null);
     resetRef.current?.();
   };
+
+  const { data: socialServiceStats, upsert: updateStats } =
+    useDocument<SocialServiceStats>("stats", "social-services");
 
   const form = useForm<SocialService>({
     initialValues: {
@@ -170,6 +174,13 @@ export default function AdminSocialServicesCreatePage() {
           date: dateToISOString(form.values.date),
           createdBy: user?.email,
         });
+
+        if (socialServiceStats) {
+          updateStats({
+            ...socialServiceStats,
+            count: (socialServiceStats.count || 0) + 1,
+          });
+        }
 
         if (subject) {
           updateSubject({

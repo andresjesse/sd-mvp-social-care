@@ -15,13 +15,15 @@ export default function StyledCard({ children, onClick }: StyledCardProps) {
   return (
     <div className={classes.root}>
       <div className={classes.body}>
-        <UnstyledButton onClick={onClick} pos="absolute" right={0}>
-          <FontAwesomeIcon
-            color="white"
-            size="xl"
-            icon={faArrowUpRightFromSquare}
-          />
-        </UnstyledButton>
+        {onClick && (
+          <UnstyledButton onClick={onClick} pos="absolute" right={0}>
+            <FontAwesomeIcon
+              color="white"
+              size="xl"
+              icon={faArrowUpRightFromSquare}
+            />
+          </UnstyledButton>
+        )}
         {children}
       </div>
     </div>
