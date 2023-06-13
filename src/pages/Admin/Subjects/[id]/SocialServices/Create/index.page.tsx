@@ -178,7 +178,7 @@ export default function AdminSocialServicesCreatePage() {
         if (socialServiceStats) {
           updateStats({
             ...socialServiceStats,
-            count: socialServiceStats.count + 1,
+            count: (socialServiceStats.count || 0) + 1,
           });
         }
 
