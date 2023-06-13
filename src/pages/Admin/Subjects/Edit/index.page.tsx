@@ -32,6 +32,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import dateToISOString from "@/helpers/dateToISOString";
 import useDocument from "@/hooks/useDocument";
 import PageSkeleton from "./_PageSkeleton";
+import incomeOptions from "@/helpers/generateIncomeOptions";
 
 export default function AdminSubjectsEditPage() {
   const navigate = useNavigate();
@@ -60,24 +61,6 @@ export default function AdminSubjectsEditPage() {
   const stateOptions = i18nEntriesToSelect(
     "subjects_create_page.form.fields.address_state_options"
   );
-
-  const incomeOptions = [
-    i18n.t("subjects_create_page.form.fields.income_options.none"),
-    i18n.t("subjects_create_page.form.fields.income_options.up_to", {
-      value: 2900,
-    }),
-    i18n.t("subjects_create_page.form.fields.income_options.between", {
-      value1: 2900,
-      value2: 7100,
-    }),
-    i18n.t("subjects_create_page.form.fields.income_options.between", {
-      value1: 7100,
-      value2: 22000,
-    }),
-    i18n.t("subjects_create_page.form.fields.income_options.superior_to", {
-      value: 22000,
-    }),
-  ].map((label, index) => ({ value: index.toString(), label }));
 
   const chemicalDependencyOptions = Object.entries(
     i18n.t("subjects_create_page.form.fields.chemical_dependency_options")
@@ -475,7 +458,7 @@ export default function AdminSubjectsEditPage() {
               mt="md"
               label={i18n.t("subjects_create_page.form.fields.income")}
               placeholder={i18n.t("subjects_create_page.form.pick")}
-              data={incomeOptions}
+              data={incomeOptions()}
               {...form.getInputProps("income")}
             />
 

@@ -154,26 +154,34 @@ export default function AdminSubjectsPage() {
                     </Flex>
 
                     <Group sx={{ flex: 1 }}>
-                      <MediaQuery smallerThan="sm" styles={{ width: "100%" }}>
-                        <Button
-                          onClick={() => {
-                            navigate(`${subject.id}/social-services`);
-                          }}
-                        >
-                          {i18n.t("subjects_page.social_services")}
-                        </Button>
-                      </MediaQuery>
+                      <Button
+                        w="100%"
+                        onClick={() => {
+                          navigate(`${subject.id}/social-services`);
+                        }}
+                      >
+                        {i18n.t("subjects_page.social_services")}
+                      </Button>
 
-                      <MediaQuery smallerThan="sm" styles={{ width: "100%" }}>
-                        <Button
-                          variant="outline"
-                          onClick={() => {
-                            navigate(`${subject.id}/edit`);
-                          }}
-                        >
-                          {i18n.t("subjects_page.edit")}
-                        </Button>
-                      </MediaQuery>
+                      <Button
+                        w="100%"
+                        variant="light"
+                        onClick={() => {
+                          navigate(`${subject.id}`);
+                        }}
+                      >
+                        {i18n.t("subjects_page.show")}
+                      </Button>
+
+                      <Button
+                        w="100%"
+                        variant="outline"
+                        onClick={() => {
+                          navigate(`${subject.id}/edit`);
+                        }}
+                      >
+                        {i18n.t("subjects_page.edit")}
+                      </Button>
                     </Group>
                   </Flex>
                 </MediaQuery>
