@@ -21,7 +21,9 @@
 
     "admin_page": {
       "subjects": "Sujeitos",
-      "subjects_attended": "Sujeitos atendidos até o momento"
+      "subjects_attended": "Sujeitos atendidos até o momento",
+      "social_services": "Atendimentos",
+      "social_services_performed": "Atendimentos realizados até o momento"
     },
 
     "configuration_page": {

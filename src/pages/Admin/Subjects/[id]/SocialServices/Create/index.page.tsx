@@ -23,9 +23,10 @@ import { notifications } from "@mantine/notifications";
 import { useForm, isNotEmpty, hasLength } from "@mantine/form";
 import { DateTimePicker } from "@mantine/dates";
 import i18n from "@/lang";
-
-import { faFilePdf, faFileImage } from "@fortawesome/free-regular-svg-icons";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFile,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SocialService } from "@/types/SocialService";
 import useCollection from "@/hooks/useCollection";
@@ -37,6 +38,7 @@ import dateToISOString from "@/helpers/dateToISOString";
 import PageSkeleton from "./_PageSkeleton";
 import useAuth from "@/hooks/useAuth";
 import useStorage from "@/hooks/useStorage";
+import { SocialServiceStats } from "@/types/SocialServiceStats";
 
 export default function AdminSocialServicesCreatePage() {
   const theme = useMantineTheme();
@@ -78,6 +80,9 @@ export default function AdminSocialServicesCreatePage() {
     setFiles(null);
     resetRef.current?.();
   };
+
+  const { data: socialServiceStats, upsert: updateStats } =
+    useDocument<SocialServiceStats>("stats", "social-services");
 
   const form = useForm<SocialService>({
     initialValues: {
@@ -169,6 +174,13 @@ export default function AdminSocialServicesCreatePage() {
           date: dateToISOString(form.values.date),
           createdBy: user?.email,
         });
+
+        if (socialServiceStats) {
+          updateStats({
+            ...socialServiceStats,
+            count: (socialServiceStats.count || 0) + 1,
+          });
+        }
 
         if (subject) {
           updateSubject({
@@ -311,12 +323,7 @@ export default function AdminSocialServicesCreatePage() {
             />
 
             <Group position="center" mt="md">
-              <FileButton
-                multiple
-                resetRef={resetRef}
-                onChange={setFiles}
-                accept="application/pdf,image/png,image/jpeg"
-              >
+              <FileButton multiple resetRef={resetRef} onChange={setFiles}>
                 {(props) => (
                   <Button {...props}>
                     {i18n.t(
@@ -339,17 +346,9 @@ export default function AdminSocialServicesCreatePage() {
                       key={index}
                       icon={
                         <FontAwesomeIcon
-                          color={
-                            file.type == "application/pdf"
-                              ? theme.colors.red[8]
-                              : theme.colors.gray[7]
-                          }
+                          color={theme.colors.gray[4]}
                           size="xl"
-                          icon={
-                            file.type == "application/pdf"
-                              ? faFilePdf
-                              : faFileImage
-                          }
+                          icon={faFile}
                         />
                       }
                     >

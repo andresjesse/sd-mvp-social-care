@@ -25,13 +25,13 @@ export default function AdminSubjectsPage() {
   const [subjects, setSubjects] = useState<Array<Subject>>([]);
   const [searchString, setSearchString] = useState("");
   const {
-    filterLast,
+    filter,
     filterByQueryString,
     loading: loadingSubjects,
   } = useCollection<Subject>("subjects", false);
 
   const filterSujects = async () => {
-    setSubjects(await filterLast(10, "lastSocialServiceDate"));
+    setSubjects(await filter("lastSocialServiceDate", "asc", 10));
   };
 
   useEffect(() => {
