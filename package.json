@@ -16,7 +16,7 @@
     "@mantine/hooks": "^6.0.8",
     "@mantine/notifications": "^6.0.7",
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
@@ -41,7 +41,8 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test",
+    "test-default": "craco test",
+    "test": "playwright test --ui",
     "eject": "craco eject",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --quiet"
   },
@@ -64,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.35.0",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "eslint": "^8.36.0",
