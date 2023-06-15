@@ -51,7 +51,8 @@
       "social_services": "Atendimentos",
       "empty_subjects": "Nenhum sujeito encontrado",
       "edit": "Editar sujeito",
-      "show": "Visualizar sujeito"
+      "show": "Visualizar sujeito",
+      "social_service_not_registered": "Ainda não realizado"
     },
 
     "subjects_edit_page": {

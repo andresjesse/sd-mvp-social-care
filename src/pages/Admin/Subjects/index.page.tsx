@@ -146,9 +146,13 @@ export default function AdminSubjectsPage() {
                           :
                         </Text>
                         <Text span ml="5px">
-                          {moment(subject.lastSocialServiceDate).format(
-                            "DD/MM/YYYY"
-                          )}
+                          {subject.lastSocialServiceDate
+                            ? moment(subject.lastSocialServiceDate).format(
+                                "DD/MM/YYYY"
+                              )
+                            : i18n.t(
+                                "subjects_page.social_service_not_registered"
+                              )}
                         </Text>
                       </Text>
                     </Flex>
