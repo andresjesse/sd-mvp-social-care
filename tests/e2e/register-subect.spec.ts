@@ -1,8 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("can register a subject", async ({ page }) => {
-  /* Login */
-
+test.beforeEach(async ({ page }, testInfo) => {
   // Acess home page
   await page.goto("http://localhost:3000/");
 
@@ -20,9 +18,9 @@ test("can register a subject", async ({ page }) => {
 
   // Expects the URL redirects to admin page.
   await expect(page).toHaveURL(/.*admin/);
+});
 
-  /* Registe subject */
-
+test("can register a subject", async ({ page }) => {
   // Click button to register subject
   await page.getByRole("link", { name: "Cadastrar sujeito" }).click();
 
