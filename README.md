@@ -1,65 +1,103 @@
+<!-- prettier-ignore-start -->
 # Projeto MVP Social Care
 
-É um projeto desenvlvido para a disciplina de Sistemas ditribuídos da UTFPR - Guarapuava. Pensando em uma melhoria para o dia a dia de trabalho de assistente social o sistema foi pensado para ajudar contendo um cadastro de sujeitos e atendimentos.
+O MVP Social Care é um projeto desenvolvido para a disciplina de Sistemas ditribuídos da Graduação em Sistemas para Internet da UTFPR - Guarapuava. Pensando em uma melhoria para o dia a dia de trabalho de assistente social, o sistema foi pensado para auxiliar o cadastro de sujeitos e atendimentos realizados.
 
-## Ambiente e ferramentas
+## Ambiente de desenvolvimento e ferramentas
 
-Testado em Pop OS 22.04 LTS
+Este sistema foi desenvolvido de modo a não exigir um servidor de Backend, sendo toda a sua infraestrutura focada em nuvem. As principais tecnologias utilizadas foram Firebase e React.JS, com o seguinte detalhamento:
 
 - Node.js: https://nodejs.org/en (Versão 18.14.2 LTS)
+- [Create React App](https://github.com/facebook/create-react-app)
 - [Mantine UI](https://v6.mantine.dev/)
 - [Firebase](https://firebase.google.com/?hl=pt-br)
+- Testado em Pop OS 22.04 LTS
 
-## Getting Started with Create React App
+## Executando o projeto em ambiente de desenvolvimento
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Clone o projeto:
 
-## Available Scripts
+    - `$ git clone git@github.com:andresjesse/sd-mvp-social-care.git`
 
-In the project directory, you can run:
+2. Crie um projeto no firebase e copie as credenciais:
 
-### `yarn start`
+    - Acesse [https://console.firebase.google.com/](https://console.firebase.google.com/)
+    - Crie um novo projeto, a adição do Google Analytics é opcional visto que este recurso não é utilizado no projeto
+    - Ao finalizar a criação do projeto, adicione um App Web e registre-o (o nome do App pode ser de sua preferência)
+    - Nas configurações do App, procure pelas credenciais de conexão, copie o conteúdo do objeto `firebaseConfig`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3. Adicione as credenciais ao projeto clonado no passo 1:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    - Abra o projeto em um editor de sua preferência, como o VSCode
+    - Crie o arquivo `src/config/firebaseConfig.ts`
+    - Cole o conteúdo das credenciais no arquivo recém criado, existe um modelo nesta mesma pasta com o nome de `firebaseConfig.example.ts`
 
-### `yarn test`
+4. Ative os serviços necessários no firebase:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - Acesse [https://console.firebase.google.com/](https://console.firebase.google.com/)
+    - No painel lateral, na aba "Criação", inicialize os seguintes serviços: 
+      - Auth, com o provedor nativo "Email/Senha" (Link do e-mail (login sem senha) não é necessário). Dica: na Aba "Users" você pode aproveitar e criar um usuário logo após a ativação deste serviço
+      - Cloud Firestore: crie um banco de dados, escolha o datacenter mais próximo da sua localidade
+      - Storage: configure o cloud storage (use as definições padrão)
 
-### `yarn build`
+    - As regras do Cloud Firestore precisam ser configuradas antes do uso, acesse a aba "Firestore Database" e procure por "Regras". Altere as regras de acesso para o seguinte:
+      ```js
+      rules_version = '2';
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+      service cloud.firestore {
+        match /databases/{database}/documents {
+          match /{document=**} {
+            allow read, write: if request.auth != null;
+          }
+        }
+      }
+      ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    - Faça o mesmo atualizando as regras do serviço Storage:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+      ```js
+      rules_version = '2';
 
-### `yarn eject`
+      service firebase.storage {
+        match /b/{bucket}/o {
+          match /{allPaths=**} {
+            allow read, write: if request.auth != null;
+          }
+        }
+      }
+      ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+5. Instale as dependências:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    - Na pasta do projeto, abra um terminal e execute: `$ yarn`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+6. Execute o servidor:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    - `$ yarn start`
+    - Acesse: [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+7. Referências adicionais para estudo e resolução de problemas:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    - https://firebase.google.com/docs/web/setup?hl=pt-br
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-## Setup Firebase
+## Criando uma cópia do projeto para desenvolvimento próprio
 
-https://firebase.google.com/docs/web/setup?hl=pt-br
+Este processo visa fazer upload do projeto no seu próprio repositório, desta forma permitindo que você realize alterações e o deploy da sua própria cópia do sistema. É necessário ter uma conta no github para prosseguir.
+
+1. Acesse o github do projeto [https://github.com/andresjesse/sd-mvp-social-care](https://github.com/andresjesse/sd-mvp-social-care), e crie um Fork para a sua própria conta
+
+
+2. Acesse as configurações do seu projeto no github (o fork), procure por "Secrets and Variables", e adicione o conteúdo do seu `firebaseConfig.ts` como um "Secret" chamado "FIREBASE_CONFIG"
+
+3. Acesse as configurações do seu projeto no github (o fork), procure por Settings >> Actions >> General, depois role a página até Workflow permissions e ative a opção "enable Read and Write permissions"
+
+>>>>>>>>>>>>>>> Daqui pra frente não foi testado!
+
+4. Crie uma chave de conta de serviço para o seu projeto firebase, siga os passos do tutorial oficial: https://cloud.google.com/iam/docs/keys-create-delete?hl=pt-br 
+
+5. Ao finalizar a criação da chave da conta de serviço, você receberá um arquivo JSON, copie o seu conteúdo e crie um novo Secret no github (similar ao passo 2) chamado "FIREBASE_SERVICE_ACCOUNT_SD_MVP_SOCIAL_CARE"
+
 
 ## Setup Deploy
 
@@ -132,3 +170,5 @@ From your repository: Settings >> Actions >> General, scroll down to Workflow pe
 Open your repository Settings >> Secrets and Variables >> Actions >> Tab Secrets.
 
 Add the content of `src/config/firebaseConfig` as a secret named `FIREBASE_CONFIG`.
+
+<!-- prettier-ignore-end -->
