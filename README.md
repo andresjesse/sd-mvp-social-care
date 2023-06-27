@@ -1,4 +1,16 @@
-# Getting Started with Create React App
+# Projeto MVP Social Care
+
+É um projeto desenvlvido para a disciplina de Sistemas ditribuídos da UTFPR - Guarapuava. Pensando em uma melhoria para o dia a dia de trabalho de assistente social o sistema foi pensado para ajudar contendo um cadastro de sujeitos e atendimentos.
+
+## Ambiente e ferramentas
+
+Testado em Pop OS 22.04 LTS
+
+- Node.js: https://nodejs.org/en (Versão 18.14.2 LTS)
+- [Mantine UI](https://v6.mantine.dev/)
+- [Firebase](https://firebase.google.com/?hl=pt-br)
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
