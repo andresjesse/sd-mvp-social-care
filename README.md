@@ -138,4 +138,19 @@ Nota: outras formas de deploy podem ser implementadas de maneira mais simples. E
     - Realizar o merge do branch da feature no branch main
     - Inspecionar os logs do github actions para detectar falhas
 
+## Testes
+
+Este repositório conta com exemplos de testes End-to-End configurados com a biblioteca playwright. Veja a pasta `tests/e2e/` para detalhes. **Atenção**: o workflow de testes foi configurado para execução apenas em localhost e deve, idealmente, usar um projeto do firebase exclusivo para testes, conforme sugere a documentação [testing/staging database connection](https://playwright.dev/docs/best-practices#testing-with-a-database). **Não execute o pipeline de testes com o `firebaseConfig.ts` de desenvolvimento ou de produção!**. O workflow de testes também não foi integrado ao github actions.
+
+Para executar os testes:
+
+    - Crie um projeto novo no firebase, use-o exclusivamente para o ambiente de testes
+    - Substitua o `firebaseConfig.ts` com as informações do ambiente de testes
+    - Execute: `yarn test`
+
+Ideia para o futuro: fazer com o `firebaseConfig.ts` carregue as credenciais de variáveis de ambiente, assim seria possível criar um `.env` para desenvolvimento e outro para testes, facilitando o processo.
+
+Nota: a aplicação foi criada usando o template CRA (Create-React-App), portanto possui pré-configurado o ambiente de testes com Jest. Este ambiente de testes não foi utilizado (por enquanto), todavia, você pode implementar testes unitários com Jest e executá-los com o comando `yarn test-default`. Para mais detalhes de como os testes são executados, veja o bloco `scripts` no arquivo `package.json`.
+
+
 <!-- prettier-ignore-end -->
