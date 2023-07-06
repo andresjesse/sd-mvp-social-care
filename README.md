@@ -83,92 +83,59 @@ Este sistema foi desenvolvido de modo a não exigir um servidor de Backend, send
 
 ## Criando uma cópia do projeto para desenvolvimento próprio
 
-Este processo visa fazer upload do projeto no seu próprio repositório, desta forma permitindo que você realize alterações e o deploy da sua própria cópia do sistema. É necessário ter uma conta no github para prosseguir.
+Este processo visa fazer upload do projeto em um novo repositório git (na sua conta, por exemplo), desta forma permitindo que você realize alterações e o deploy da sua própria cópia do sistema. É necessário ter uma conta no github para prosseguir. Note que este processo configurará um workflow de deploy automatizado usando github actions e um projeto (novo) do firebase. Recomenda-se conhecimento prévio em github actions para execução destes procedimentos.
+
+Nota: outras formas de deploy podem ser implementadas de maneira mais simples. Este projeto conta com um script `yarn build` que gerará uma versão de produção do software localmente (na pasta `build`). Qualquer serviço de hospedagem compatível com React.js pode ser usado para servir a aplicação.
 
 1. Acesse o github do projeto [https://github.com/andresjesse/sd-mvp-social-care](https://github.com/andresjesse/sd-mvp-social-care), e crie um Fork para a sua própria conta
 
+2. Repita as ações do guia anterior: 
 
-2. Acesse as configurações do seu projeto no github (o fork), procure por "Secrets and Variables", e adicione o conteúdo do seu `firebaseConfig.ts` como um "Secret" chamado "FIREBASE_CONFIG"
-
-3. Acesse as configurações do seu projeto no github (o fork), procure por Settings >> Actions >> General, depois role a página até Workflow permissions e ative a opção "enable Read and Write permissions"
-
->>>>>>>>>>>>>>> Daqui pra frente não foi testado!
-
-4. Crie uma chave de conta de serviço para o seu projeto firebase, siga os passos do tutorial oficial: https://cloud.google.com/iam/docs/keys-create-delete?hl=pt-br 
-
-5. Ao finalizar a criação da chave da conta de serviço, você receberá um arquivo JSON, copie o seu conteúdo e crie um novo Secret no github (similar ao passo 2) chamado "FIREBASE_SERVICE_ACCOUNT_SD_MVP_SOCIAL_CARE"
+    1. Clone o projeto (usando a url do seu fork)
+    2. Crie um projeto no firebase e copie as credenciais (esta será a versão de produção do sistema)
+    3. Adicione as credenciais ao projeto clonado no passo 1
+    4. Ative os serviços necessários no firebase
+    5. Instale as dependências
 
 
-## Setup Deploy
+3. Acesse as configurações do seu projeto no github (o fork), procure por "Secrets and Variables", e adicione o conteúdo do seu `firebaseConfig.ts` como um "Secret" chamado "FIREBASE_CONFIG"
 
-**Install Firebase CLI**
+4. Acesse as configurações do seu projeto no github (o fork), procure por Settings >> Actions >> General, depois role a página até Workflow permissions e ative a opção "Read and Write permissions"
 
-Firebase CLI can be installed globally or used as a standalone binary (your choice). Follow official guide: https://firebase.google.com/docs/cli
+5. Instale a CLI do firebase seguindo o guia oficial: https://firebase.google.com/docs/cli 
 
-Execute: `firebase login`
+    - Nota: este tutorial foi testado usando a CLI instalada via npm: `npm install -g firebase-tools`
 
-**Setup Firebase Hosting**
+6. Faça login no firebase usando a CLI: `firebase login`
 
-Execute: `firebase init hosting`
+7. Inicialize o serviço hosting usando a CLI. Um log das opções usadas neste tutorial é apresentado a seguir, você pode usar as mesmas respostas para configurar o seu deploy: 
 
-- ❯ Use an existing project
-- ❯ sd-mvp-social-care (sd-mvp-social-care)
-- ? What do you want to use as your public directory? build
-- ? Configure as a single-page app (rewrite all urls to /index.html)? (y/N) y
-- ? Set up automatic builds and deploys with GitHub? (y/N) y
-- ? For which GitHub repository would you like to set up a GitHub workflow? (format:
-  user/repository) (andresjesse/sd-mvp-social-care)
-- ? Set up the workflow to run a build script before every deploy? Yes
-- ? What script should be run before every deploy? yarn install --frozen-lockfile && yarn build
-- ? Set up automatic deployment to your site's live channel when a PR is merged? (Y/n) Y
-- ? What is the name of the GitHub branch associated with your site's live channel? main
+    Usando o `projectId` do seu `firebaseConfig.ts`, execute: `firebase init hosting --project seuProjectIdAqui`
 
-Previous process will generate configs for firebase deploy and two github workflows: `firebase-hosting-merge.yml` and `firebase-hosting-pull-request.yml`. For this project we decided to merge them into the following workflow (`cd-firebase.yml`):
+    Siga os passos da CLI usando as seguintes respostas: 
+    
+    ```
+    ? Do you want to use a web framework? (experimental) No
+    ? What do you want to use as your public directory? build
+    ? Configure as a single-page app (rewrite all urls to /index.html)? Yes
+    ? Set up automatic builds and deploys with GitHub? Yes
+    ? For which GitHub repository would you like to set up a GitHub workflow? (format: user/repository) seu_repositorio_git_aqui
+    ? Set up the workflow to run a build script before every deploy? No
+    ? Set up automatic deployment to your site's live channel when a PR is merged? No
+    ```
 
-```
-name: Deploy to Firebase Hosting
-# "on": pull_request
-"on":
-  push:
-    branches:
-      - main
-jobs:
-  build_and_deploy:
-    name: "Build and Deploy to Firebase Hosting"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Write firebaseConfig
-        env:
-          MY_VAL: ${{ secrets.FIREBASE_CONFIG }}
-        run: |
-          import os
-          data = open("src/config/firebaseConfig.ts", "w")
-          for q in (os.getenv("MY_VAL")):
-            data.write(q)
-        shell: python
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - name: Lint
-        run: yarn lint
-      - name: Build
-        run: yarn build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SD_MVP_SOCIAL_CARE }}"
-          channelId: live
-          projectId: sd-mvp-social-care
-```
+8. Atualize o workflow de deploy:
 
-**Setup github permissions for workflow**:
+    - Abra o arquivo `.github/workflows/cd-firebase.yml`
+    - Atualize a variável `firebaseServiceAccount`. Você deve acessar os Secrets do seu projeto no github e procurar por uma chave com este formato: `FIREBASE_SERVICE_ACCOUNT_SEU_PROJETO_AQUI`
+    - Atualize a variável `projectId` de acordo com o seu `firebaseConfig.ts`
+    - Salve o arquivo, realize algum commit e push para testar a Action de deploy no github actions.
 
-From your repository: Settings >> Actions >> General, scroll down to Workflow permissions >> enable Read and Write permissions.
+9. Acesse o console do firebase, em seguida abra a Aba "hosting" para conferir a url onde os deploys do seu projeto foram feitos. A action `cd-firebase` é configurada para realizar um novo deploy a cada vez que atualizações chegam ao branch main, portanto, é sugerido o seguinte fluxo de trabalho:
 
-**Setup FIREBASE_CONFIG secret**:
-
-Open your repository Settings >> Secrets and Variables >> Actions >> Tab Secrets.
-
-Add the content of `src/config/firebaseConfig` as a secret named `FIREBASE_CONFIG`.
+    - Criar um novo branch para as features a serem desevolvidas
+    - Criar uma Pull Request quando a feature estiver pronta
+    - Realizar o merge do branch da feature no branch main
+    - Inspecionar os logs do github actions para detectar falhas
 
 <!-- prettier-ignore-end -->
