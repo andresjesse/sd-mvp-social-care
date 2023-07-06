@@ -1,122 +1,141 @@
-# Getting Started with Create React App
+<!-- prettier-ignore-start -->
+# Projeto MVP Social Care
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+O MVP Social Care é um projeto desenvolvido para a disciplina de Sistemas ditribuídos da Graduação em Sistemas para Internet da UTFPR - Guarapuava. Pensando em uma melhoria para o dia a dia de trabalho de assistente social, o sistema foi pensado para auxiliar o cadastro de sujeitos e atendimentos realizados.
 
-## Available Scripts
+## Ambiente de desenvolvimento e ferramentas
 
-In the project directory, you can run:
+Este sistema foi desenvolvido de modo a não exigir um servidor de Backend, sendo toda a sua infraestrutura focada em nuvem. As principais tecnologias utilizadas foram Firebase e React.JS, com o seguinte detalhamento:
 
-### `yarn start`
+- Node.js: https://nodejs.org/en (Versão 18.14.2 LTS)
+- [Create React App](https://github.com/facebook/create-react-app)
+- [Mantine UI](https://v6.mantine.dev/)
+- [Firebase](https://firebase.google.com/?hl=pt-br)
+- Testado em Pop OS 22.04 LTS
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Executando o projeto em ambiente de desenvolvimento
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Clone o projeto:
 
-### `yarn test`
+    - `$ git clone git@github.com:andresjesse/sd-mvp-social-care.git`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Crie um projeto no firebase e copie as credenciais:
 
-### `yarn build`
+    - Acesse [https://console.firebase.google.com/](https://console.firebase.google.com/)
+    - Crie um novo projeto, a adição do Google Analytics é opcional visto que este recurso não é utilizado no projeto
+    - Ao finalizar a criação do projeto, adicione um App Web e registre-o (o nome do App pode ser de sua preferência)
+    - Nas configurações do App, procure pelas credenciais de conexão, copie o conteúdo do objeto `firebaseConfig`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Adicione as credenciais ao projeto clonado no passo 1:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    - Abra o projeto em um editor de sua preferência, como o VSCode
+    - Crie o arquivo `src/config/firebaseConfig.ts`
+    - Cole o conteúdo das credenciais no arquivo recém criado, existe um modelo nesta mesma pasta com o nome de `firebaseConfig.example.ts`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. Ative os serviços necessários no firebase:
 
-### `yarn eject`
+    - Acesse [https://console.firebase.google.com/](https://console.firebase.google.com/)
+    - No painel lateral, na aba "Criação", inicialize os seguintes serviços: 
+      - Auth, com o provedor nativo "Email/Senha" (Link do e-mail (login sem senha) não é necessário). Dica: na Aba "Users" você pode aproveitar e criar um usuário logo após a ativação deste serviço
+      - Cloud Firestore: crie um banco de dados, escolha o datacenter mais próximo da sua localidade
+      - Storage: configure o cloud storage (use as definições padrão)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    - As regras do Cloud Firestore precisam ser configuradas antes do uso, acesse a aba "Firestore Database" e procure por "Regras". Altere as regras de acesso para o seguinte:
+      ```js
+      rules_version = '2';
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+      service cloud.firestore {
+        match /databases/{database}/documents {
+          match /{document=**} {
+            allow read, write: if request.auth != null;
+          }
+        }
+      }
+      ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    - Faça o mesmo atualizando as regras do serviço Storage:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+      ```js
+      rules_version = '2';
 
-## Learn More
+      service firebase.storage {
+        match /b/{bucket}/o {
+          match /{allPaths=**} {
+            allow read, write: if request.auth != null;
+          }
+        }
+      }
+      ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Instale as dependências:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    - Na pasta do projeto, abra um terminal e execute: `$ yarn`
 
-## Setup Firebase
+6. Execute o servidor:
 
-https://firebase.google.com/docs/web/setup?hl=pt-br
+    - `$ yarn start`
+    - Acesse: [http://localhost:3000](http://localhost:3000)
 
-## Setup Deploy
+7. Referências adicionais para estudo e resolução de problemas:
 
-**Install Firebase CLI**
+    - https://firebase.google.com/docs/web/setup?hl=pt-br
 
-Firebase CLI can be installed globally or used as a standalone binary (your choice). Follow official guide: https://firebase.google.com/docs/cli
 
-Execute: `firebase login`
+## Criando uma cópia do projeto para desenvolvimento próprio
 
-**Setup Firebase Hosting**
+Este processo visa fazer upload do projeto em um novo repositório git (na sua conta, por exemplo), desta forma permitindo que você realize alterações e o deploy da sua própria cópia do sistema. É necessário ter uma conta no github para prosseguir. Note que este processo configurará um workflow de deploy automatizado usando github actions e um projeto (novo) do firebase. Recomenda-se conhecimento prévio em github actions para execução destes procedimentos.
 
-Execute: `firebase init hosting`
+Nota: outras formas de deploy podem ser implementadas de maneira mais simples. Este projeto conta com um script `yarn build` que gerará uma versão de produção do software localmente (na pasta `build`). Qualquer serviço de hospedagem compatível com React.js pode ser usado para servir a aplicação.
 
-- ❯ Use an existing project
-- ❯ sd-mvp-social-care (sd-mvp-social-care)
-- ? What do you want to use as your public directory? build
-- ? Configure as a single-page app (rewrite all urls to /index.html)? (y/N) y
-- ? Set up automatic builds and deploys with GitHub? (y/N) y
-- ? For which GitHub repository would you like to set up a GitHub workflow? (format:
-  user/repository) (andresjesse/sd-mvp-social-care)
-- ? Set up the workflow to run a build script before every deploy? Yes
-- ? What script should be run before every deploy? yarn install --frozen-lockfile && yarn build
-- ? Set up automatic deployment to your site's live channel when a PR is merged? (Y/n) Y
-- ? What is the name of the GitHub branch associated with your site's live channel? main
+1. Acesse o github do projeto [https://github.com/andresjesse/sd-mvp-social-care](https://github.com/andresjesse/sd-mvp-social-care), e crie um Fork para a sua própria conta
 
-Previous process will generate configs for firebase deploy and two github workflows: `firebase-hosting-merge.yml` and `firebase-hosting-pull-request.yml`. For this project we decided to merge them into the following workflow (`cd-firebase.yml`):
+2. Repita as ações do guia anterior: 
 
-```
-name: Deploy to Firebase Hosting
-# "on": pull_request
-"on":
-  push:
-    branches:
-      - main
-jobs:
-  build_and_deploy:
-    name: "Build and Deploy to Firebase Hosting"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Write firebaseConfig
-        env:
-          MY_VAL: ${{ secrets.FIREBASE_CONFIG }}
-        run: |
-          import os
-          data = open("src/config/firebaseConfig.ts", "w")
-          for q in (os.getenv("MY_VAL")):
-            data.write(q)
-        shell: python
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - name: Lint
-        run: yarn lint
-      - name: Build
-        run: yarn build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SD_MVP_SOCIAL_CARE }}"
-          channelId: live
-          projectId: sd-mvp-social-care
-```
+    1. Clone o projeto (usando a url do seu fork)
+    2. Crie um projeto no firebase e copie as credenciais (esta será a versão de produção do sistema)
+    3. Adicione as credenciais ao projeto clonado no passo 1
+    4. Ative os serviços necessários no firebase
+    5. Instale as dependências
 
-**Setup github permissions for workflow**:
 
-From your repository: Settings >> Actions >> General, scroll down to Workflow permissions >> enable Read and Write permissions.
+3. Acesse as configurações do seu projeto no github (o fork), procure por "Secrets and Variables", e adicione o conteúdo do seu `firebaseConfig.ts` como um "Secret" chamado "FIREBASE_CONFIG"
 
-**Setup FIREBASE_CONFIG secret**:
+4. Acesse as configurações do seu projeto no github (o fork), procure por Settings >> Actions >> General, depois role a página até Workflow permissions e ative a opção "Read and Write permissions"
 
-Open your repository Settings >> Secrets and Variables >> Actions >> Tab Secrets.
+5. Instale a CLI do firebase seguindo o guia oficial: https://firebase.google.com/docs/cli 
 
-Add the content of `src/config/firebaseConfig` as a secret named `FIREBASE_CONFIG`.
+    - Nota: este tutorial foi testado usando a CLI instalada via npm: `npm install -g firebase-tools`
+
+6. Faça login no firebase usando a CLI: `firebase login`
+
+7. Inicialize o serviço hosting usando a CLI. Um log das opções usadas neste tutorial é apresentado a seguir, você pode usar as mesmas respostas para configurar o seu deploy: 
+
+    Usando o `projectId` do seu `firebaseConfig.ts`, execute: `firebase init hosting --project seuProjectIdAqui`
+
+    Siga os passos da CLI usando as seguintes respostas: 
+    
+    ```
+    ? Do you want to use a web framework? (experimental) No
+    ? What do you want to use as your public directory? build
+    ? Configure as a single-page app (rewrite all urls to /index.html)? Yes
+    ? Set up automatic builds and deploys with GitHub? Yes
+    ? For which GitHub repository would you like to set up a GitHub workflow? (format: user/repository) seu_repositorio_git_aqui
+    ? Set up the workflow to run a build script before every deploy? No
+    ? Set up automatic deployment to your site's live channel when a PR is merged? No
+    ```
+
+8. Atualize o workflow de deploy:
+
+    - Abra o arquivo `.github/workflows/cd-firebase.yml`
+    - Atualize a variável `firebaseServiceAccount`. Você deve acessar os Secrets do seu projeto no github e procurar por uma chave com este formato: `FIREBASE_SERVICE_ACCOUNT_SEU_PROJETO_AQUI`
+    - Atualize a variável `projectId` de acordo com o seu `firebaseConfig.ts`
+    - Salve o arquivo, realize algum commit e push para testar a Action de deploy no github actions.
+
+9. Acesse o console do firebase, em seguida abra a Aba "hosting" para conferir a url onde os deploys do seu projeto foram feitos. A action `cd-firebase` é configurada para realizar um novo deploy a cada vez que atualizações chegam ao branch main, portanto, é sugerido o seguinte fluxo de trabalho:
+
+    - Criar um novo branch para as features a serem desevolvidas
+    - Criar uma Pull Request quando a feature estiver pronta
+    - Realizar o merge do branch da feature no branch main
+    - Inspecionar os logs do github actions para detectar falhas
+
+<!-- prettier-ignore-end -->
