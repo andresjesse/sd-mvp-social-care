@@ -1,7 +1,7 @@
 <!-- prettier-ignore-start -->
-# Projeto MVP Social Care
+# Open Social Care - Protótipo MVP
 
-O MVP Social Care é um projeto desenvolvido para a disciplina de Sistemas ditribuídos da Graduação em Sistemas para Internet da UTFPR - Guarapuava. Pensando em uma melhoria para o dia a dia de trabalho de assistente social, o sistema foi pensado para auxiliar o cadastro de sujeitos e atendimentos realizados.
+O MVP Open Social Care é um projeto desenvolvido para a disciplina de Sistemas ditribuídos da Graduação em Sistemas para Internet da UTFPR - Guarapuava. Pensando em uma melhoria para o dia a dia de trabalho de assistente social, o sistema foi pensado para auxiliar o cadastro de sujeitos e atendimentos realizados.
 
 ## Ambiente de desenvolvimento e ferramentas
 
